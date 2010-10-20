@@ -64,14 +64,14 @@
 				</RegExp>
 				<expression>\+(.*)</expression>
 			</RegExp>
-			<RegExp conditional="!merlinartistonly" input="$$6" output="&lt;url function=&quot;MerlinLinkSmu&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=\1&amp;amp;person=\2&amp;amp;firm=&amp;amp;date=\3&amp;amp;isbn=&amp;amp;sort=nowosc&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
+			<RegExp input="$$6" output="&lt;url function=&quot;MerlinLinkSmu&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=\1&amp;amp;person=\2&amp;amp;firm=&amp;amp;date=\3&amp;amp;isbn=&amp;amp;sort=nowosc&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
 				<expression noclean="1">(.*?)xbmc(.*?)xbmc([0-9]+)</expression>
 			</RegExp>
-			<RegExp conditional="!merlinartistonly" input="$$6" output="&lt;url function=&quot;MerlinLinkSmu&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=\1&amp;amp;person=&amp;amp;firm=&amp;amp;date=\2&amp;amp;isbn=&amp;amp;sort=nowosc&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
+			<RegExp input="$$6" output="&lt;url function=&quot;MerlinLinkSmu&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=\1&amp;amp;person=&amp;amp;firm=&amp;amp;date=\2&amp;amp;isbn=&amp;amp;sort=nowosc&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
 				<expression noclean="1">(.*?)xbmcVarious\+Artistsxbmc([0-9]+)</expression>
 			</RegExp>
-			<RegExp conditional="merlinartistonly" input="$$6" output="&lt;url function=&quot;MerlinLink&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=&amp;amp;person=\2&amp;amp;firm=&amp;amp;date=\3&amp;amp;isbn=&amp;amp;sort=tytul&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
-				<expression noclean="1">(.*?)xbmc(.*?)xbmc([0-9]+)</expression>
+			<RegExp input="$$6" output="&lt;url function=&quot;MerlinLink&quot;&gt;http://merlin.pl/xbmc/browse/search/4,,1.html?phrase=&amp;amp;place=4+simple&amp;amp;carrier=3&amp;amp;category=&amp;amp;title=&amp;amp;person=\1&amp;amp;firm=&amp;amp;date=\2&amp;amp;isbn=&amp;amp;sort=tytul&amp;amp;x=40&amp;amp;y=12&lt;/url&gt;" dest="2">
+				<expression noclean="1">10\+000\+Hz\+Legendxbmc(.*?)xbmc([0-9]+)</expression>
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
@@ -79,7 +79,7 @@
 	<MerlinLinkSmu clearbuffers="no" dest="5">
 		<RegExp input="$$7" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
 			<RegExp input="$$1" output="$$18" dest="7+">
-				<RegExp input="$$6" output="&lt;url function=&quot;AMGAlbumSearchResults&quot; post=&quot;yes&quot;&gt;http://www.allmusic.com/cg/amg.dll?P=amg&amp;amp;SQL=\1&amp;amp;OPT1=2&lt;/url&gt;" dest="18">
+				<RegExp input="$$6" output="&lt;url function=&quot;AMGAlbumSearchResults&quot;&gt;http://www.allmusic.com/search/album/\1&lt;/url&gt;" dest="18">
 					<expression noclean="1">(.*?)xbmc(.*?)xbmc([0-9]+)</expression>
 				</RegExp>
 				<expression>Liczba towar[^f]+f="([^"]+)</expression>
@@ -98,7 +98,7 @@
 	</MerlinLinkSmu>
 	<MerlinLink clearbuffers="no" dest="5">
 		<RegExp input="$$4" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
-			<RegExp input="$$6" output="&lt;url function=&quot;AMGAlbumSearchResults&quot; post=&quot;yes&quot;&gt;http://www.allmusic.com/cg/amg.dll?P=amg&amp;amp;SQL=\1&amp;amp;OPT1=2&lt;/url&gt;" dest="4+">
+			<RegExp input="$$6" output="&lt;url function=&quot;AMGAlbumSearchResults&quot;&gt;http://www.allmusic.com/search/album/\1&lt;/url&gt;" dest="4+">
 				<expression noclean="1">(.*?)xbmc(.*?)xbmc([0-9]+)</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;url function=&quot;GetMerlinReview&quot;&gt;http://merlin.pl\1&lt;/url&gt;" dest="4+">
@@ -109,9 +109,6 @@
 	</MerlinLink>
 	<AMGAlbumSearchResults dest="5">
 		<RegExp input="$$11" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
-			<RegExp input="$$1" output="&lt;url function=&quot;ParseAMGAlbum&quot;&gt;http://www.allmusic.com/cg/amg.dll?p=amg&amp;amp;SQL=\1&lt;/url&gt;" dest="11">
-				<expression noclean="1">sql=([^"]*)"&gt;Overview</expression>
-			</RegExp>
 			<RegExp input="$$6" output="\3" dest="12">
 				<expression noclean="1">(.*?)xbmc(.*?)xbmc([0-9]+)</expression>
 			</RegExp>
@@ -124,14 +121,17 @@
 			<RegExp input="$$13" output="" dest="14">
 				<expression noclean="1">Various\+Artis(.*?)</expression>
 			</RegExp>
-			<RegExp input="$$1" output="&lt;url function=&quot;ParseAMGAlbum&quot;&gt;http://www.allmusic.com/cg/amg.dll?p=amg&amp;amp;SQL=\1&lt;/url&gt;" dest="11+">
-				<expression noclean="1,2">word;"&gt;$$14.*?sql=([0-9:a-z]*)"&gt;(.*?)&lt;.</expression>
+			<RegExp input="$$1" output="&lt;url function=&quot;ParseAMGAlbum&quot;&gt;http://www.allmusic.com/album/r\1&lt;/url&gt;" dest="11">
+				<expression noclean="1">r([0-9]+)[^&lt;]+&lt;/a&gt;&lt;/td&gt;[^&gt;]+&gt;$$14</expression>
 			</RegExp>
-			<RegExp input="$$20" output="&lt;url function=&quot;ParseAMGAlbum&quot;&gt;http://www.allmusic.com/cg/amg.dll?p=amg&amp;amp;SQL=\1&lt;/url&gt;" dest="11">
+			<RegExp input="$$20" output="&lt;url function=&quot;ParseAMGAlbum&quot;&gt;http://www.allmusic.com/album/r\1&lt;/url&gt;" dest="11">
 				<RegExp input="$$1" output="\1" dest="20">
-					<expression noclean="1,2">&gt;$$12&lt;/.*?&gt;$$14.*?sql=([0-9:a-z]*)"&gt;(.*?)&lt;.</expression>
+					<expression noclean="1,2">r([0-9]+)[^&lt;]+&lt;/a&gt;&lt;/td&gt;[^&gt;]+&gt;$$14[^&gt;]+[^\/]+[^0-9]+$$12</expression>
 				</RegExp>
 				<expression>(.+)</expression>
+			</RegExp>
+			<RegExp input="" output="&lt;title&gt;$$14&lt;/title&gt;" dest="11+">
+				<expression noclean="1" />
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
