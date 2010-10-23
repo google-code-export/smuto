@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.image.990px" name="990 pixeli" version="0.0.1" provider-name="smuto">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.script" library="runscript.py">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="pl">Duże fotografie prasowe ułożone w przemyślane cykle opatrzone krótkim komentarzem.</summary>
+    <description lang="pl">Twórcy 990px nie ukrywają swojej inspiracji blogiem The Big Picture, jednak na tej bazie starają się stworzyć swój własny, warty uwagi, charakterystyczny fotoblog. Jakość fotografii oraz doboru tematów często również nie odbiega od swojego pierwowzoru. Wszystkie zdjęcie są pokazywane w dużej rozdzielczości (990px). Piotr Macura, fotoedytor 990px, wybiera świetne, bieżące tematy i potrafi bardzo dobrze wyselekcjonować fotografie do umieszczanych na stronie cykli. </description>
+  </extension>
+</addon>

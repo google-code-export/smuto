@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Language file translated with Team XBMC Translator-->
+<!--Date of translation: 10/14/2010-->
+<!--$Revision$-->
+<strings>
+  <!--LOADING-->
+  <string id="32001">trwa ładowanie...</string>
+  <!--DOWNLOAD-->
+  <string id="32020">Pobierz</string>
+  <string id="32021">Fotoreportaż</string>
+  <string id="32022">Zdjęcie</string>
+  <!--Downloading [picturename] to [path].-->
+  <string id="32023">Pobieram</string>
+  <string id="32024">do</string>
+  <string id="32025">z</string>
+  <!--Picture Mode -->
+  <string id="32030">Kierunek lewo i prawo - przeglądaj zdjęcia</string>  
+  <string id="32031">Info - pokaż/ukryj komentarze</string>
+  <string id="32032">Context Menu - Pobierz zdjęcia</string>
+  <!--Album Mode -->
+  <string id="32040">Kierunek lewo i prawo - Zmień fotoreportaż</string>
+  <string id="32041">Kierunek góra i dół - Zmień kategorię</string>
+  <string id="32042">Select - Wejście do fotoreportażu</string>
+</strings>
