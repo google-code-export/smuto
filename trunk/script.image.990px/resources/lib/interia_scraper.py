@@ -43,6 +43,8 @@ class TBP:
         s = s.replace('&#8211;', '-')
         s = s.replace('&#8220;', '"')
         s = s.replace('&#8221;', '"')
+        s = s.replace('&quot;', '"')
+        s = s.replace('&nbsp;', '')
         s = s.strip()
         return s
 
@@ -70,9 +72,9 @@ class TBP:
             titlelist.append(title)
         storyNodes = tree.findAll('div', 'post')
         for i, node in enumerate(storyNodes):
-            description = self.cleanHTML(node.find('p'))
-            link = node.find('a', attrs={'href': re.compile('www.990px.pl/index.php/[0-9]{4}/')})['href']
-            pic = node.find('img')['src']
+            description = self.cleanHTML(node.findAll('p', recursive=False))
+            link = node.find('img', attrs={'width': '990'}).findPrevious('a')['href']
+            pic = node.find('img', attrs={'width': '990'})['src']
             try:
                 title = titlelist[i]
             except:
@@ -84,8 +86,8 @@ class TBP:
         tree = BeautifulSoup(self.getHTML(url))
         title = self.cleanHTML(tree.find('div', 'main_meta').h2.a)
         self.photos = list()
-        photoNodes = tree.findAll('div', 'wp-caption aligncenter')
+        photoNodes = tree.findAll('div', attrs={'style': 'width: 1000px'})
         for node in photoNodes:
-            pic = node.img['src']
+            pic = node.find(re.compile('img|embed'))['src']
             description = self.cleanHTML(node.find('p'))
             self.photos.append({'title': title, 'pic': pic, 'description': description})
