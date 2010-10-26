@@ -28,7 +28,7 @@ class GUI(xbmcgui.WindowXML):
     ACTIVESOURCE = 0
     
     SOURCES = list()
-    SOURCES.append({'name': '990 pixeli: Strona glowna', 'object': 'tbp', 'url': 'http://www.990px.pl/'})
+    SOURCES.append({'name': '990 pixeli: Najnowsze', 'object': 'tbp', 'url': 'http://www.990px.pl/'})
     SOURCES.append({'name': '990 pixeli: Historia', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/historia/'})
     SOURCES.append({'name': '990 pixeli: Kultura 1', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/kultura/'})
     SOURCES.append({'name': '990 pixeli: Kultura 2', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/kultura/page/2/'})

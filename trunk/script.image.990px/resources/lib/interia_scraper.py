@@ -43,6 +43,7 @@ class TBP:
         s = s.replace('&#8211;', '-')
         s = s.replace('&#8220;', '"')
         s = s.replace('&#8221;', '"')
+        s = s.replace('&#8230;', '...')
         s = s.replace('&quot;', '"')
         s = s.replace('&nbsp;', '')
         s = s.strip()

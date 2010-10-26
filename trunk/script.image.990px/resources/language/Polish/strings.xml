@@ -20,5 +20,5 @@
   <!--Album Mode -->
   <string id="32040">Kierunek lewo i prawo - Zmień fotoreportaż</string>
   <string id="32041">Kierunek góra i dół - Zmień kategorię</string>
-  <string id="32042">Select - Wejście do fotoreportażu</string>
+  <string id="32042">Enter - Wejście do fotoreportażu[CR]Backspace - Wyjście z fotoreportażu</string>
 </strings>
