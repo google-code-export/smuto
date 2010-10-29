@@ -1,9 +1,15 @@
 import urllib2
 import re
 import sys
+import os
 from BeautifulSoup import BeautifulSoup
+from xbmcaddon import Addon
+
+ADDON_ID = "script.image.990px"
+ADDON_PATH = Addon(ADDON_ID).getAddonInfo("path")
 
 scriptName = sys.modules['__main__'].__scriptname__
+
 
 
 class TBP:
@@ -74,8 +80,14 @@ class TBP:
         storyNodes = tree.findAll('div', 'post')
         for i, node in enumerate(storyNodes):
             description = self.cleanHTML(node.findAll('p', recursive=False))
-            link = node.find('img', attrs={'width': '990'}).findPrevious('a')['href']
-            pic = node.find('img', attrs={'width': '990'})['src']
+            try:
+                link = node.find('img', attrs={'width': '990'}).findPrevious('a')['href']
+            except:
+                link = 'http://www.990px.pl/index.php/2010/06/09/pierwsze-urodziny-990px/'
+            try:
+                pic = node.find('img', attrs={'width': '990'})['src']
+            except:
+                pic = os.path.join(ADDON_PATH , "fanart.jpg")
             try:
                 title = titlelist[i]
             except:
