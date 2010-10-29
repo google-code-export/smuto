@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.image.990px" name="990 pixeli" version="0.0.3" provider-name="smuto">
+<addon id="script.image.990px" name="990 pixeli" version="0.0.4" provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>

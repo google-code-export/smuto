@@ -1,4 +1,5 @@
 import os
+import random
 
 import xbmcgui
 import imageDownloader
@@ -10,6 +11,8 @@ _id = os.path.basename(os.getcwd())
 Addon = xbmcaddon.Addon(_id)
 #enable localization
 getLS = Addon.getLocalizedString
+starymiesiac = random.randint(06, 12)
+nowymiesiac = random.randint(01, 10)
 
 
 class GUI(xbmcgui.WindowXML):
@@ -29,6 +32,7 @@ class GUI(xbmcgui.WindowXML):
     
     SOURCES = list()
     SOURCES.append({'name': '990 pixeli: Najnowsze', 'object': 'tbp', 'url': 'http://www.990px.pl/'})
+    SOURCES.append({'name': '990 pixeli: losowy %s 2010' % ( nowymiesiac), 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/2010/%s' % ( nowymiesiac)})
     SOURCES.append({'name': '990 pixeli: Historia', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/historia/'})
     SOURCES.append({'name': '990 pixeli: Kultura 1', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/kultura/'})
     SOURCES.append({'name': '990 pixeli: Kultura 2', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/kultura/page/2/'})
@@ -46,6 +50,7 @@ class GUI(xbmcgui.WindowXML):
     SOURCES.append({'name': '990 pixeli: Sport 2', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/sport/page/2/'})
     SOURCES.append({'name': '990 pixeli: Technologia', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/technologia/'})
     SOURCES.append({'name': '990 pixeli: Vancouver', 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/category/vancouver/'})
+    SOURCES.append({'name': '990 pixeli: losowy %s 2009' % ( starymiesiac), 'object': 'tbp', 'url': 'http://www.990px.pl/index.php/2009/%s' % ( starymiesiac)})
 
 
     def __init__(self, *args, **kwargs):
