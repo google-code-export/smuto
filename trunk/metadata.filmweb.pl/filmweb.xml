@@ -196,6 +196,12 @@
 				</RegExp>
 				<expression noclean="1">(.+)</expression>
 			</RegExp>
+			<RegExp input="$$8" output="\1 " dest="8">
+				<expression repeat="yes" noclean="1">([^\t]*)\t?</expression>
+			</RegExp>
+			<RegExp input="$$8" output="\1\2" dest="8">
+				<expression repeat="yes" noclean="1,2">([^\s]*)(?:(\s)\2*)?</expression>
+			</RegExp>
 			<expression/>
 		</RegExp>
 	</Opisy>
