@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<scraper framework="1.0" date="2011-01-19">
+<scraper framework="1.0" date="2011-02-18">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="&lt;url cache=&quot;filmweb-\1&quot;&gt;http://www.filmweb.pl/Film?id=\1&lt;/url&gt;"  dest="3">
 			<expression noclean="1">filmweb.pl/f([0-9]*)/</expression>
@@ -34,7 +34,7 @@
 		</RegExp>
 	</FilmwebByIMDBId>
 	<CreateSearchUrl dest="3">
-		<RegExp input="$$1" output="&lt;url&gt;http://www.filmweb.pl/search/film?sort=COUNT&amp;amp;q=\1&amp;amp;startYear=$$2&lt;/url&gt;" dest="3">
+		<RegExp input="$$1" output="&lt;url&gt;http://www.filmweb.pl/search/film?sort=COUNT&amp;amp;q=\1&amp;amp;startYear=$$2&amp;amp;endYear=$$2&lt;/url&gt;" dest="3">
 			<expression noclean="1"/>
 		</RegExp>
 	</CreateSearchUrl>
