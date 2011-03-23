@@ -1,0 +1,42 @@
+﻿<scraperfunctions>
+	<!-- Polish -->
+	<GetTranslate-pl dest="5">
+		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;GoogleTofdb-$INFO[language]&quot;&gt;http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;amp;q=\1+site:fdb.pl&lt;/url&gt;&lt;/details&gt;" dest="5">
+			<expression/>
+		</RegExp>
+	</GetTranslate-pl>
+	<GoogleTofdb-pl dest="5">
+		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;GetDetailsfdb-$INFO[language]&quot;&gt;http://fdb.pl/film/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+			<expression noclean="1">fdb.pl/film/([^"]*)</expression>
+		</RegExp>
+	</GoogleTofdb-pl>
+	<GetDetailsfdb-pl dest="5">
+		<RegExp input="$$2" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
+			<RegExp input="$$1" output="&lt;title&gt;\1&lt;/title&gt;" dest="2">
+				<expression trim="1">&lt;title&gt;([^//|^(]*)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;thumb&gt;http://gfx1.fdb.pl/\1.jpg&lt;/thumb&gt;" dest="2+">
+				<expression noclean="1">gfx-poster-new" src="http://gfx1.fdb.pl/([^\/]*)</expression>
+			</RegExp>
+			<RegExp input="$$8" output="&lt;plot&gt;\1&lt;/plot&gt;" dest="2+">
+				<RegExp input="$$1" output="\2" dest="8">
+					<expression>&lt;li id="description"&gt;(.*?)&lt;/span&gt;(.*?)&lt;li id="crew_overview"&gt;</expression>
+				</RegExp>
+				<RegExp input="$$8" output="\1" dest="8">
+					<expression noclean="1" repeat="yes">([^\n]+)</expression>
+				</RegExp>
+				<expression noclean="1"/>
+			</RegExp>
+			<RegExp input="$$1" output="&lt;tagline&gt;\1&lt;/tagline&gt;" dest="2+">
+				<expression>class="title">Recenzja:([^&lt;]+)</expression>
+			</RegExp>
+			<RegExp input="$$1" output="\1" dest="6">
+				<expression noclean="1">Recenzja:([^~]*)Gatunek:</expression>
+			</RegExp>
+			<RegExp input="$$6" output="&lt;outline&gt;\1&lt;/outline&gt;" dest="2+">
+				<expression>&lt;p&gt;([^»]+)więcej </expression>
+			</RegExp>
+			<expression noclean="1"/>
+		</RegExp>
+	</GetDetailsfdb-pl>
+</scraperfunctions>
