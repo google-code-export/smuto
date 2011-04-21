@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<scraper framework="1.1" date="2010-02-24" name="themoviedb.org" content="movies" thumb="tmdb.png" language="pl">
+<scraper framework="1.1" date="2010-04-21" name="themoviedb.org" content="movies" thumb="tmdb.png" language="pl">
 	<include>common/tmdb.xml</include>
 	<include>common/dtrailer.xml</include>
 	<GetSettings dest="3">
@@ -10,12 +10,15 @@
 			<RegExp input="$$1" output="&lt;setting label=&quot;Enable Trailers from Dtrailer.com&quot; type=&quot;bool&quot; id=&quot;dtrailer&quot; default=&quot;false&quot;&gt;&lt;/setting&gt;" dest="5+">
 				<expression/>
 			</RegExp>
+			<RegExp input="$$1" output="&lt;setting label=&quot;Opis zawsze z fdb.pl&quot; type=&quot;bool&quot; id=&quot;fdb&quot; default=&quot;true&quot;&gt;&lt;/setting&gt;" dest="5+">
+				<expression/>
+			</RegExp>
 			<expression noclean="1"/>
 		</RegExp>
 	</GetSettings>
 	<CreateSearchUrl dest="3">
-		<RegExp input="$$1" output="&lt;url&gt;http://api.themoviedb.org/2.1/Movie.search/pl/xml/57983e31fb435df4df77afb854740ea9/\1&lt;/url&gt;" dest="3">
-			<RegExp input="$$2" output="%20(\1)" dest="4">
+		<RegExp input="$$1" output="&lt;url&gt;http://api.themoviedb.org/2.1/Movie.search/pl/xml/57983e31fb435df4df77afb854740ea9/\1$$4&lt;/url&gt;" dest="3">
+			<RegExp input="$$2" output="+\1" dest="4">
 				<expression clear="yes">(.+)</expression>
 			</RegExp>
 			<expression noclean="1"/>
@@ -25,12 +28,14 @@
 		<RegExp input="$$1" output="&lt;url&gt;http://api.themoviedb.org/2.1/Movie.getInfo/pl/xml/57983e31fb435df4df77afb854740ea9/\2&lt;/url&gt;&lt;id&gt;\2&lt;/id&gt;" dest="3">
 			<expression clear="yes" noclean="1">(themoviedb.org/movie/)([0-9]*)</expression>
 		</RegExp>
+        	<!-- Nie działa 
 		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;GetTMDBId&quot;&gt;http://api.themoviedb.org/2.1/Movie.imdbLookup/pl/xml/57983e31fb435df4df77afb854740ea9/tt\2&lt;/url&gt;&lt;/details&gt;" dest="3+">
 			<expression>(imdb.com/title/tt)([0-9]*)</expression>
 		</RegExp>
 		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;GetTMDBId&quot;&gt;http://api.themoviedb.org/2.1/Movie.imdbLookup/pl/xml/57983e31fb435df4df77afb854740ea9/tt\2&lt;/url&gt;&lt;/details&gt;" dest="3+">
 			<expression>(imdb.com/)Title\?([0-9]+)</expression>
 		</RegExp>
+        	 może kiedyś zadziała -->
 	</NfoUrl>
 	<GetTMDBId dest="3">
 		<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-pl-\1.xml&quot;&gt;http://api.themoviedb.org/2.1/Movie.getInfo/pl/xml/57983e31fb435df4df77afb854740ea9/\1&lt;/url&gt;&lt;id&gt;\1&lt;/id&gt;" dest="3+">
@@ -107,11 +112,11 @@
 			<RegExp input="$$1" output="&lt;actor&gt;&lt;name&gt;\1&lt;/name&gt;&lt;role&gt;\2&lt;/role&gt;&lt;thumb&gt;http://\4-original\5&lt;/thumb&gt;&lt;/actor&gt;" dest="5+">
 				<expression noclean="1" repeat="yes">&lt;person.*?name=&quot;([^&quot;]*)&quot; character=&quot;([^&quot;]*)&quot; job=&quot;Actor&quot; id=&quot;([0-9]+)&quot; thumb=&quot;http://(.*?)-thumb([^&quot;]*)&quot;</expression>
 			</RegExp>
-			<RegExp input="$$1" output="&lt;url function=&quot;GoogleTofdb&quot;&gt;http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;amp;q=$$6+site:fdb.pl&lt;/url&gt;" dest="5+">
-				<RegExp input="$$1" output="\1" dest="6">
-					<expression noclean="1" encode="1">&lt;original_name&gt;([^&lt;]*)&lt;/original_name&gt;</expression>
-				</RegExp>
+			<RegExp conditional="!fdb" input="$$1" output="&lt;url function=&quot;GetTranslate&quot; cache=&quot;tmdb-pl-$$2.xml&quot;&gt;http://api.themoviedb.org/2.1/Movie.getInfo/pl/xml/57983e31fb435df4df77afb854740ea9/$$2&lt;/url&gt;" dest="5+">
 				<expression>&lt;translated&gt;false&lt;/translated&gt;</expression>
+			</RegExp>
+			<RegExp conditional="fdb" input="$$1" output="&lt;url function=&quot;GetTranslate&quot; cache=&quot;tmdb-pl-$$2.xml&quot;&gt;http://api.themoviedb.org/2.1/Movie.getInfo/pl/xml/57983e31fb435df4df77afb854740ea9/$$2&lt;/url&gt;" dest="5+">
+				<expression/>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-$$2.xml&quot; function=&quot;GetTMDBThumbsById&quot;&gt;$$3&lt;/url&gt;" dest="5+">
 				<expression/>
@@ -131,9 +136,23 @@
 			<expression noclean="1"/>
 		</RegExp>
 	</GetDetails>
+	<GetTranslate dest="5">
+        <RegExp input="$$1" output="\1" dest="8">
+            <expression clear="yes" noclean="1">&lt;imdb_id&gt;([^&lt;]*)&lt;/imdb_id&gt;</expression>
+        </RegExp>
+        <RegExp input="$$1" output="\1" dest="7">
+            <expression noclean="1">&lt;released&gt;([0-9]+)-</expression>
+        </RegExp>
+        <RegExp input="$$1" output="\1" dest="6">
+            <expression noclean="1" encode="1">&lt;original_name&gt;([^&lt;]*)&lt;/original_name&gt;</expression>
+        </RegExp>
+		<RegExp input="" output="&lt;details&gt;&lt;url function=&quot;GoogleTofdb&quot;&gt;http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;amp;q=$$6+$$7+site:fdb.pl&lt;/url&gt;&lt;/details&gt;" dest="5">
+			<expression noclean="1"/>
+		</RegExp>
+	</GetTranslate>
 	<GoogleTofdb dest="5">
 		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;GetDetailsfdb&quot;&gt;http://fdb.pl/film/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-			<expression noclean="1">fdb.pl/film/([^"]*)</expression>
+			<expression noclean="1">fdb.pl/film/([0-9]+)</expression>
 		</RegExp>
 	</GoogleTofdb>
 	<GetDetailsfdb dest="5">
