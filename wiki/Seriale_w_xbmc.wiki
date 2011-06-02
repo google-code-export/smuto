@@ -1,7 +1,0 @@
-The defaults will match the following structures/file name formats
-    foo.s01e01.* 
-    foo.s01.e01.* 
-    foo.s01_e01.* 
-    foo_[s01]_[e01]_* 
-    foo.1x01.* 
-    foo.101.* 
