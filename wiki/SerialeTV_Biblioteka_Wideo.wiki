@@ -1,11 +1,11 @@
-#summary One-sentence summary of this page.
+#summary nazwy plików i układ folderów dla seriali.
 
 = Po co ta strona =
 
-Add your content here.
+może jakieś info się komuś przyda.
 
 
-= Czas nauczyć się pisać jakieś info =
+= Może kiedyś napiszę jakieś info =
 
 pomocniczo:
   * wpis *pogrubiony* lub _skośny_
