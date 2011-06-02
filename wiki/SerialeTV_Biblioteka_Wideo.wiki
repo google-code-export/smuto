@@ -1,16 +1,16 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Po co ta strona =
 
 Add your content here.
 
 
-= Details =
+= Czas nauczyć się pisać jakieś info =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+pomocniczo:
+  * wpis *pogrubiony* lub _skośny_
+  * nowy wiersz lub wyliczanki
+  * automatyczne odnośniki do innego wiki
 
 Domyślnie działają takie formaty nazwy pliku
  *   foo.s01e01.* 
