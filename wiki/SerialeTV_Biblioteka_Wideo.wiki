@@ -13,9 +13,9 @@ pomocniczo:
   * automatyczne odnośniki do innego wiki
 
 Domyślnie działają takie formaty nazwy pliku
- *   foo.s01e01.* 
- *   foo.s01.e01.* 
- *   foo.s01_e01.* 
- *   foo_[s01]_[e01]_* 
- *   foo.1x01.* 
- *   foo.101.* 
+ *   smuto.s01e01.* 
+ *   smuto.s01.e01.* 
+ *   smuto.s01_e01.* 
+ *   smuto_[s01]_[e01]_* 
+ *   smuto.1x01.* 
+ *   smuto.101.* 
