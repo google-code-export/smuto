@@ -78,6 +78,9 @@
 				</RegExp>
 				<expression/>
 			</RegExp>
+			<RegExp conditional="!UseOriginalTitle" input="$$1" output="&lt;url function=&quot;TitletoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=\1&lt;/url&gt;" dest="5+">
+				<expression fixchars="1" encode="1">&lt;h1[^&gt;]+&gt;(.*?)&lt;/h1</expression>
+			</RegExp>
 			<RegExp input="$$1" output="\1" dest="9">
 				<expression noclean="1">filmId[^&gt;]+&gt;([0-9]*)</expression>
 			</RegExp>
@@ -369,4 +372,12 @@
 			<expression noclean="1"/>
 		</RegExp>
 	</Fanarty>
+	<TitletoASCII dest="3">
+		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+			<RegExp input="$$1" output="&lt;sorttitle&gt;\1&lt;/sorttitle&gt;" dest="5">
+				<expression noclean="1">&lt;textarea&gt;(.*?)xbmc(.*?)&lt;/textarea&gt;</expression>
+			</RegExp>
+			<expression noclean="1" />
+		</RegExp>
+	</TitletoASCII>
 </scraper>
