@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<scraper framework="1.1" date="2010-10-27">
+<scraper framework="1.1" date="2011-08-03">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="&lt;url&gt;http://musicbrainz.org/ws/1/release/\1?type=xml&amp;inc=artist+release-events&lt;/url&gt;" dest="3">
 			<expression>http://musicbrainz.org/release/(.+?).html</expression>
@@ -116,7 +116,7 @@
 				</RegExp>
 				<RegExp input="$$13" output="&lt;url function=&quot;GetMerlinReview&quot;&gt;http://merlin.pl/\1&lt;/url&gt;" dest="12">
 					<RegExp input="$$1" output="\1" dest="13">
-						<expression noclean="1">($$6[^"]+)</expression>
+						<expression noclean="1">($$6/browse/product/[^"]+)</expression>
 					</RegExp>
 					<expression>(.+)</expression>
 				</RegExp>
