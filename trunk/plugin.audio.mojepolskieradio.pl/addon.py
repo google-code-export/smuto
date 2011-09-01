@@ -1,29 +1,36 @@
+ï»¿# -*- coding: utf-8 -*-
 import sys
+import simplejson
+import urllib2
+
 import xbmcgui
 import xbmcplugin
 
+CHANNELS_URL = 'http://moje.polskieradio.pl/api/?key=20439fdf-be66-4852-9ded-1476873cfa22&output=json'
 
 def showChannels():
+    u = urllib2.urlopen(CHANNELS_URL)
+    data = u.read()
+    u.close()
 
-    channels = list()
-    channels.append({'title': 'Jedynka', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/pr1.jpg', 'File': 'mms://stream.polskieradio.pl/program1_wma10'})
-    channels.append({'title': 'Dwójka', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/pr2.jpg', 'File': 'mms://stream.polskieradio.pl/program2_wma10'})
-    channels.append({'title': 'Trójka', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/pr3.jpg', 'File': 'mms://stream.polskieradio.pl/program3_wma10'})
-    channels.append({'title': 'Czwórka', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/pr4.jpg', 'File': 'mms://stream.polskieradio.pl/program4_wma10'})
-    channels.append({'title': 'Koncerty w Trójce', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/6.jpg', 'File': 'rtmp://stream85.polskieradio.pl/omniaaxe/k16.stream'})
-    channels.append({'title': 'Przeboje Lata z Radiem', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/14.jpg', 'File': 'rtmp://stream85.polskieradio.pl/omniaaxe/k24.stream'})
-    channels.append({'title': 'Minimax', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/24.jpg', 'File': 'rtmp://stream85.polskieradio.pl/omniaaxe/k34.stream'})
-    channels.append({'title': 'Pod dachami Pary¿a', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/23.jpg', 'File': 'rtmp://stream85.polskieradio.pl/omniaaxe/k33.stream'})
-    channels.append({'title': 'Bajki samograjki', 'logo': 'http://moje.polskieradio.pl/_img/kanaly/27.jpg', 'File': 'rtmp://stream85.polskieradio.pl/omniaaxe/k37.stream'})
+    channels = simplejson.loads(data[11:-1])
 
     for channel in channels:
-        item = xbmcgui.ListItem(channel['title'], iconImage = channel['logo'], thumbnailImage = channel['logo'])
+        item = xbmcgui.ListItem(channel['title'], iconImage = channel['image'], thumbnailImage = channel['image'])
         item.setProperty('IsPlayable', 'true')
         item.setProperty("IsLive", "true")
-        item.setInfo(type='Music', infoLabels = { 'title' : channel['title'] })
-        #item.setInfo(type='Music', infoLabels = { 'artist' : channel['title'] })
+        item.setInfo( type="Music",  infoLabels = {
+                'title' : channel['title'] ,
+                'artist' : channel['category'] ,
+                'album' : 'moje.polskieradio.pl' ,
+                'comment' : channel['description']
+        })
+        try:
+            rtsp = channel["AlternateStationsStreams"][2]["link"]
+        except: 
+            rtsp = channel["AlternateStationsStreams"][1]["link"]
 
-        xbmcplugin.addDirectoryItem(HANDLE, channel['File'], item)
+        xbmcplugin.addDirectoryItem(HANDLE, str(rtsp).replace('rtsp://','rtmp://'), item)
 
     xbmcplugin.endOfDirectory(HANDLE)
 

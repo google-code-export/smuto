@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <addon
         id="plugin.audio.mojepolskieradio.pl"
-        version="1.0.0"
+        version="1.0.1"
         name="Moje Polskie Radio"
         provider-name="smuto">
     <requires>
@@ -12,9 +12,10 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Polish Broadcasting Internet radio services</summary>
+        <summary lang="pl">Polskie Radio Online</summary>
         <description lang="en">Listen to Polish radio channels via Internet</description>
+        <description lang="pl">Portal Polskiego Radia umożliwia słuchanie audycji Jedynki, Dwójki, Trójki, Czwórki, Polskiego Radia dla Zagranicy i Radia Parlament. Słuchacze mogą zapoznać się z wyemitowanymi audycjami dzięki specjalnie przygotowanym kanałom tematycznym. Dostępna jest również Czwórka na Wizji. Dział Łączności ze Słuchaczami, (0-22) 645 24 45</description>
         <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
-
         <license>GPL 2.0</license>
         <platform>all</platform>
     </extension>
