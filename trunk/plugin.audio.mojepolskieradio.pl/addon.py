@@ -16,9 +16,13 @@ def showChannels():
     channels = simplejson.loads(data[11:-1])
 
     for channel in channels:
+        
+        xbmcplugin.setContent(HANDLE, 'albums')
+        
         item = xbmcgui.ListItem(channel['title'], iconImage = channel['image'], thumbnailImage = channel['image'])
         item.setProperty('IsPlayable', 'true')
         item.setProperty("IsLive", "true")
+        item.setProperty('Album_Description', channel['description'])
         item.setInfo( type="Music",  infoLabels = {
                 'title' : channel['title'] ,
                 'artist' : channel['category'] ,
