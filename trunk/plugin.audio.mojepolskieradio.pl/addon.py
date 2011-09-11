@@ -29,15 +29,9 @@ def showChannels():
                 'album' : 'moje.polskieradio.pl' ,
                 'comment' : channel['description']
         })
-
-        if "RTSP" == channel["AlternateStationsStreams"][0]['name'] :
-            rtsp = channel["AlternateStationsStreams"][0]['link']
-        elif "RTSP" == channel["AlternateStationsStreams"][1]['name'] :
-            rtsp = channel["AlternateStationsStreams"][1]['link']
-        elif "RTSP" == channel["AlternateStationsStreams"][2]['name'] :
-            rtsp = channel["AlternateStationsStreams"][2]['link']
-        elif "RTSP" == channel["AlternateStationsStreams"][3]['name'] :
-            rtsp = channel["AlternateStationsStreams"][3]['link']   
+        for i in range(len(channel["AlternateStationsStreams"])):
+          if "RTSP" == channel["AlternateStationsStreams"][i]['name'] :
+              rtsp = channel["AlternateStationsStreams"][i]['link'] 
 
         xbmcplugin.addDirectoryItem(HANDLE, str(rtsp).replace('rtsp://','rtmp://'), item)
 
