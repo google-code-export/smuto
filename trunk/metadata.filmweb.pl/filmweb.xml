@@ -115,7 +115,7 @@
 				<expression repeat="yes" fixchars="1">"&gt;([^&lt;]+)</expression>
 			</RegExp>
 			<RegExp input="$$1" output="\1" dest="6">
-				<expression noclean="1">produkcja:(.*?)&lt;/td&gt;</expression>
+				<expression noclean="1">kraj(.*?)&lt;/dd&gt;</expression>
 			</RegExp>
 			<RegExp input="$$6" output="&lt;country&gt;\1&lt;/country&gt;" dest="5+">
 				<expression repeat="yes">"&gt;([^&lt;]+)</expression>
