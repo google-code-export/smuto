@@ -1,3 +1,6 @@
-﻿[B]Version 1.0.0[/B]
-
+﻿[B]Version 1.0.2[/B]
+- serch mbid first
+[B]Version 1.0.1[/B]
+- rewrite to use param
+[B]Version 1.0.0[/B]
 - Initial test version

@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmcaddon
 
-import urllib2, simplejson
+import urllib, simplejson
 import xbmc, xbmcgui, xbmcplugin
 
 
@@ -21,14 +21,11 @@ class multiImagesSession:
         return True
 
     def SEARCH_FANARTS(self,query):
-        results = []
-        url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=65dbeb994f0d10b36ed8a8f0fcc83a8d&keywords='+query.replace(' ','+')+'&_render=json'
-        req = urllib2.Request(url)
-        response = urllib2.urlopen(req)
-        data=response.read()
-        response.close()
-        result = simplejson.loads(data)
-        images = result['value']['items']
+        url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=c2fa95340901afd0957744024c8a3372&mbid='+query+'&_render=json'
+        search_results = urllib.urlopen(url)
+        json = simplejson.loads(search_results.read())
+        search_results.close()
+        images = json['value']['items']
         for img in images:
             title = img.get('title','')
             if not self.addLink(title,img.get('link','')): break
@@ -53,20 +50,57 @@ def get_params():
                 param[splitparams[0]]=splitparams[1]
                             
     return param
-    
 
+def get_mbid_artist(artist):
+    artist_url = 'http://search.musicbrainz.org/ws/2/artist/?&fmt=json&query=artist:"%s"'  % (artist)
+    search_results = urllib.urlopen(artist_url)
+    json = simplejson.loads(search_results.read())
+    search_results.close()
+    if json['artist-list']['count'] == 0:
+        return None
+    else:
+        mbid = json['artist-list']['artist'][0]['id']
+        return mbid
+
+def get_mbid(artist, song):
+    artist=urllib.quote_plus(artist)
+    song=urllib.quote_plus(song)
+    recording_url = 'http://search.musicbrainz.org/ws/2/recording/?&fmt=json&query=artist:"%s" AND recording:"%s"'  % (artist,song)
+    search_results = urllib.urlopen(recording_url)
+    json = simplejson.loads(search_results.read())
+    search_results.close()
+    if json['recording-list']['count'] == 0:
+        return get_mbid_artist(artist)
+    else:
+        recordings = json['recording-list']['recording']
+        for recording in recordings:
+            mbid = recording['artist-credit']['name-credit'][0]['artist']['id']
+        return mbid
+
+def artist_mbid():
+    artist=xbmc.Player().getMusicInfoTag().getArtist()
+    song=xbmc.Player().getMusicInfoTag().getTitle()
+    if len(artist) > 0 and len(song) > 0:
+        return get_mbid(artist, song)
+    if len(artist) == 0 and len(song) > 0:
+        artistsong=song.split(' - ')
+        if (len(artistsong))==2:
+            artist=artistsong[0]
+            song=artistsong[1]
+            return get_mbid(artist, song)
+    else:
+        return None
 ### Do plugin stuff --------------------------------------------------------------------------
 def doPlugin():
     params=get_params()
 
     mode=None
     name=None
-    if xbmc.Player().isPlayingAudio()==False:
-        url=None
 
+    if xbmc.Player().isPlayingAudio()==False:
+        url=None 
     else:
-        artist=xbmc.Player().getMusicInfoTag().getArtist()
-        url=artist.replace('&','')
+        url=artist_mbid()
     try:
             url=urllib.unquote_plus(params["url"])
     except:
