@@ -52,7 +52,7 @@ def get_params():
     return param
 
 def get_mbid_artist(artist):
-    artist_url = 'http://search.musicbrainz.org/ws/2/artist/?&fmt=json&query=artist:"%s"'  % (artist)
+    artist_url = 'http://search.musicbrainz.org/ws/2/artist/?&fmt=json&query=artist:"'+artist+'"'
     search_results = urllib.urlopen(artist_url)
     json = simplejson.loads(search_results.read())
     search_results.close()
@@ -65,7 +65,7 @@ def get_mbid_artist(artist):
 def get_mbid(artist, song):
     artist=urllib.quote_plus(artist)
     song=urllib.quote_plus(song)
-    recording_url = 'http://search.musicbrainz.org/ws/2/recording/?&fmt=json&query=artist:"%s" AND recording:"%s"'  % (artist,song)
+    recording_url = 'http://search.musicbrainz.org/ws/2/recording/?&fmt=json&query=artist:"'+artist+'"%20AND%20recording:"'+song+'"'
     search_results = urllib.urlopen(recording_url)
     json = simplejson.loads(search_results.read())
     search_results.close()
