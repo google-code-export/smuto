@@ -1,7 +1,11 @@
-﻿[B]Version 1.0.1[/B]
+﻿[B]Version 1.0.3[/B]
+- Ustawienia - dostępne dwa rodzaje strumienia
 
+[B]Version 1.0.2[/B]
+- Dostępny widok albumów
+
+[B]Version 1.0.1[/B]
 - API na pokładzie
 
 [B]Version 1.0.0[/B]
-
 - Initial version

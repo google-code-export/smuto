@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <addon
         id="plugin.audio.mojepolskieradio.pl"
-        version="1.0.2"
+        version="1.0.3"
         name="Moje Polskie Radio"
         provider-name="smuto">
     <requires>
-        <import addon="xbmc.python" version="1.0"/>
+        <import addon="xbmc.python" version="2.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>audio</provides>

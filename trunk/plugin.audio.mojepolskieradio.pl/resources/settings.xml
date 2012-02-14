@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting label="30000" type="labelenum" values="mp3|RTMP" id="stream" default="RTMP"/>
+</settings>
