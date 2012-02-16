@@ -1,4 +1,7 @@
-﻿[B]Version 1.0.3[/B]
+﻿[B]Version 1.0.4[/B]
+- Menu kontekstowe - dostępne info aktualnej audycji
+
+[B]Version 1.0.3[/B]
 - Ustawienia - dostępne dwa rodzaje strumienia
 
 [B]Version 1.0.2[/B]
