@@ -74,6 +74,7 @@ class showInfo(xbmcgui.WindowXMLDialog):
                     .replace("&gt;", ">")\
                     .replace("&amp;", "&")\
                     .replace("&quot;",'"')\
+                    .replace("&nbsp;",'')\
                     .replace("&apos;","'")
 
     def onInit(self):
@@ -158,7 +159,7 @@ for key, value in query.items():
     query[key] = value[0]
 query['mode'] = query.get('mode', '')    
 if query['mode'] == 'info':
-    w = showInfo("script-PolskieRadio-Info.xml", __cwd__, gsid = query['gsid'], station = query['station'], data_url = query['data_url'])
+    w = showInfo("script-PolskieRadio-Info.xml", __cwd__, "default", gsid = query['gsid'], station = query['station'], data_url = query['data_url'])
     w.doModal()
     del w
 else:
