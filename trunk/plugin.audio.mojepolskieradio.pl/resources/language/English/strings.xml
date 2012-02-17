@@ -2,4 +2,6 @@
 <strings>
     <string id="30000">Select the type of stream</string>
     <string id="30001">PolskieRadio Info</string>
+    <string id="30002">Start</string>
+    <string id="30003">Stop</string>
 </strings>

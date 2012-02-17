@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <strings>
     <string id="30000">Wybierz rodzaj strumienia</string>
+    <string id="30002">Początek</string>
+    <string id="30003">Koniec</string>
 </strings>

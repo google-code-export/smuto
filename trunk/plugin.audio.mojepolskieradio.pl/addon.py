@@ -67,6 +67,31 @@ class showInfo(xbmcgui.WindowXMLDialog):
         self.gsid = kwargs['gsid']
         self.infostation = kwargs['station']
         self.data_url = kwargs['data_url']
+        url = 'http://moje.polskieradio.pl/getPlaylist.aspx?stationId=%s' % (self.gsid)
+        print url
+        u = urllib2.urlopen(url)
+        data = u.read()
+        self.assets = simplejson.loads(data)
+        u.close()
+        if not self.assets:
+            pass   
+        else:
+            for item in self.assets:
+                start = item['Dates']['AirStarttime'].replace('/Date(','').replace(')/','')
+                start_time = float(start)/1000
+                stop = item['Dates']['AirStoptime'].replace('/Date(','').replace(')/','')
+                stop_time = float(stop)/1000
+                Time = time.time()
+    
+                if start_time < Time and Time < stop_time :  
+                    self.infotitle = item['Info'].get('Title','')
+                    self.infoalbum = item['Info'].get('Album','')
+                    self.infoartist = item['Info'].get('Artist','')
+                    self.infonote = self.htmlToText(item['Info'].get('Note',''))
+                    self.infophoto = item['Info'].get('Photo','')
+                    self.infostart_time = time.localtime(start_time)
+                    self.infostop_time = time.localtime(stop_time)
+
 
     def htmlToText(self,html):
         html = re.sub('<.*?>','',html)
@@ -79,29 +104,7 @@ class showInfo(xbmcgui.WindowXMLDialog):
 
     def onInit(self):
         self.defineControls()
-        url = 'http://moje.polskieradio.pl/getPlaylist.aspx?stationId=%s' % (self.gsid)
-        print url
-        u = urllib2.urlopen(url)
-        data = u.read()
-        self.assets = simplejson.loads(data)
-        u.close()
-        if not self.assets:
-            pass   
-        else:
-            for item in self.assets:
-                start = item['Dates']['AirStarttime'].replace('/Date(','').replace(')/','')
-                start_time = int(start)
-                stop = item['Dates']['AirStoptime'].replace('/Date(','').replace(')/','')
-                stop_time = int(stop)
-                Time = time.time()*1000 
-    
-                if start_time < Time and Time < stop_time :  
-                    self.infotitle = item['Info'].get('Title','')
-                    self.infoalbum = item['Info'].get('Album','')
-                    self.infoartist = item['Info'].get('Artist','')
-                    self.infonote = self.htmlToText(item['Info'].get('Note',''))
-                    self.infophoto = item['Info'].get('Photo','')
-                    self.showDialog()
+        self.showDialog()
 
     def defineControls(self):
         #actions
@@ -115,6 +118,8 @@ class showInfo(xbmcgui.WindowXMLDialog):
         self.control_flipyphoto_id          = 12
         self.control_play_button_id         = 18
         self.control_cancel_button_id       = 19
+        self.control_start_time_id          = 20
+        self.control_stop_time_id           = 21
         #controls
         self.infostation_value       = self.getControl(self.control_infostation_id)
         self.infotitle_value       = self.getControl(self.control_infotitle_id)
@@ -125,6 +130,8 @@ class showInfo(xbmcgui.WindowXMLDialog):
         self.flipyphoto_value       = self.getControl(self.control_flipyphoto_id)
         self.play_button          = self.getControl(self.control_play_button_id)
         self.cancel_button      = self.getControl(self.control_cancel_button_id)
+        self.infostart_time_value          = self.getControl(self.control_start_time_id)
+        self.infostop_time_value      = self.getControl(self.control_stop_time_id)
 
     def showDialog(self):
         self.infostation_value.setLabel(self.infostation)
@@ -135,6 +142,8 @@ class showInfo(xbmcgui.WindowXMLDialog):
         self.infoimage = 'http://moje.polskieradio.pl/_files/'+self.infophoto.replace('.jpg','_big.jpg')
         self.infophoto_value.setImage(self.infoimage)
         self.flipyphoto_value.setImage(self.infoimage)
+        self.infostart_time_value.addLabel(time.strftime("%H:%M", self.infostart_time))
+        self.infostop_time_value.addLabel(time.strftime("%H:%M", self.infostop_time))
 
 
 

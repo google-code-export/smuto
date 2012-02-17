@@ -184,9 +184,9 @@
 					<aligny>center</aligny>
 					<font>font13</font>
 					<textcolor>blue</textcolor>
-					<label>$LOCALIZE[515]:</label>
+					<label>$ADDON[plugin.audio.mojepolskieradio.pl 30002]:</label>
 				</control>
-				<control type="fadelabel">
+				<control type="fadelabel" id="20">
 					<description>Genre Value</description>
 					<posx>160</posx>
 					<posy>90</posy>
@@ -196,7 +196,7 @@
 					<aligny>center</aligny>
 					<font>font13</font>
 					<textcolor>white</textcolor>
-					<label fallback="161">$INFO[ListItem.Genre]</label>
+					<label fallback="161"></label>
 				</control>
 				<control type="label">
 					<description>Year Title</description>
@@ -208,9 +208,9 @@
 					<aligny>center</aligny>
 					<font>font13</font>
 					<textcolor>blue</textcolor>
-					<label>$LOCALIZE[562]:</label>
+					<label>$ADDON[plugin.audio.mojepolskieradio.pl 30003]:</label>
 				</control>
-				<control type="fadelabel">
+				<control type="fadelabel" id="21">
 					<description>Year Value</description>
 					<posx>160</posx>
 					<posy>120</posy>
@@ -220,7 +220,7 @@
 					<aligny>center</aligny>
 					<font>font13</font>
 					<textcolor>white</textcolor>
-					<label fallback="161">$INFO[ListItem.Year]</label>
+					<label fallback="161"></label>
 				</control>
 			</control>
 			<control type="group" id="9000">
