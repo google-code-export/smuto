@@ -1,5 +1,5 @@
 ﻿ <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<scraper framework="1.0" date="2012-01-31">
+<scraper framework="1.0" date="2012-02-28">
 	<NfoUrl dest="3">
 		<RegExp input="$$1" output="&lt;url cache=&quot;filmweb-\1&quot;&gt;http://www.filmweb.pl/Film?id=\1&lt;/url&gt;"  dest="3">
 			<expression noclean="1">filmweb.pl/f([0-9]*)/</expression>
@@ -57,7 +57,7 @@
 				</RegExp>
 				<RegExp conditional="UseOriginalTitle" input="$$8" output="\1" dest="6">
 					<RegExp input="$$1" output="\1" dest="8">
-						<expression fixchars="1">class=filmYear&gt;[^&gt;]+&gt;([^&lt;]+)&lt;/h2</expression>
+						<expression fixchars="1">class=origTitle&gt;([^&lt;]+)&lt;/h2</expression>
 					</RegExp>
 					<expression>(.+)</expression>
 				</RegExp>
@@ -71,7 +71,7 @@
 			</RegExp>
 			<RegExp input="$$6" output="&lt;originaltitle&gt;\1&lt;/originaltitle&gt;" dest="5+">
 				<RegExp input="$$1" output="\1" dest="6">
-					<expression fixchars="1">class=filmYear&gt;[^&gt;]+&gt;([^&lt;]+)&lt;/h2</expression>
+					<expression fixchars="1">class=origTitle&gt;([^&lt;]+)&lt;/h2</expression>
 				</RegExp>
 				<RegExp conditional="UseOriginalTitle" input="$$1" output="\1" dest="6">
 					<expression fixchars="1">&lt;h1[^&gt;]+&gt;(.*?)&lt;/h1</expression>
@@ -152,7 +152,7 @@
 			</RegExp>
 			<RegExp input="$$18" output="&lt;url function=&quot;GoogleToIMDB&quot;&gt;http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;amp;q=\1+site:imdb.com&lt;/url&gt;" dest="5+">
 				<RegExp input="$$1" output="\1" dest="18">
-					<expression fixchars="1">&lt;title&gt;(.*?)\([0-9]{4}\)[^-]+- Filmweb&lt;/title&gt;</expression>
+					<expression fixchars="1">og:title&quot; content=&quot;([^&quot;]+)</expression>
 				</RegExp>
 				<RegExp input="$$19" output="\1" dest="18">
 					<RegExp input="$$18" output="\1" dest="19">
@@ -192,6 +192,9 @@
 				<expression/>
 			</RegExp>
 			<RegExp input="" output="&lt;chain function=&quot;GetTMDBFanartByIdChain&quot;&gt;$$6&lt;/chain&gt;" dest="5+">
+				<expression />
+			</RegExp>
+			<RegExp input="" output="&lt;chain function=&quot;GetTMDBSetByIdChain&quot;&gt;$$6&lt;/chain&gt;" dest="5+">
 				<expression />
 			</RegExp>
 			<RegExp conditional="iMDBRatings" input="" output="&lt;chain function=&quot;GetIMDBRatingById&quot;&gt;$$6&lt;/chain&gt;" dest="5+">
