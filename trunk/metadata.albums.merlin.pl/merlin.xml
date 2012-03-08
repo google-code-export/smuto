@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<scraper framework="1.1" date="2011-08-03">
+<scraper framework="1.1" date="2012-03-08">
 	<NfoUrl dest="3">
-		<RegExp input="$$1" output="&lt;url&gt;http://musicbrainz.org/ws/1/release/\1?type=xml&amp;inc=artist+release-events&lt;/url&gt;" dest="3">
-			<expression>http://musicbrainz.org/release/(.+?).html</expression>
+		<RegExp input="$$1" output="&lt;url&gt;http://musicbrainz.org/ws/2/release-group/\1?inc=url-rels+artist-credits&lt;/url&gt;" dest="3">
+			<expression>http://musicbrainz.org/release-group/(.+?).html</expression>
 		</RegExp>
 	</NfoUrl>
 	<CreateAlbumSearchUrl dest="3">
@@ -12,7 +12,7 @@
 	</CreateAlbumSearchUrl>
 	<GetAlbumSearchResults dest="8">
 		<RegExp input="$$5" output="&lt;results&gt;\1&lt;/results&gt;" dest="8">
-			<RegExp input="$$1" output="&lt;entity&gt;&lt;artist&gt;\5&lt;/artist&gt;&lt;title&gt;\4&lt;/title&gt;&lt;url&gt;http://musicbrainz.org/ws/2/release-group/\3?inc=url-rels+artist-credits&lt;/url&gt;&lt;/entity&gt;" dest="5">
+			<RegExp input="$$1" output="&lt;entity&gt;&lt;artist&gt;\5&lt;/artist&gt;&lt;title&gt;\4&lt;/title&gt;&lt;url&gt;http://musicbrainz.org/ws/2/release-group/\3?inc=url-rels+artist-credits+releases&lt;/url&gt;&lt;/entity&gt;" dest="5">
 				<expression repeat="yes">(score":"[^"]+","type":"([^"]+)|score":"[^"]+)","id":"([^"]+)","title":"([^"]+)".+?"name":"([^"]+)</expression>
 			</RegExp>
 			<expression noclean="1" />
@@ -59,7 +59,7 @@
 			<RegExp input="$$6" output="&lt;url function=&quot;AlbumUTFtoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=$$6&amp;dot=$$6&lt;/url&gt;" dest="5+">
 				<expression />
 			</RegExp>
-			<RegExp input="$$1" output="&lt;url function=&quot;GetMBTracks&quot;&gt;http://musicbrainz.org/release/\1.html&lt;/url&gt;" dest="5+">
+			<RegExp input="$$1" output="&lt;url function=&quot;GetMBTracks&quot;&gt;http://musicbrainz.org/ws/2/release/\1?inc=recordings&lt;/url&gt;" dest="5+">
 				<expression noclean="1">release id="([^"]+)</expression>
 			</RegExp>
 			<expression noclean="1" />
@@ -177,9 +177,6 @@
 				</RegExp>
 				<expression>(.+)</expression>
 			</RegExp>
-			<RegExp input="" output="&lt;title&gt;$$14&lt;/title&gt;" dest="11+">
-				<expression noclean="1" />
-			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
 	</AMGAlbumSearchResults>
@@ -220,11 +217,11 @@
 	</GetMerlinReview>
 	<GetMBTracks dest="5">
 		<RegExp input="$$4" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
-			<RegExp input="$$1" output="&lt;track&gt;&lt;position&gt;\1&lt;/position&gt;&lt;title&gt;\2&lt;/title&gt;&lt;duration&gt;\3&lt;/duration&gt;&lt;/track&gt;" dest="4">
-				<expression repeat="yes" noclean="1,2,3">class="no"&gt;([0-9]+)&lt;.*?""&gt;(.*?)&lt;/a&gt;.*?length"&gt;&amp;nbsp;(.*?)&lt;</expression>
+			<RegExp input="$$1" output="&lt;track&gt;&lt;position&gt;\1&lt;/position&gt;&lt;title&gt;\2&lt;/title&gt;&lt;/track&gt;" dest="4">
+				<expression repeat="yes" noclean="1,2,3">&lt;track&gt;&lt;position&gt;([^&lt;]+).+?&lt;title&gt;([^&lt;]+)</expression>
 			</RegExp>
 			<RegExp input="$$1" output="&lt;thumb&gt;http://ec1.images-amazon.com/images/P/\1.jpg&lt;/thumb&gt;" dest="4+">
-				<expression noclean="1">asin=([^"]+)</expression>
+				<expression noclean="1">&lt;asin&gt;([^&lt;]+)</expression>
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
