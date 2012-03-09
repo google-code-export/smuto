@@ -30,7 +30,10 @@
 				<expression fixchars="1,2" encode="1,2" noclean="1,2">&lt;name&gt;([^&lt;]+).*?&lt;title&gt;([^&lt;]+)</expression>
 			</RegExp>
 			<RegExp input="$$10" output="\1" dest="5+">
-				<RegExp input="$$6" output="&lt;style&gt;!! Brak powiązania MusicBrainz-Allmusic !!&lt;/style&gt;&lt;url function=&quot;ArtistUTFtoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=$$6&amp;dot=$$6&lt;/url&gt;" dest="10">
+				<RegExp input="$$6" output="&lt;url function=&quot;ArtistUTFtoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=$$6&amp;dot=$$6&lt;/url&gt;" dest="10">
+					<expression />
+				</RegExp>
+				<RegExp conditional="relationships" input="$$6" output="&lt;style&gt;!! !! No Relationships MusicBrainz-Allmusic !! MusicBrainz-Allmusic !!&lt;/style&gt;&lt;url function=&quot;ArtistUTFtoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=$$6&amp;dot=$$6&lt;/url&gt;" dest="10">
 					<expression />
 				</RegExp>
 				<RegExp input="$$1" output="&lt;url function=&quot;ParseAMGArtist&quot;&gt;http://www.allmusic.com/artist/p\1/&lt;/url&gt;" dest="10">
