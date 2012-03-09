@@ -12,12 +12,15 @@ import time
 
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
+polskieradio_url = 'http://moje.polskieradio.pl'
+idKey = '20439fdf-be66-4852-9ded-1476873cfa22'
+format = 'json'
 
 __settings__ = xbmcaddon.Addon(id='plugin.audio.mojepolskieradio.pl')
 __language__ = __settings__.getLocalizedString
 __cwd__      = __settings__.getAddonInfo('path')
 
-CHANNELS_URL = 'http://moje.polskieradio.pl/api/?key=20439fdf-be66-4852-9ded-1476873cfa22&output=json'
+CHANNELS_URL = polskieradio_url + '/api/?key=' + idKey + '&output=' + format
 
 def showChannels():
     u = urllib2.urlopen(CHANNELS_URL)
