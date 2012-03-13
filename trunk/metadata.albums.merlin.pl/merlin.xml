@@ -62,8 +62,11 @@
 			<RegExp input="$$6" output="&lt;url function=&quot;AlbumUTFtoASCII&quot;&gt;http://www.remove-pl.yoyo.pl/smu4.php?text=$$6&amp;dot=$$6&lt;/url&gt;" dest="5+">
 				<expression />
 			</RegExp>
+			<RegExp input="$$1" output="\1" dest="7">
+				<expression noclean="1">&lt;title&gt;(.*?)&lt;/title&gt;</expression>
+			</RegExp>
 			<RegExp input="$$1" output="&lt;url function=&quot;GetMBTracks&quot;&gt;http://musicbrainz.org/ws/2/release/\1?inc=recordings&lt;/url&gt;" dest="5+">
-				<expression noclean="1">release id="([^"]+)</expression>
+				<expression noclean="1">release id="([^"]+)[^&lt;]+&lt;title&gt;$$7&lt;/title&gt;</expression>
 			</RegExp>
 			<expression noclean="1" />
 		</RegExp>
