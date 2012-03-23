@@ -45,6 +45,8 @@ def TVNPlayerAPI(m,type,id,season):
                     name = item.get('name','')
                     season = item.get('id','')
                     addDir(name,'getItems',type,id,'DefaultTVShows.png',season)
+                if not seasons:
+                    return TVNPlayerItems(json)
         else:
             return TVNPlayerItems(json)
 
