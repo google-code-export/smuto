@@ -66,6 +66,8 @@ def TVNPlayerItems(json):
                         name = tvshowtitle + ' - ' + sub_title + ' odc. ' + str(episode)
                     else:
                         name = tvshowtitle + ' - ' + sub_title
+                        if tvshowtitle == sub_title:
+                            name = tvshowtitle
                     addDir(name,'getItem',type,id,'DefaultVideoCover.png','')
             else:
                 thumbnail = item['thumbnail'][0]['url']
