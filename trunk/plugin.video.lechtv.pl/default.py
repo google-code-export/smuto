@@ -25,8 +25,8 @@ def INDEX(url,page):
                 match=re.compile('href="([^"]+)').findall(movie)[0]
                 url = sys.argv[0]+"?mode=2&url="+match
                 thumb = re.compile('src="([^"]+)').findall(movie)[0]
-                date = re.compile('left">([^<]+)').findall(movie)[0]
-                date = date.replace(" stycznia ", ".01.")\
+                miesiac = re.compile('left">([^<]+)').findall(movie)[0]
+                date = miesiac.replace(" stycznia ", ".01.")\
                             .replace(" lutego ", ".02.")\
                             .replace(" marca ", ".03.")\
                             .replace(" kwietnia ", ".04.")\
@@ -38,7 +38,7 @@ def INDEX(url,page):
                             .replace(" października ", ".10.")\
                             .replace(" listopada ", ".11.")\
                             .replace(" grudnia ", ".12.")
-                addLink(name,url,thumb,date)
+                addLink(name,url,thumb,date,miesiac)
 
 def RESOLVE(url):
         req2 = urllib2.Request(base_url+url)
@@ -58,12 +58,17 @@ def RESOLVE(url):
         thumb = ''
         resolveLink(url,name,thumb,plot)
 
-def addLink(name,url,iconimage,date):
+def addLink(name,url,iconimage,date,miesiac):
         ok=True
         name=str(BS(name,convertEntities=BS.HTML_ENTITIES,fromEncoding='utf-8'))
+        xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        liz.setInfo( type="Video", infoLabels={ "aired": miesiac} )
+        liz.setInfo( type="Video", infoLabels={ "duration": ""} )
+        liz.setInfo( type="Video", infoLabels={ "plot": "LechTV Online"} )
         liz.setInfo( type="Video", infoLabels={ "Date": date} )
+        liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         liz.setProperty("IsPlayable","true");
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz,isFolder=False)
         return ok
@@ -99,6 +104,7 @@ def addDir(name,url,mode,page,iconimage):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok
 
