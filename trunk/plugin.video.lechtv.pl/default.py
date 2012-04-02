@@ -47,9 +47,14 @@ def RESOLVE(url):
         response.close()
         match=re.compile('var content = ([^;]+)').findall(link)[0]
         json = simplejson.loads(match)
-        url = json['formats'][0]['url']
-        name = json['title']
-        plot = json['description']
+        #print json
+        try:
+                url = json['formats'][0]['url'];
+        except:
+                url = "";
+                pass
+        name = json.get('title','')
+        plot = json.get('description','')
         thumb = ''
         resolveLink(url,name,thumb,plot)
 
