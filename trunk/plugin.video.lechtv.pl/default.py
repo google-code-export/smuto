@@ -66,7 +66,8 @@ def addLink(name,url,iconimage,date,miesiac):
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         liz.setInfo( type="Video", infoLabels={ "aired": miesiac} )
         liz.setInfo( type="Video", infoLabels={ "duration": ""} )
-        liz.setInfo( type="Video", infoLabels={ "plot": "LechTV Online"} )
+        liz.setInfo( type="Video", infoLabels={ "tvshowtitle": "LechTV Online"} )
+        liz.setInfo( type="Video", infoLabels={ "plot": __language__(30002)} )
         liz.setInfo( type="Video", infoLabels={ "Date": date} )
         liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         liz.setProperty("IsPlayable","true");
