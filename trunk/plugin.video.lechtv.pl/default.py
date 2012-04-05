@@ -5,25 +5,42 @@ import urllib,urllib2,re,string,xbmc,xbmcgui,xbmcplugin
 import simplejson
 from BeautifulSoup import BeautifulSoup as BS
 
-base_url = 'http://www.lechpoznan.tv'
+MAIN_URL = 'http://www.lechpoznan.tv'
 
 def CATEGORIES():
-        addDir('News','/filmy/News',1,1,'')
-        addDir('Mecze','/filmy/Mecze',1,1,'')
-        addDir('Programy','/filmy/Programy',1,1,'')
+        addDir('News','/filmy/News',1,1,'','')
+        addDir('Mecze','/filmy/Mecze',1,1,'','')
+        addDir('Programy','/filmy/Programy',1,1,'','')
+        addDir('Szukaj','/Catalog/Search',1,1,'','')
 
-def INDEX(url,page):
-        req = urllib2.Request(base_url+url+'?page='+page)
+def INDEX(url,page,query):
+        if 'Search' in url:
+            if not query:
+                terms = getTerms()
+                if not terms: return True
+                query = terms
+            
+            base_url = MAIN_URL+url+'?SearchQuery='+query+'&page='+page
+        else:
+            base_url = MAIN_URL+url+'?page='+page
+
+        req = urllib2.Request(base_url)
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        link = string.split(link,'<div class="movieListM">')
-        link = string.split(link[1],'<div class="pagerBox">')
-        link = string.split(link[0],'<li class="movieBox">')
+        try:
+                lastPage = re.compile('([0-9]*)" class="lastPage"').findall(link)[0];
+        except:
+                lastPage = "1";
+                pass
+
+        link = string.split(link,'class="movieListM"')
+        link = string.split(link[1],'class="pagerBox"')
+        link = string.split(link[0],'class="movieBox"')
         for movie in link[1:]:
                 name = re.compile('titleBox">([^<]+)').findall(movie)[0]
                 match=re.compile('href="([^"]+)').findall(movie)[0]
-                url = sys.argv[0]+"?mode=2&url="+match
+                video_url = sys.argv[0]+"?mode=2&url="+match
                 thumb = re.compile('src="([^"]+)').findall(movie)[0]
                 miesiac = re.compile('left">([^<]+)').findall(movie)[0]
                 date = miesiac.replace(" stycznia ", ".01.")\
@@ -38,10 +55,25 @@ def INDEX(url,page):
                             .replace(" października ", ".10.")\
                             .replace(" listopada ", ".11.")\
                             .replace(" grudnia ", ".12.")
-                addLink(name,url,thumb,date,miesiac)
+                addLink(name,video_url,thumb,date,miesiac,page)
+
+        ipage = int(page);
+        if ipage > 1:
+                addDir(__language__(30001),url,1,str(ipage-1),'',query)
+        if ipage < int(lastPage):
+                addDir(__language__(30000),url,1,str(ipage+1),'',query)
+        xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_DATE)
+
+def getTerms():
+        keyboard = xbmc.Keyboard('','LechTV Online')
+        keyboard.doModal()
+        if (keyboard.isConfirmed()):
+            return keyboard.getText()
+        else:
+            return ''
 
 def RESOLVE(url):
-        req2 = urllib2.Request(base_url+url)
+        req2 = urllib2.Request(MAIN_URL+url)
         response = urllib2.urlopen(req2)
         link = response.read()
         response.close()
@@ -58,13 +90,14 @@ def RESOLVE(url):
         thumb = ''
         resolveLink(url,name,thumb,plot)
 
-def addLink(name,url,iconimage,date,miesiac):
+def addLink(name,url,iconimage,date,miesiac,page):
         ok=True
         name=str(BS(name,convertEntities=BS.HTML_ENTITIES,fromEncoding='utf-8'))
         xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         liz.setInfo( type="Video", infoLabels={ "aired": miesiac} )
+        liz.setInfo( type="Video", infoLabels={ "episode": int(page)} )
         liz.setInfo( type="Video", infoLabels={ "duration": ""} )
         liz.setInfo( type="Video", infoLabels={ "tvshowtitle": "LechTV Online"} )
         liz.setInfo( type="Video", infoLabels={ "plot": __language__(30002)} )
@@ -101,8 +134,8 @@ def get_params():
                                 
         return param
 
-def addDir(name,url,mode,page,iconimage):
-        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)
+def addDir(name,url,mode,page,iconimage,query):
+        u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&query="+urllib.quote_plus(query)
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name } )
         liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
@@ -114,9 +147,14 @@ __language__ = __settings__.getLocalizedString
 params=get_params()
 url=None
 mode=None
+query=None
 
 try:
         url=urllib.unquote_plus(params["url"])
+except:
+        pass
+try:
+        query=urllib.unquote_plus(params["query"])
 except:
         pass
 try:
@@ -133,12 +171,8 @@ if mode==None or url==None or len(url)<1:
         CATEGORIES()
        
 elif mode==1:
-        INDEX(url,page)
-        ipage = int(page);
-        if ipage > 1:
-                addDir(__language__(30001),url,1,str(ipage-1),'')
-        addDir(__language__(30000),url,1,str(ipage+1),'')
-        xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_DATE)
+        INDEX(url,page,query)
+
         
 elif mode==2:
         RESOLVE(url)
