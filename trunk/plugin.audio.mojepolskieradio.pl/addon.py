@@ -4,6 +4,7 @@ import xbmcaddon
 import sys, cgi, re
 import simplejson
 import urllib2
+import base64, socket
 
 import xbmcgui
 import xbmcplugin
@@ -12,18 +13,17 @@ import time
 
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
-polskieradio_url = 'http://moje.polskieradio.pl'
-idKey = '20439fdf-be66-4852-9ded-1476873cfa22'
-format = 'json'
+CHANNELS_URL    = 'http://moje.polskieradio.pl/api/?key=%s&output=json'
+A_I_K           = 'MjJhZmMzNzg2NzQxLWRlZDktMjU4NC02NmViLWZkZjkzNDAy'
 
 __settings__ = xbmcaddon.Addon(id='plugin.audio.mojepolskieradio.pl')
 __language__ = __settings__.getLocalizedString
 __cwd__      = __settings__.getAddonInfo('path')
 
-CHANNELS_URL = polskieradio_url + '/api/?key=' + idKey + '&output=' + format
+socket.setdefaulttimeout(10)
 
 def showChannels():
-    u = urllib2.urlopen(CHANNELS_URL)
+    u = urllib2.urlopen(CHANNELS_URL % aik[::-1])
     data = u.read()
     json = simplejson.loads(data)
     u.close()
@@ -71,7 +71,6 @@ class showInfo(xbmcgui.WindowXMLDialog):
         self.infostation = kwargs['station']
         self.data_url = kwargs['data_url']
         url = 'http://moje.polskieradio.pl/getPlaylist.aspx?stationId=%s' % (self.gsid)
-        print url
         u = urllib2.urlopen(url)
         data = u.read()
         self.assets = simplejson.loads(data)
@@ -153,18 +152,16 @@ class showInfo(xbmcgui.WindowXMLDialog):
     def closeDialog(self):
         self.close()
     def onClick(self, controlId):
-        #play
         if controlId == self.control_play_button_id:
             xbmc.Player().play(self.data_url) 
             self.closeDialog()
-        #cancel dialog
         elif controlId == self.control_cancel_button_id:
             self.closeDialog()
     def onAction(self, action):
         if action in self.action_cancel_dialog:
             self.closeDialog()
 
-
+aik = base64.b64decode(A_I_K)
 query = cgi.parse_qs(pluginQuery[1:])
 
 for key, value in query.items():

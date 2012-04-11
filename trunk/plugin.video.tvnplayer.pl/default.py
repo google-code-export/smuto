@@ -13,7 +13,9 @@ except ImportError:
     import sha
     sha1 = sha.new
 
-
+pluginUrl = sys.argv[0]
+pluginHandle = int(sys.argv[1])
+pluginQuery = sys.argv[2]
 base_url = 'http://tvnplayer.pl/api/?platform=Mobile&terminal=Android&format=json'
 
 def TVNPlayerAPI(m,type,id,season):
@@ -27,12 +29,12 @@ def TVNPlayerAPI(m,type,id,season):
             name = item.get('name','')
             type = item.get('type','')
             id = item['id']
-            addDir(name,'getItems',type,id,'DefaultVideoPlaylists.png','')
+            if type != 'titles_of_day':
+                addDir(name,'getItems',type,id,'DefaultVideoPlaylists.png','')
     else:
         urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (m, type, id)
         if season > 0:
             urlQuery = urlQuery + '&season=' + str(season)
-        print base_url +urlQuery
         response = urllib2.urlopen(base_url + urlQuery)
         json = simplejson.loads(response.read())
         response.close()
@@ -44,6 +46,7 @@ def TVNPlayerAPI(m,type,id,season):
                 for item in seasons:
                     name = item.get('name','')
                     season = item.get('id','')
+                    xbmcplugin.addSortMethod(pluginHandle, xbmcplugin.SORT_METHOD_LABEL)
                     addDir(name,'getItems',type,id,'DefaultTVShows.png',season)
                 if not seasons:
                     return TVNPlayerItems(json)
@@ -57,36 +60,32 @@ def TVNPlayerItems(json):
             type = item.get('type','')
             type_episode = item.get('type_episode','')
             id = item['id']
+            thumbnail = item['thumbnail'][0]['url']
+            lead = item.get('lead','')
             if type == 'episode':
                 if type_episode == 'normal' or type_episode == 'catchup':
                     tvshowtitle = item.get('title','')
                     episode = item.get('episode','')
                     sub_title = item.get('sub_title','')
-                    if episode != "0":
-                        name = tvshowtitle + ' - ' + sub_title + ' odc. ' + str(episode)
-                    else:
-                        name = tvshowtitle + ' - ' + sub_title
-                        if tvshowtitle == sub_title:
-                            name = tvshowtitle
-                    addDir(name,'getItem',type,id,'DefaultVideoCover.png','')
+                    season = item.get('season','')
+                    start_date = item.get('start_date','')
+                    url = pluginUrl+'?m=getItem&id='+str(id)+'&type='+type
+                    name = tvshowtitle + ' - ' + sub_title
+                    if not sub_title or tvshowtitle == sub_title:
+                        name = tvshowtitle
+                    if type_episode == 'catchup':
+                        name = name + ', sezon ' + str(season)+', odcinek '+ str(episode)
+                        
+                    addLink(name,url,thumbnail,tvshowtitle,lead,episode,season,start_date)
             else:
-                thumbnail = item['thumbnail'][0]['url']
                 iconimage ='http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/' + thumbnail + '?type=1&quality=85&srcmode=0&srcx=49/100&srcy=1/1&srcw=27/50&srch=93/100&dstw=256&dsth=256'
-                lead = item.get('lead','')
                 addDir(name,'getItems',type,id,iconimage,'')
 
 def TVNPlayerItem(type, id):
         urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
-        print base_url + urlQuery
-        getItems = urllib2.urlopen(base_url + urlQuery)
-        json = simplejson.loads(getItems.read())
-        getItems.close()
-        serie_title = json['item'].get('serie_title','')
-        title = json['item'].get('title', '')
-        lead = json['item'].get('lead','')
-        episode = json['item'].get('episode','')
-        season = json['item'].get('season','')
-        start_date = json['item'].get('start_date','')
+        getItem = urllib2.urlopen(base_url + urlQuery)
+        json = simplejson.loads(getItem.read())
+        getItem.close()
         video_content = json['item']['videos']['main']['video_content']
         videoUrls={}
         for video in video_content:
@@ -107,31 +106,19 @@ def TVNPlayerItem(type, id):
                 print qualityName
         rankSorted =sorted(videoUrls)
         if len(rankSorted) > 0:
-            url = videoUrls.get(rankSorted[0])
-            url = generateToken(url)
+            stream_url = videoUrls.get(rankSorted[0])
+            stream_url = generateToken(stream_url)
         else:
-            url = ''
-        thumbnail = json['item']['thumbnail'][0]['url']
-        if not title:
-            if episode != "0":
-                title = serie_title + ' - odc. ' + str(episode)
-            else:
-                title = serie_title
-        ok=True
-        xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
-        liz=xbmcgui.ListItem(title, iconImage="DefaultVideo.png", thumbnailImage='http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/' + thumbnail + '?quality=85&dstw=640&dsth=360&type=1')
-        liz.setProperty('IsPlayable', 'true')
-        liz.setProperty("IsLive", "true")
-        liz.setInfo( type="video",  infoLabels = {
-                'tvshowtitle' : serie_title ,
-                'title' : title ,
-                'plot': htmlToText(lead) ,
-                'episode': int(episode) ,
-                'season' : int(season) ,
-                'aired' : start_date
-        })
-        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
-        return ok
+            stream_url = ''
+        if stream_url:
+            xbmcplugin.setResolvedUrl(pluginHandle, True,
+                                  xbmcgui.ListItem(path=stream_url))
+        else:
+            xbmcplugin.setResolvedUrl(pluginHandle, False,
+                                  xbmcgui.ListItem())
+            dialog = xbmcgui.Dialog()
+            ok = dialog.ok('dupa', qualityName) 
+
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
@@ -183,11 +170,26 @@ def generateToken(url):
         return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)  
 
 def addDir(name,m,type,id,iconimage,season):
-        u=sys.argv[0]+"?m="+urllib.quote_plus(m)+"&type="+urllib.quote_plus(type)+"&id="+str(id)+"&season="+str(season)+"&platform=Mobile&terminal=Android"
+        u=sys.argv[0]+"?m="+urllib.quote_plus(m)+"&type="+urllib.quote_plus(type)+"&id="+str(id)+"&season="+str(season)
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-        liz.setInfo( type="Video", infoLabels={ "Title": name } )
-        ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+        liz.setInfo( type="video",  infoLabels = {'title' : name })
+        ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=u,listitem=liz,isFolder=True)
+        return ok
+
+def addLink(name,url,thumbnail,serie_title,lead,episode,season,start_date):
+        ok=True
+        liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage='http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/' + thumbnail + '?quality=85&dstw=640&dsth=360&type=1')
+        liz.setInfo( type="video",  infoLabels = {
+                'tvshowtitle' : serie_title ,
+                'title' : name ,
+                'plot': htmlToText(lead) ,
+                'episode': int(episode) ,
+                'season' : int(season) ,
+                'aired' : start_date
+        })
+        liz.setProperty("IsPlayable","true");
+        ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=url,listitem=liz,isFolder=False)
         return ok
 
 params=get_params()
@@ -231,4 +233,10 @@ elif m == "getItems":
 elif m == "getItem":
         TVNPlayerItem(type,id)
 
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+if type == "series":
+        xbmcplugin.setContent(pluginHandle, 'episodes')
+        xbmcplugin.addSortMethod(pluginHandle, xbmcplugin.SORT_METHOD_EPISODE)
+elif type == "catalog":
+        xbmcplugin.addSortMethod( pluginHandle, xbmcplugin.SORT_METHOD_UNSORTED )
+        xbmcplugin.addSortMethod(pluginHandle, xbmcplugin.SORT_METHOD_LABEL)
+xbmcplugin.endOfDirectory(pluginHandle)
