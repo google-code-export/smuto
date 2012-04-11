@@ -57,7 +57,7 @@ def showChannels():
             data_url = xbmc_streams[-1]
 
         runner = ',%d,?mode=info&gsid=%d&station=%s&data_url=%s' % (pluginHandle, channel['gsid'], channel['title'], data_url )
-        contextMenu = [(__language__(30001),'XBMC.RunScript(special://home/addons/plugin.audio.mojepolskieradio.pl/addon.py'+runner+')')]
+        contextMenu = [(__language__(30001),'XBMC.RunScript(special://home/addons/plugin.audio.mojepolskieradio.pl/default.py'+runner+')')]
         item.addContextMenuItems(contextMenu)
 
         xbmcplugin.addDirectoryItem(pluginHandle, data_url, item)

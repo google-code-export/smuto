@@ -81,6 +81,9 @@ def artist_mbid():
     artist=xbmc.Player().getMusicInfoTag().getArtist()
     song=xbmc.Player().getMusicInfoTag().getTitle()
     if len(artist) > 0 and len(song) > 0:
+        multiartist=artist.split(' / ')
+        if (len(multiartist)) >= 2:
+            artist=multiartist[0]
         return get_mbid(artist, song)
     if len(artist) == 0 and len(song) > 0:
         artistsong=song.split(' - ')
