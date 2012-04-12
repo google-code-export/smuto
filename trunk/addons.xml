@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="metadata.albums.merlin.pl"
+       name="Merlin.pl"
+       version="1.1.1"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.metadata" version="1.0"/>
+    <import addon="metadata.common.allmusic.com" version="1.8.1"/>
+  </requires>
+  <extension point="xbmc.metadata.scraper.albums"
+             language="pl"
+             library="merlin.xml"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Merlin.pl Album scraper</summary>
+    <summary lang="hu">Merlin.pl album információk</summary>
+    <summary lang="kr">Merlin.pl 음악 스크래퍼</summary>
+    <summary lang="pl">Scraper albumów Merlin.pl</summary>
+    <summary lang="pt">Scraper de música Merlin.pl</summary>
+    <description lang="en">Download music information from merlin.pl. Also uses info from MusicBrainz and allmusic.com</description>
+    <description lang="kr">Merlin.pl 에서 음악 정보 다운로드 (MusicBrainz 과 allmusic.com 정보 이용)</description>
+    <description lang="hu">Album információk letöltése a merlin.pl, valamint a MusicBrainz és a allmusic.com webhelyekről</description>
+    <description lang="pl">Pobieraj informacje o albumach. Wyszukiwanie i pobranie listy utworów z MusicBrainz, opis i okłdka z merlin.pl, generalne info z allmusic.</description>
+    <description lang="pt">Descarregar informação de música de merlin.pl. Também usa informação de MusicBrainz e allmusic.com</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="metadata.artists.yoyo.pl"
+       name="YoYo-MusicBrainz"
+        version="1.1.1"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.metadata" version="1.0"/>
+    <import addon="metadata.common.last.fm" version="1.0.4"/>
+    <import addon="metadata.common.allmusic.com" version="1.8.1"/>
+    <import addon="metadata.common.htbackdrops.com" version="1.0.4"/>
+  </requires>
+  <extension point="xbmc.metadata.scraper.artists"
+             language="multi"
+             library="yoyo.xml"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">YoYo artist scraper</summary>
+    <summary lang="hu">YoYo előadó információk</summary>
+    <summary lang="pl">Scraper arytsty YoYo</summary>
+    <summary lang="pt">Scraper de artistas YoYo</summary>
+    <description lang="en">MusicBrainz scraper. Also uses info from last.fm and allmusic.com</description>
+    <description lang="hu">Előadó információk letöltése a MusicBrainz, last.fm és az allmusic.com webhelyekről</description>
+    <description lang="pl">YoYo scraper - wyszukiwanie na bazie MusicBrainz, biografia z last.fm,  dyskografia z MusicBrainz, generalne info z allmusic, fanart z htbackdrops (jak są) - w przeciwnym wypadku zdjęcia z lastfm</description>
+    <description lang="pt">Scraper YoYo. Além de utilizar o MusicBrainz, também conta com os recursos disponíveis em last.fm e allmusic.com.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="metadata.filmweb.pl"
+       name="Filmweb"
+       version="1.2.4"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.metadata" version="1.0"/>
+    <import addon="metadata.common.themoviedb.org" version="2.1.4"/>
+    <import addon="metadata.common.imdb.com" version="1.0.4"/>
+    <import addon="plugin.video.youtube" />
+  </requires>
+  <extension point="xbmc.metadata.scraper.movies"
+             language="pl"
+             library="filmweb.xml"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Filmweb Movie Scraper</summary>
+    <summary lang="hu">Filmweb filmadat leolvasó</summary>
+    <summary lang="kr">Filmweb 영화 스크래퍼</summary>
+    <summary lang="pl">Scraper filmowy Filmweb.pl</summary>
+    <summary lang="pt">Scraper de filmes FilmWeb</summary>
+    <description lang="en">Download Movie information from www.filmweb.pl</description>
+    <description lang="hu">Film információk letöltése a www.filmweb.pl webhelyről</description>
+    <description lang="kr">www.filmweb.pl 에서 영화 정보 다운로드</description>
+    <description lang="pl">Filmweb - łeb pełen filmów! to największy polski serwis filmowy i druga największa baza filmowa na świecie. Drapacz ten korzysta z jednej z czterech stron głównych „Bazy Filmwebu” stworzonej przez użytkowników. Jak czegoś brakuje to mamy IMDb - ten portal jest tutaj obecny. Fanarty z themoviedb.org - te piękne tla to zasługa utalentowanych ludzi tworzących tę bazę. </description>
+    <description lang="pt">Descarregar informação de filmes de www.filmweb.pl</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon
+        id="plugin.audio.mojepolskieradio.pl"
+        version="1.0.5"
+        name="Moje Polskie Radio"
+        provider-name="smuto">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Polish Broadcasting Internet radio services</summary>
+        <summary lang="pl">Polskie Radio Online</summary>
+        <description lang="en">Listen to Polish radio channels via Internet</description>
+        <description lang="pl">Portal Polskiego Radia umożliwia słuchanie audycji Jedynki, Dwójki, Trójki, Czwórki, Polskiego Radia dla Zagranicy i Radia Parlament. Słuchacze mogą zapoznać się z wyemitowanymi audycjami dzięki specjalnie przygotowanym kanałom tematycznym. Dostępna jest również Czwórka na Wizji. Dział Łączności ze Słuchaczami, (0-22) 645 24 45</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
+        <license>GPL 2.0</license>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.image.990px.random" name="990px Random" version="1.0.0" provider-name="smuto">
+    <requires>
+	<import addon="xbmc.python" version="2.0"/>
+	<import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+	<provides>image</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+	<platform>all</platform>
+	<summary lang="en">990px</summary>
+	<summary lang="pl">990px.pl – fotoreportaże, galerie zdjęć, fotografia cyfrowa</summary>
+	<description lang="en">990px</description>
+	<description lang="pl">Losowo wybrana galeria. Może w ten sposób traficie na temat, którego wcześniej nie udało wam się sprawdzić.</description>
+	<disclaimer lang="en"></disclaimer>
+    </extension>
+</addon>
+
+<addon id="plugin.image.artistmultifanart" name="Artist Multi Fanart" version="1.0.2" provider-name="smuto">
+    <requires>
+	<import addon="xbmc.python" version="2.0"/>
+	<import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+	<provides>image</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+	<platform>all</platform>
+	<summary lang="en">Artist Multi Fanart</summary>
+	<summary lang="pl">Artist Multi Fanart</summary>
+	<description lang="en">smuto's Artist Multi Fanart</description>
+	<description lang="pl">smuto's Artist Multi Fanart</description>
+	<disclaimer lang="en"></disclaimer>
+    </extension>
+</addon>
+
+<addon id="plugin.video.lechtv.pl"
+       name="LechTV"
+       version="1.0.2"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">See videos from lechpoznan.tv</summary>
+    <summary></summary>
+    <description lang="en">See videos from lechpoznan.pl, the homepage of Lech Poznań, the football club.</description>
+    <description lang="pl">Wiadomości wideo o Lechu Poznań.</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.onettv.pl" name="Onet.TV" version="1.0.0" provider-name="pajretX">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>View videos from onet.pl.</summary>
+        <disclaimer>Filmiki</disclaimer>
+        <description>View videos from onet.pl</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tvnplayer.pl"
+       name="TVNPlayer"
+       version="1.0.1"
+       provider-name="sd-xbmc, smuto">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+    <import addon="script.module.cryptopy" version="1.2.6"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">http://tvnplayer.pl</summary>
+    <summary></summary>
+    <description lang="en">tvn player</description>
+    <description lang="pl">Usługa tvn player jest dostępna na wielu platformach. Ciesz się oglądaniem ulubionych programów, filmów i seriali w każdym miejscu i o każdej porze!</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="repository.smuto" name="xbmc.org.pl Addons" version="1.0.0" provider-name="smuto">
+	<extension point="xbmc.addon.repository" name="xbmc.org.pl Addons">
+		<info compressed="false">http://smuto.googlecode.com/svn/trunk/addons.xml</info>
+		<checksum>http://smuto.googlecode.com/svn/trunk/addons.xml.md5</checksum>
+		<datadir zip="false">http://smuto.googlecode.com/svn/trunk</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>smuto's Addon Repo</summary>
+		<description>smuto's XBMC addon repository for bleeding edge and likely buggy :) versions.</description>
+		<disclaimer>The owners and submitters to this repository do not host or distribute any of the content displayed by these addons nor do they have any affiliation with the content providers.</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.image.990px" name="990 pixeli" version="0.0.4" provider-name="smuto">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.script" library="runscript.py">
+    <provides>image</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="pl">Duże fotografie prasowe ułożone w przemyślane cykle opatrzone krótkim komentarzem.</summary>
+    <description lang="pl">Twórcy 990px nie ukrywają swojej inspiracji blogiem The Big Picture, jednak na tej bazie starają się stworzyć swój własny, warty uwagi, charakterystyczny fotoblog. Jakość fotografii oraz doboru tematów często również nie odbiega od swojego pierwowzoru. Wszystkie zdjęcie są pokazywane w dużej rozdzielczości (990px). Piotr Macura, fotoedytor 990px, wybiera świetne, bieżące tematy i potrafi bardzo dobrze wyselekcjonować fotografie do umieszczanych na stronie cykli. </description>
+  </extension>
+</addon>
+</addons>

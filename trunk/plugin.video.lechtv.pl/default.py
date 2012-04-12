@@ -16,10 +16,9 @@ def CATEGORIES():
 def INDEX(url,page,query):
         if 'Search' in url:
             if not query:
-                terms = getTerms()
-                if not terms: return True
-                query = terms
-            
+                query = getTerms()
+                if not query:
+                    return -1           
             base_url = MAIN_URL+url+'?SearchQuery='+query+'&page='+page
         else:
             base_url = MAIN_URL+url+'?page='+page
@@ -33,11 +32,11 @@ def INDEX(url,page,query):
         except:
                 lastPage = "1";
                 pass
-
         link = string.split(link,'class="movieListM"')
-        link = string.split(link[1],'class="pagerBox"')
-        link = string.split(link[0],'class="movieBox"')
-        for movie in link[1:]:
+        if len(link)>=2:
+            link = string.split(link[1],'class="pagerBox"')
+            link = string.split(link[0],'class="movieBox"')
+            for movie in link[1:]:
                 name = re.compile('titleBox">([^<]+)').findall(movie)[0]
                 match=re.compile('href="([^"]+)').findall(movie)[0]
                 video_url = sys.argv[0]+"?mode=2&url="+match
@@ -56,7 +55,8 @@ def INDEX(url,page,query):
                             .replace(" listopada ", ".11.")\
                             .replace(" grudnia ", ".12.")
                 addLink(name,video_url,thumb,date,miesiac,page)
-
+        else:
+            return -1              
         ipage = int(page);
         if ipage > 1:
                 addDir(__language__(30001),url,1,str(ipage-1),'',query)
@@ -79,42 +79,38 @@ def RESOLVE(url):
         response.close()
         match=re.compile('var content = ([^;]+)').findall(link)[0]
         json = simplejson.loads(match)
-        #print json
         try:
-                url = json['formats'][0]['url'];
+                stream_url = json['formats'][0]['url'];
         except:
-                url = "";
+                stream_url = "";
                 pass
-        name = json.get('title','')
-        plot = json.get('description','')
-        thumb = ''
-        resolveLink(url,name,thumb,plot)
+        if stream_url:
+            xbmcplugin.setResolvedUrl(pluginHandle, True,
+                                  xbmcgui.ListItem(path=stream_url))
+        else:
+            xbmcplugin.setResolvedUrl(pluginHandle, False,
+                                  xbmcgui.ListItem())
+            dialog = xbmcgui.Dialog()
+            ok = dialog.ok('','LechTV Online') 
+
 
 def addLink(name,url,iconimage,date,miesiac,page):
         ok=True
         name=str(BS(name,convertEntities=BS.HTML_ENTITIES,fromEncoding='utf-8'))
         xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-        liz.setInfo( type="Video", infoLabels={ "Title": name } )
-        liz.setInfo( type="Video", infoLabels={ "aired": miesiac} )
-        liz.setInfo( type="Video", infoLabels={ "episode": int(page)} )
-        liz.setInfo( type="Video", infoLabels={ "duration": ""} )
-        liz.setInfo( type="Video", infoLabels={ "tvshowtitle": "LechTV Online"} )
-        liz.setInfo( type="Video", infoLabels={ "plot": __language__(30002)} )
-        liz.setInfo( type="Video", infoLabels={ "Date": date} )
+        liz.setInfo( type="video",  infoLabels = {
+                "Title": name ,
+                "aired": miesiac ,
+                "episode": int(page) ,
+                "tvshowtitle": "LechTV Online" ,
+                "plot": __language__(30002) ,
+                "Date": date
+        })
         liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         liz.setProperty("IsPlayable","true");
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz,isFolder=False)
         return ok
-
-def resolveLink(url,name,thumb,plot):
-        li=xbmcgui.ListItem(name,
-                            path = url,
-                            thumbnailImage=thumb)
-        li.setInfo( type="Video", infoLabels={ "Title": name } )
-        li.setInfo( type="Video", infoLabels={ "Plot": plot} )
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, li)
-        return True
 
 def get_params():
         param=[]
@@ -144,6 +140,9 @@ def addDir(name,url,mode,page,iconimage,query):
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.lechtv.pl')
 __language__ = __settings__.getLocalizedString
+pluginUrl = sys.argv[0]
+pluginHandle = int(sys.argv[1])
+pluginQuery = sys.argv[2]
 params=get_params()
 url=None
 mode=None
@@ -178,4 +177,4 @@ elif mode==2:
         RESOLVE(url)
 
 
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
+xbmcplugin.endOfDirectory(pluginHandle)
