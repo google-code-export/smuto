@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui
-import simplejson
+import simplejson, socket
 
 import crypto.cipher.aes_cbc
 import crypto.cipher.base
@@ -17,6 +17,9 @@ pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
 base_url = 'http://tvnplayer.pl/api/?platform=Mobile&terminal=Android&format=json'
+scale_url = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
+
+socket.setdefaulttimeout(10)
 
 def TVNPlayerAPI(m,type,id,season):
     if m == 'mainInfo':
@@ -30,7 +33,7 @@ def TVNPlayerAPI(m,type,id,season):
             type = item.get('type','')
             id = item['id']
             if type != 'titles_of_day':
-                addDir(name,'getItems',type,id,'DefaultVideoPlaylists.png','')
+                addDir(name,'getItems',type,id,'DefaultVideoPlaylists.png','','')
     else:
         urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (m, type, id)
         if season > 0:
@@ -47,7 +50,7 @@ def TVNPlayerAPI(m,type,id,season):
                     name = item.get('name','')
                     season = item.get('id','')
                     xbmcplugin.addSortMethod(pluginHandle, xbmcplugin.SORT_METHOD_LABEL)
-                    addDir(name,'getItems',type,id,'DefaultTVShows.png',season)
+                    addDir(name,'getItems',type,id,'DefaultTVShows.png','',season)
                 if not seasons:
                     return TVNPlayerItems(json)
         else:
@@ -61,12 +64,21 @@ def TVNPlayerItems(json):
             type_episode = item.get('type_episode','')
             id = item['id']
             thumbnail = item['thumbnail'][0]['url']
-            lead = item.get('lead','')
+            gets = {'type': 1,
+                    'quality': 95,
+                    'srcmode': 0,
+                    'srcx': item['thumbnail'][0]['srcx'],
+                    'srcy': item['thumbnail'][0]['srcy'],
+                    'srcw': item['thumbnail'][0]['srcw'],
+                    'srch': item['thumbnail'][0]['srch'],
+                    'dstw': 256,
+                    'dsth': 292}
             if type == 'episode':
                 if type_episode == 'normal' or type_episode == 'catchup':
                     tvshowtitle = item.get('title','')
                     episode = item.get('episode','')
                     sub_title = item.get('sub_title','')
+                    lead = item.get('lead','')
                     season = item.get('season','')
                     start_date = item.get('start_date','')
                     url = pluginUrl+'?m=getItem&id='+str(id)+'&type='+type
@@ -76,10 +88,9 @@ def TVNPlayerItems(json):
                     if type_episode == 'catchup':
                         name = name + ', sezon ' + str(season)+', odcinek '+ str(episode)
                         
-                    addLink(name,url,thumbnail,tvshowtitle,lead,episode,season,start_date)
+                    addLink(name,url,thumbnail,gets,tvshowtitle,lead,episode,season,start_date)
             else:
-                iconimage ='http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/' + thumbnail + '?type=1&quality=85&srcmode=0&srcx=49/100&srcy=1/1&srcw=27/50&srch=93/100&dstw=256&dsth=256'
-                addDir(name,'getItems',type,id,iconimage,'')
+                addDir(name,'getItems',type,id,thumbnail,gets,'')
 
 def TVNPlayerItem(type, id):
         urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
@@ -169,17 +180,25 @@ def generateToken(url):
         encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
         return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)  
 
-def addDir(name,m,type,id,iconimage,season):
+def addDir(name,m,type,id,thumbnail,gets,season):
         u=sys.argv[0]+"?m="+urllib.quote_plus(m)+"&type="+urllib.quote_plus(type)+"&id="+str(id)+"&season="+str(season)
+        if not gets:
+            thumbnailimage=''
+        else:
+            thumbnailimage='%s%s?%s' % (scale_url, thumbnail, urllib.urlencode(gets))
         ok=True
-        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=urllib.unquote(thumbnailimage))
         liz.setInfo( type="video",  infoLabels = {'title' : name })
         ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=u,listitem=liz,isFolder=True)
         return ok
 
-def addLink(name,url,thumbnail,serie_title,lead,episode,season,start_date):
+def addLink(name,url,thumbnail,gets,serie_title,lead,episode,season,start_date):
         ok=True
-        liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage='http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/' + thumbnail + '?quality=85&dstw=640&dsth=360&type=1')
+        if not gets:
+            thumbnailimage=''
+        else:
+            thumbnailimage='%s%s?%s' % (scale_url, thumbnail, urllib.urlencode(gets))
+        liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=urllib.unquote(thumbnailimage))
         liz.setInfo( type="video",  infoLabels = {
                 'tvshowtitle' : serie_title ,
                 'title' : name ,
@@ -189,6 +208,7 @@ def addLink(name,url,thumbnail,serie_title,lead,episode,season,start_date):
                 'aired' : start_date
         })
         liz.setProperty("IsPlayable","true");
+        liz.setProperty('Fanart_Image', 'http://dcs-46-28-242-53.atmcdn.pl/dcs/o2/tvn/web-content/m/orig/' + thumbnail)
         ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=url,listitem=liz,isFolder=False)
         return ok
 
@@ -239,4 +259,6 @@ if type == "series":
 elif type == "catalog":
         xbmcplugin.addSortMethod( pluginHandle, xbmcplugin.SORT_METHOD_UNSORTED )
         xbmcplugin.addSortMethod(pluginHandle, xbmcplugin.SORT_METHOD_LABEL)
+        if id == 3:
+            xbmcplugin.setContent(pluginHandle, 'movies')
 xbmcplugin.endOfDirectory(pluginHandle)
