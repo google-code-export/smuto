@@ -16,7 +16,7 @@ except ImportError:
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
-base_url = 'http://tvnplayer.pl/api/?platform=Mobile&terminal=Android&format=json'
+base_url = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json'
 scale_url = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
 
 socket.setdefaulttimeout(10)
@@ -98,38 +98,13 @@ def TVNPlayerItem(type, id):
         json = simplejson.loads(getItem.read())
         getItem.close()
         video_content = json['item']['videos']['main']['video_content']
-        videoUrls={}
-        for video in video_content:
-            qualityName = video['profile_name']
-            videoUrl = video['url']
-            rank = 'z'
-            if qualityName == 'Bardzo wysoka':
-                rank = 'a'
-            elif qualityName == 'Wysoka':
-                rank = 'b'
-            elif qualityName == 'Standard':
-                rank = 'c'
-            elif qualityName == 'Niska':
-                rank = 'd'
-            if rank != 'z':
-                videoUrls[rank] = videoUrl
-            else:
-                print qualityName
-        rankSorted =sorted(videoUrls)
-        if len(rankSorted) > 0:
-            stream_url = videoUrls.get(rankSorted[0])
-            stream_url = generateToken(stream_url)
-        else:
-            stream_url = ''
-        if stream_url:
-            xbmcplugin.setResolvedUrl(pluginHandle, True,
-                                  xbmcgui.ListItem(path=stream_url))
-        else:
-            xbmcplugin.setResolvedUrl(pluginHandle, False,
-                                  xbmcgui.ListItem())
-            dialog = xbmcgui.Dialog()
-            ok = dialog.ok('dupa', qualityName) 
-
+        profile_name_list = []
+        for item in video_content:
+            profile_name = item['profile_name']
+            profile_name_list.append(profile_name)
+        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+        stream_url = json['item']['videos']['main']['video_content'][select]['url']
+        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
