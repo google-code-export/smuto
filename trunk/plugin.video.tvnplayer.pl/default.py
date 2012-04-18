@@ -3,15 +3,6 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui
 import simplejson, socket
 
-import crypto.cipher.aes_cbc
-import crypto.cipher.base
-import binascii, time, os
-
-try:
-    from hashlib import sha1
-except ImportError:
-    import sha
-    sha1 = sha.new
 
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
@@ -115,7 +106,7 @@ def htmlToText(html):
                 .replace("&apos;","'")
 
 def SetTVNPlayer():
-        return TVNPlayerAPI(platform='Mobile',terminal='Android',format='json')
+        return TVNPlayerAPI(platform='Mobile',terminal='Sony',format='json')
 
 def get_params():
         param=[]
@@ -135,25 +126,6 @@ def get_params():
                                 
         return param
 
-def generateToken(url):
-        url = url.replace('http://redir.atmcdn.pl/http/','')
-        SecretKey = 'AB9843DSAIUDHW87Y3874Q903409QEWA'
-        iv = 'ab5ef983454a21bd'
-        KeyStr = '0f12f35aa0c542e45926c43a39ee2a7b38ec2f26975c00a30e1292f7e137e120e5ae9d1cfe10dd682834e3754efc1733'
-        salt = sha1()
-        salt.update(os.urandom(16))
-        salt = salt.hexdigest()[:32]
-        tvncrypt = crypto.cipher.aes_cbc.AES_CBC(SecretKey, padding=crypto.cipher.base.noPadding(), keySize=32)
-        key = tvncrypt.decrypt(binascii.unhexlify(KeyStr), iv=iv)[:32]
-        expire = 3600000L + long(time.time()*1000) - 946684800000L
-        unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
-        pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-        pkcs5_unpad = lambda s : s[0:-ord(s[-1])]
-        unencryptedToken = pkcs5_pad(unencryptedToken)
-        tvncrypt = crypto.cipher.aes_cbc.AES_CBC(binascii.unhexlify(key), padding=crypto.cipher.base.noPadding(), keySize=16)
-        encryptedToken = tvncrypt.encrypt(unencryptedToken, iv=binascii.unhexlify(salt))
-        encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
-        return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)  
 
 def addDir(name,m,type,id,thumbnail,gets,season):
         u=sys.argv[0]+"?m="+urllib.quote_plus(m)+"&type="+urllib.quote_plus(type)+"&id="+str(id)+"&season="+str(season)
