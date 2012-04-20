@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addon
+        id="plugin.audio.fanclubpolska.pl"
+        version="0.0.5"
+        name="Fanclub Polska Radio"
+        provider-name="XBMC.org.pl">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en"></summary>
+        <summary lang="pl">Fanclub Polska</summary>
+        <description lang="en">Fanclub Polska</description>
+        <description lang="pl">Fanclub Polska</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
+        <license>GPL 2.0</license>
+        <platform>all</platform>
+    </extension>
+</addon>
