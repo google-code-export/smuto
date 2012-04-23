@@ -106,7 +106,7 @@
 
 <addon
         id="plugin.audio.mojepolskieradio.pl"
-        version="1.0.5"
+        version="1.0.6"
         name="Moje Polskie Radio"
         provider-name="smuto">
     <requires>
@@ -145,7 +145,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.image.artistmultifanart" name="Artist Multi Fanart" version="1.0.2" provider-name="smuto">
+<addon id="plugin.image.artistmultifanart" name="Artist Multi Fanart" version="1.0.3" provider-name="smuto">
     <requires>
 	<import addon="xbmc.python" version="2.0"/>
 	<import addon="script.module.simplejson" version="2.0.10"/>
@@ -165,7 +165,7 @@
 
 <addon id="plugin.video.lechtv.pl"
        name="LechTV"
-       version="1.0.2"
+       version="1.0.3"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -185,7 +185,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.onettv.pl" name="Onet.TV" version="1.0.0" provider-name="pajretX">
+<addon id="plugin.video.onettv.pl" name="Onet.TV" version="1.0.1" provider-name="pajretX">
     <requires>
         <import addon="xbmc.python" version="1.0"/>
     </requires>
@@ -216,7 +216,7 @@
 
 <addon id="plugin.video.tvnplayer.pl"
        name="TVNPlayer"
-       version="1.0.4"
+       version="1.0.5"
        provider-name="sd-xbmc, smuto">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -252,7 +252,7 @@
 	</extension>
 </addon>
 
-<addon id="script.image.990px" name="990 pixeli" version="0.0.4" provider-name="smuto">
+<addon id="script.image.990px" name="990 pixeli" version="0.0.5" provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
