@@ -1,5 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmcaddon
+import os
 
 import urllib,urllib2,re,string,xbmc,xbmcgui,xbmcplugin
 import simplejson
@@ -8,10 +9,10 @@ from BeautifulSoup import BeautifulSoup as BS
 MAIN_URL = 'http://www.lechpoznan.tv'
 
 def CATEGORIES():
-        addDir('News','/filmy/News',1,1,'','')
-        addDir('Mecze','/filmy/Mecze',1,1,'','')
-        addDir('Programy','/filmy/Programy',1,1,'','')
-        addDir('Szukaj','/Catalog/Search',1,1,'','')
+        addDir('News','/filmy/News',1,1,__icons__ % ('news'),'')
+        addDir('Mecze','/filmy/Mecze',1,1,__icons__ % ('mecze'),'')
+        addDir('Programy','/filmy/Programy',1,1,__icons__ % ('programy'),'')
+        addDir('Szukaj','/Catalog/Search',1,1,__icons__ % ('szukaj'),'')
 
 def INDEX(url,page,query):
         if 'Search' in url:
@@ -140,9 +141,11 @@ def addDir(name,url,mode,page,iconimage,query):
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.lechtv.pl')
 __language__ = __settings__.getLocalizedString
+__icons__ = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'icons', '%s.png')
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
+
 params=get_params()
 url=None
 mode=None
