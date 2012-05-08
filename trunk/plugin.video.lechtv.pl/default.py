@@ -13,14 +13,17 @@ def CATEGORIES():
         addDir('Mecze','/filmy/Mecze',1,1,__icons__ % ('mecze'),'')
         addDir('Programy','/filmy/Programy',1,1,__icons__ % ('programy'),'')
         addDir('Szukaj','/Catalog/Search',1,1,__icons__ % ('szukaj'),'')
+        addDir('Historia','/Catalog/Search',3,1,'','')
 
 def INDEX(url,page,query):
         if 'Search' in url:
             if not query:
                 query = getTerms()
                 if not query:
-                    return -1           
-            base_url = MAIN_URL+url+'?SearchQuery='+query+'&page='+page
+                    return CATEGORIES()
+                addToHistory(query)
+            base_url = MAIN_URL+url+'?SearchQuery='+urllib.quote_plus(query)+'&page='+page
+            print base_url
         else:
             base_url = MAIN_URL+url+'?page='+page
 
@@ -60,18 +63,43 @@ def INDEX(url,page,query):
             return -1              
         ipage = int(page);
         if ipage > 1:
-                addDir(__language__(30001),url,1,str(ipage-1),'',query)
+                prev_page = str(ipage - 1)
+                addDir('<< %s %s <<' % (__language__(30001),prev_page),url,1,prev_page,'',query)
         if ipage < int(lastPage):
-                addDir(__language__(30000),url,1,str(ipage+1),'',query)
+                next_page = str(ipage + 1)
+                addDir('>> %s %s >>' % (__language__(30000),next_page),url,1,next_page,'',query)
         xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_DATE)
 
+def HISTORY():
+        for query in getHistory():
+            addDir(query,'/Catalog/Search',1,1,'',query)
+
+def getHistory():
+        if not os.path.exists(HISTORY_PATH): return []
+        fobj = open(HISTORY_PATH,'r')
+        history = fobj.read()
+        fobj.close()
+        return history.splitlines()
+
+def saveHistory(history):
+        fobj = open(HISTORY_PATH,'w')
+        fobj.write('\n'.join(history))
+        fobj.close()
+
+def addToHistory(query):
+        history = getHistory()
+        history.insert(0,query)
+        history = history[0:50]
+        saveHistory(history)
+
 def getTerms():
+        terms = None
         keyboard = xbmc.Keyboard('','LechTV Online')
         keyboard.doModal()
-        if (keyboard.isConfirmed()):
-            return keyboard.getText()
-        else:
-            return ''
+        if keyboard.isConfirmed() and keyboard.getText():
+            terms = keyboard.getText()
+            return terms
+
 
 def RESOLVE(url):
         req2 = urllib2.Request(MAIN_URL+url)
@@ -142,9 +170,13 @@ def addDir(name,url,mode,page,iconimage,query):
 __settings__ = xbmcaddon.Addon(id='plugin.video.lechtv.pl')
 __language__ = __settings__.getLocalizedString
 __icons__ = os.path.join(__settings__.getAddonInfo('path'), 'resources', 'icons', '%s.png')
+__profile__ = xbmc.translatePath(__settings__.getAddonInfo('profile'))
+if not os.path.exists(__profile__):
+    os.makedirs(__profile__)
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
+HISTORY_PATH = os.path.join(__profile__,'history')
 
 params=get_params()
 url=None
@@ -162,6 +194,7 @@ except:
 try:
         page = params["page"]
 except:
+        page = "1";
         pass
 try:
         mode=int(params["mode"])
@@ -179,5 +212,9 @@ elif mode==1:
 elif mode==2:
         RESOLVE(url)
 
+elif mode==3:
+        HISTORY()
 
-xbmcplugin.endOfDirectory(pluginHandle)
+is_update = (int(page) != 1)
+
+xbmcplugin.endOfDirectory(pluginHandle, updateListing=is_update)
