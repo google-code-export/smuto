@@ -26,6 +26,9 @@ def iplaList(iplaid):
             descr = item.get('descr','')
             if iplaid != '5000296':
                 addDir(iplaid,title,iconimage,descr)
+        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED )
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def iplaVOD(iplaid):
@@ -52,12 +55,22 @@ def iplaVOD(iplaid):
             descr = item.get('descr','')
             url = item.get('url','')
             addLink(title,url,iconimage,descr)
+        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED )
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 def addLink(name,url,iconimage,descr):
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-        liz.setInfo( type="Video", infoLabels={ "Title": name } )
+        liz.setInfo( type="video",  infoLabels = {
+                'title' : name ,
+                'plot': descr
+        })
+                #'episode': int(episode) ,
+                #'season' : int(season) ,
+                #'aired' : start_date
+        liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
 
@@ -65,7 +78,14 @@ def addDir(iplaid,title,iconimage,descr):
     u=sys.argv[0]+"?iplaid="+str(iplaid)
     ok=True
     liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-    liz.setInfo( type="Video", infoLabels={ "Title": title } )
+    liz.setInfo( type="video",  infoLabels = {
+                'title' : title ,
+                'plot': descr
+    })
+                #'episode': int(episode) ,
+                #'season' : int(season) ,
+                #'aired' : start_date
+
     liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
     return ok
