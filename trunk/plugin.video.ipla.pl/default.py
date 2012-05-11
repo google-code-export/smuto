@@ -4,7 +4,7 @@ import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 import elementtree.ElementTree as ET
 import urllib,urllib2,time,os
 
-def iplaList(iplaid):
+def iplaList(iplaid,contentupdatets,newsid,name):
     iplaidlist = []
     elems = get_data()
     cats = elems.findall("cat")
@@ -17,23 +17,26 @@ def iplaList(iplaid):
         except:
             pass
     if not iplaidlist:
-        iplaVOD(iplaid)
+        iplaVOD(iplaid,contentupdatets,newsid,name) 
     else:
         for item in iplaidlist:
             iplaid = item['id']
+            newsid = item['pid']
             title = item.get('title','')
             iconimage = item.get('thumbnail_big','')
             descr = item.get('descr','')
+            publishts = float(item.get('publishts',time.time()))
+            contentupdatets = float(item.get('contentupdatets',time.time()))
             if iplaid != '5000296':
-                addDir(iplaid,title,iconimage,descr)
+                addDir(iplaid,newsid,title,iconimage,descr,publishts,contentupdatets)
         xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED )
         xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
         xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-def iplaVOD(iplaid):
+def iplaVOD(iplaid,contentupdatets,newsid,name):
     darmolist = []
-    elems = get_VOD_data(iplaid)
+    elems = get_VOD_data(iplaid,contentupdatets,newsid)
     vods = elems.find("VoDs").findall("vod")    
     for vod in vods:
         val = vod.attrib
@@ -53,39 +56,56 @@ def iplaVOD(iplaid):
                 title = item.get('descr','')
             iconimage = item.get('thumbnail_big','')
             descr = item.get('descr','')
+            vcnt = item.get('vcnt','') 
+            vote = item.get('vote','')
+            dur = int(item.get('dur','0'))
             url = item.get('url','')
-            addLink(title,url,iconimage,descr)
-        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED )
+            timestamp = float(item.get('timestamp',time.time()))
+            addLink(title,url,iconimage,descr,timestamp,vcnt,vote,dur,name)
+        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_EPISODE )
+        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATE )
         xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+        xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_RUNTIME)
+        xbmcplugin.addSortMethod( int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_RATING )
         xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
-def addLink(name,url,iconimage,descr):
+def addLink(name,url,iconimage,descr,timestamp,vcnt,vote,dur,tvshowtitle):
         ok=True
+        m, s = divmod(dur, 60)
+        h, m = divmod(m, 60)
+        odcinek = 0
+        if 'Odcinek' in name:
+            podziel = name.split(' - ')
+            name = podziel[0]
+            odcinek = int(podziel[1].replace("Odcinek ", ""))
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="video",  infoLabels = {
                 'title' : name ,
+                'tvshowtitle' : tvshowtitle ,
+                'aired' : time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(timestamp)) ,
+                'date' : time.strftime("%d.%m.%Y", time.localtime(timestamp)) ,
+                'votes' : vcnt ,
+                'rating' : float(vote) ,
+                'episode' : odcinek ,
+                'duration' : "%d:%02d:%02d" % (h, m, s) ,
                 'plot': descr
         })
-                #'episode': int(episode) ,
-                #'season' : int(season) ,
-                #'aired' : start_date
         liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz)
         return ok
 
-def addDir(iplaid,title,iconimage,descr):
-    u=sys.argv[0]+"?iplaid="+str(iplaid)
+def addDir(iplaid,newsid,title,iconimage,descr,publishts,contentupdatets):
+    u=sys.argv[0]+"?iplaid="+str(iplaid)+"&newsid="+str(newsid)+"&contentupdatets="+str(contentupdatets)+"&name="+title
     ok=True
     liz=xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo( type="video",  infoLabels = {
                 'title' : title ,
+                'aired' : time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(publishts)) ,
+                'year' : int(time.strftime("%Y", time.localtime(publishts))) , 
+                'genre' : 'ipla.tv' , 
                 'plot': descr
     })
-                #'episode': int(episode) ,
-                #'season' : int(season) ,
-                #'aired' : start_date
-
     liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
     return ok
@@ -127,7 +147,7 @@ def get_data():
 		os.makedirs(local)
 	local = os.path.join(local,'list.xml')
 	if os.path.exists(local):
-		if (time.time() - os.path.getctime(local)) > (3600*24*7):
+		if (time.time() - os.path.getctime(local)) > (3600*24):
 			download_listfile(local)
 	else:
 		download_listfile(local)
@@ -139,15 +159,17 @@ def download_VODfile(dest,iplaid):
         f.write(unicode(data,'UTF-8').encode('UTF-8'))
         f.close()
 
-def get_VOD_data(iplaid):
-	local = xbmc.translatePath(__settings__.getAddonInfo('profile'))
-	local = os.path.join(local,str(iplaid)+'.xml')
-	if os.path.exists(local):
-		if (time.time() - os.path.getctime(local)) > (3600*24*7):
-			download_VODfile(local,iplaid)
-	else:
-		download_VODfile(local,iplaid)
-	return ET.parse(local).getroot()
+def get_VOD_data(iplaid,contentupdatets,newsid):
+    local = xbmc.translatePath(__settings__.getAddonInfo('profile'))
+    local = os.path.join(local,str(iplaid)+'.xml')
+    if os.path.exists(local):
+        if contentupdatets > os.path.getctime(local):
+            download_VODfile(local,iplaid)
+        elif (time.time() - os.path.getctime(local)) > (3600*4) and newsid == 1753:
+            download_VODfile(local,iplaid)
+    else:
+        download_VODfile(local,iplaid)  
+    return ET.parse(local).getroot()
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.ipla.pl')
 URL_IPLA = 'http://getmedia.redefine.pl'
@@ -155,14 +177,28 @@ IDENTITY = 'login=5zdl1ax9&ver=313&cuid=%2D11218210'
 URL_CATEGORIES = URL_IPLA + '/r/l_x_35_ipla/categories/list/?' + IDENTITY
 URL_MOVIE = URL_IPLA + '/action/2.0/vod/list/?' + IDENTITY + '&category='
 params=get_params()
-
+newsid=None
+contentupdatets=None
 try:
         iplaid=int(params["iplaid"])
 except:
         iplaid=0
         pass
+try:
+        newsid=int(params["newsid"])
+except:
+        pass
+try:
+        contentupdatets=float(params["contentupdatets"])
+except:
+        pass
+try:
+        name=params["name"]
+except:
+        name='ipla.tv'
+        pass
 
-iplaList(iplaid)
+iplaList(iplaid,contentupdatets,newsid,name)
 
 
 
