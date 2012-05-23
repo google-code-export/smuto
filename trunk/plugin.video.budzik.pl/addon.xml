@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.budzik.pl" version="0.2.0" name="Budzik.tvp.pl" provider-name="smuto">
+    <requires>
+        <import addon="xbmc.python" version="2.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Przygody niezwykłych dachowców</summary>
+        <description>To nie są zwyczajne koty: one potrafią mówić! Budzik i Ruda prowadzą nawet własną telewizję. Pomaga im krasnoludek Piksel, który jak nikt inny zna się na elektronice. Oglądaj w środy o 8.55 w TVP 1.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+
