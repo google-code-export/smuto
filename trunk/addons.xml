@@ -237,7 +237,7 @@
 
 <addon id="plugin.video.sport.pl"
        name="sport.pl"
-       version="0.2.0"
+       version="0.2.1"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -287,6 +287,27 @@
     <summary></summary>
     <description lang="en">tvn player</description>
     <description lang="pl">Usługa tvn player jest dostępna na wielu platformach. Ciesz się oglądaniem ulubionych programów, filmów i seriali w każdym miejscu i o każdej porze!</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.vod.tvp.pl"
+       name="VOD - Telewizja Polska SA"
+       version="0.2.0"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+    <import addon="script.module.simplejson" version="2.0.10"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">tvp</summary>
+    <summary></summary>
+    <description lang="en">tvp</description>
+    <description lang="pl">tvp</description>
     <platform>all</platform>
   </extension>
 </addon>

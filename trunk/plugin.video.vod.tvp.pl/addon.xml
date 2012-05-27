@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sport.pl"
-       name="sport.pl"
-       version="0.2.1"
+<addon id="plugin.video.vod.tvp.pl"
+       name="VOD - Telewizja Polska SA"
+       version="0.2.0"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
-    <import addon="script.module.elementtree" version="1.2.7" />
+    <import addon="script.module.simplejson" version="2.0.10"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">sport.pl</summary>
-    <summary lang="pl">sport.pl</summary>
-    <description lang="en">sport.pl</description>
-    <description lang="pl">sport.pl</description>
+    <summary lang="en">tvp</summary>
+    <summary></summary>
+    <description lang="en">tvp</description>
+    <description lang="pl">tvp</description>
     <platform>all</platform>
   </extension>
 </addon>

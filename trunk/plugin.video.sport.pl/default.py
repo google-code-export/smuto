@@ -270,7 +270,11 @@ elif akcja == 'listuj':
                 for movie in html[1:]:
                     x = re.compile('title="([^"]+)" href=[^0-9]+[^,]+,([0-9]+),([0-9]+)').findall(movie)[0]
                     date = re.compile('class="when">([^ ]+)').findall(movie)[0]
-                    img = re.compile('img src="([^"]+)').findall(movie)[0]
+                    try:
+                        img = re.compile('img src="([^"]+)').findall(movie)[0]
+                    except:
+                        img=''
+                        pass
                     nt = x + (date,img)
                     results.append(nt)
         for title, xxd, xx,date, img in results:
