@@ -1,17 +1,24 @@
 ﻿# -*- coding: utf-8 -*-
+import xbmcaddon
 import re,string
 import urllib2
 import xbmcgui, xbmcplugin
 import simplejson
 from time import localtime, strftime
 
+__addon_name__ = 'VOD - Telewizja Polska SA'
+__id__ = 'plugin.video.vod.tvp.pl'
+__settings__ = xbmcaddon.Addon(__id__)
+
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
 listing_url = 'http://www.api.v3.tvp.pl/shared/listing.php?dump=json'
+urlImage = 'http://s.v3.tvp.pl/images/%s/%s/%s/uid_%s_width_%d_gs_0.jpg'
 
 def tvpAPI(parent_id):
     url = listing_url + '&direct=true&count=101&parent_id=%s'% (parent_id)
+    print url
     response = urllib2.urlopen(url)
     json = simplejson.loads(response.read())
     response.close()
@@ -49,7 +56,6 @@ def listingTVP(json):
     if not darmowe:
         dialog = xbmcgui.Dialog()
         ok = dialog.ok('tvp','Niestety, nie ma darmowej zawartości')
-        return
     else:
         for item in darmowe:
             if 'samsung_enabled' in item:
@@ -57,21 +63,30 @@ def listingTVP(json):
                 if item['samsung_enabled']:
                     filename = filename+'&mime_type=video/mp4'
                 title = item.get('title','')
+                TVShowTitle =  item.get('website_title','')
+                desc =  item.get('description_root','')
+                aired =  item.get('publication_start_dt','')
                 date = item['release_date'].get('sec','')
                 if 'image' in item:
-                    image = item['image'][0]['file_name']
-                    image = 'http://s.v3.tvp.pl/images/uid_%s_width_256_play_0_pos_0_gs_0_height_256.jpg' % (image[:-4])
+                    iconFile = item['image'][0]['file_name']
+                    iconWidth = item['image'][0]['width']
+                    iconUrl = urlImage %(iconFile[0],iconFile[1],iconFile[2],iconFile[:-4],iconWidth)
                 else:
-                    image = ''
-                listitem = xbmcgui.ListItem(title, iconImage=image, thumbnailImage=image)
-                listitem.setInfo('video', {'title': title, 'Date': strftime("%d.%m.%Y", localtime(date)) })               
+                    iconUrl = __settings__.getAddonInfo('icon')
+                listitem = xbmcgui.ListItem(title, iconImage=iconUrl, thumbnailImage=iconUrl)
+                listitem.setInfo('video', {'title': title,'tvshowtitle': TVShowTitle,'plot': desc,'aired': aired, 'Date': strftime("%d.%m.%Y", localtime(date)) })
+                listitem.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
                 listitem.setProperty('IsPlayable', 'true')
+                xbmcplugin.setContent(pluginHandle, 'episodes')
                 xbmcplugin.addDirectoryItem(pluginHandle, pluginUrl+"?odtwarzaj="+filename, listitem, isFolder=False)
+                xbmcplugin.addSortMethod(pluginHandle,xbmcplugin.SORT_METHOD_DATE)
+                xbmcplugin.endOfDirectory(pluginHandle) 
             else:
                 title = item.get('title','')
                 filename = str(item.get('_id',''))
                 if filename != '1597829':
-                    addDir(title,filename,'')
+                    addDir(title,filename,__settings__.getAddonInfo('icon'))
+                    xbmcplugin.endOfDirectory(pluginHandle) 
  
 def get_stream_url(channel_id):
     videofileinfo = urllib2.urlopen('http://www.tvp.pl/pub/stat/videofileinfo?video_id=' + channel_id)
@@ -85,6 +100,7 @@ def addDir(name,parent,iconimage):
     ok=True
     liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo( type="Video", infoLabels={ "Title": name } )
+    liz.setProperty('fanart_image', __settings__.getAddonInfo('fanart') )
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
     return ok
 
@@ -98,5 +114,4 @@ else:
     if not parent_id:
         parent_id = '1785454'
     tvpAPI(parent_id)
-    xbmcplugin.addSortMethod(int(sys.argv[1]),xbmcplugin.SORT_METHOD_DATE)
-xbmcplugin.endOfDirectory(pluginHandle) 
+

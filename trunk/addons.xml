@@ -293,7 +293,7 @@
 
 <addon id="plugin.video.vod.tvp.pl"
        name="VOD - Telewizja Polska SA"
-       version="0.2.0"
+       version="0.2.1"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
