@@ -80,13 +80,12 @@ def listingTVP(json):
                 xbmcplugin.setContent(pluginHandle, 'episodes')
                 xbmcplugin.addDirectoryItem(pluginHandle, pluginUrl+"?odtwarzaj="+filename, listitem, isFolder=False)
                 xbmcplugin.addSortMethod(pluginHandle,xbmcplugin.SORT_METHOD_DATE)
-                xbmcplugin.endOfDirectory(pluginHandle) 
             else:
                 title = item.get('title','')
                 filename = str(item.get('_id',''))
                 if filename != '1597829':
                     addDir(title,filename,__settings__.getAddonInfo('icon'))
-                    xbmcplugin.endOfDirectory(pluginHandle) 
+            xbmcplugin.endOfDirectory(pluginHandle) 
  
 def get_stream_url(channel_id):
     videofileinfo = urllib2.urlopen('http://www.tvp.pl/pub/stat/videofileinfo?video_id=' + channel_id)

@@ -24,7 +24,6 @@ plugin_handle = int(sys.argv[1])
 
 def add_video_item(url, infolabels, img=''):
     obrazek = img.replace("C", "D")
-    print obrazek
     listitem = xbmcgui.ListItem(infolabels['title'], iconImage=obrazek, 
                                 thumbnailImage=obrazek)
     listitem.setInfo('video', infolabels)
@@ -109,7 +108,7 @@ if akcja == 'graj':
             url = movie.find('hq').text
             if not url:
                 url = movie.find('p').text
-            xbmc.Player().play(url,listitem)
+        xbmc.Player().play(url,listitem)
     except:
         pass
 
@@ -135,7 +134,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
     # magazyn extraklasy
     elif '99215' in url:
         print 'extra'
@@ -156,7 +155,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx,nic, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle) 
+        xbmcplugin.endOfDirectory(plugin_handle) 
     # liga mistrzow i mma
     elif '112273' in url:
         print 'liga mistrzow'
@@ -171,7 +170,7 @@ elif akcja == 'listuj':
                 date = re.compile('class="when">([^ ]+)').findall(movie)[0]
                 img = re.compile('img src="([^"]+)').findall(movie)[0]
                 add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(x[0])+"&xx="+str(x[1]), {'title': '(%s) %s' % (date,title )}, img )
-                xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
     elif '97841' in url:
         print 'liga mistrzow'
         html = urllib2.urlopen(url).read()
@@ -185,7 +184,7 @@ elif akcja == 'listuj':
                 date = re.compile('class="when">([^ ]+)').findall(movie)[0]
                 img = re.compile('img src="([^"]+)').findall(movie)[0]
                 add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(x[0])+"&xx="+str(x[1]), {'title': '(%s) %s' % (date,title )}, img )
-                xbmcplugin.endOfDirectory(plugin_handle) 
+        xbmcplugin.endOfDirectory(plugin_handle) 
     # formula1
     elif '97844' in url:
         print 'formula1'
@@ -207,7 +206,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
 
     # siatkarski
     elif '97845' in url:
@@ -230,7 +229,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
 
     # inne serie
     elif '98305' in url:
@@ -253,7 +252,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
 
     #wszystkie wideo
     elif '67450' in url:
@@ -279,7 +278,7 @@ elif akcja == 'listuj':
                     results.append(nt)
         for title, xxd, xx,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=graj&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
-            xbmcplugin.endOfDirectory(plugin_handle)
+        xbmcplugin.endOfDirectory(plugin_handle)
 
 
 
@@ -328,7 +327,7 @@ else:
         href = re.compile('a href=\'([^\']+)').findall(kategoria)[0]
         title = re.compile(' title=\'([^\']+)').findall(kategoria)[0]
         add_video_item(sys.argv[0]+"?akcja=listuj&url="+urllib.quote_plus(href), {'title': '%s' % (title)} )
-        xbmcplugin.endOfDirectory(plugin_handle)
+    xbmcplugin.endOfDirectory(plugin_handle)
     
     
 
