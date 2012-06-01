@@ -162,7 +162,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.budzik.pl" version="0.2.1" name="Budzik.tvp.pl" provider-name="smuto">
+<addon id="plugin.video.budzik.pl" version="0.2.2" name="Budzik.tvp.pl" provider-name="smuto">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="script.module.simplejson" version="2.0.10"/>
@@ -179,7 +179,7 @@
 
 <addon id="plugin.video.ipla.pl"
        name="ipla.tv"
-       version="0.2.2"
+       version="0.2.3"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -237,7 +237,7 @@
 
 <addon id="plugin.video.sport.pl"
        name="sport.pl"
-       version="0.2.2"
+       version="0.2.3"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
