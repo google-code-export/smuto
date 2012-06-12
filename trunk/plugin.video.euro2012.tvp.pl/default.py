@@ -133,7 +133,10 @@ def get_stream_url(channel_id):
     json = simplejson.loads(videofileinfo.read())
     videofileinfo.close()
     if json['video_url'].endswith('manifest'):
-        return 'http://195.245.213.204/Ch0006'
+        if json['file_name'].endswith('Ch0015'):
+            return 'http://195.245.213.204/Ch0006'
+        else:
+            print json['file_name']
     else:
         return json['video_url']
 
@@ -155,6 +158,7 @@ if pluginQuery.startswith('?odtwarzaj='):
 else:
     parent_id = pluginQuery[8:]
     if not parent_id:
+        addDir('transmisje','3116100',__settings__.getAddonInfo('icon'))
         results = []
         for start in (5770492,7020280,7196752):
             url = listing_url + '&direct=true&count=150&parent_id=%s'% (start)
