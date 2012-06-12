@@ -65,7 +65,7 @@ def listingTVP(json):
     else:
         for item in darmowe:
             if 'samsung_enabled' in item:
-                if item['release_date'].get('sec','') < time() and item['play_mode'] == 1:
+                if item['release_date'].get('sec','') < time() and item['play_mode'] != 0:
                     filename = str(item.get('_id',''))
                     if item['samsung_enabled']:
                         filename = filename+'&mime_type=video/mp4'
@@ -78,7 +78,7 @@ def listingTVP(json):
                     aired =  item.get('publication_start_dt','')
                     date = item['release_date'].get('sec',time())
                     if str(date).startswith('-'):
-                        date= 1336552260
+                        date= time()
                     iconUrl = getImageUrl(item)
                     listitem = xbmcgui.ListItem(title, iconImage=iconUrl, thumbnailImage=iconUrl)
                     listitem.setInfo('video', {'title': title,'tvshowtitle': TVShowTitle,'plot': desc,'aired': aired, 'Date': strftime("%d.%m.%Y", localtime(date)) })
@@ -132,7 +132,10 @@ def get_stream_url(channel_id):
     videofileinfo = urllib2.urlopen('http://www.tvp.pl/pub/stat/videofileinfo?video_id=' + channel_id)
     json = simplejson.loads(videofileinfo.read())
     videofileinfo.close()
-    return json['video_url']
+    if json['video_url'].endswith('manifest'):
+        return 'http://195.245.213.204/Ch0006'
+    else:
+        return json['video_url']
 
 
 def addDir(name,parent,iconimage):
