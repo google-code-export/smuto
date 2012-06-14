@@ -133,10 +133,13 @@ def get_stream_url(channel_id):
     json = simplejson.loads(videofileinfo.read())
     videofileinfo.close()
     if json['video_url'].endswith('manifest'):
-        if json['file_name'].endswith('Ch0015'):
+        select = xbmcgui.Dialog().select('Wybierz kanał', ['pierwszy','drugi','trzeci'])
+        if select ==0:
+            return 'http://195.245.213.204/Ch0001'
+        elif select ==1:
+            return 'http://195.245.213.204/Ch0002'
+        elif select ==2:
             return 'http://195.245.213.204/Ch0006'
-        else:
-            print json['file_name']
     else:
         return json['video_url']
 
