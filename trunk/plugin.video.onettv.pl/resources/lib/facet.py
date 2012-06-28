@@ -1,4 +1,7 @@
-﻿#import os
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -6,18 +9,25 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
-
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
 
 alL = (names (33333))
 
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
+
 class Main:
+	#
+	# Init
+	#
 	def __init__( self ) :
+
 		self.getNames()
+
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&rss=1'),
 			("Erotyka",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28Erotyka%29&rss=1'),
 			("Modelki",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28Modelki%29&rss=1'),
 			("Adrenalina",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28Adrenalina%29&rss=1'),
@@ -25,6 +35,7 @@ class Main:
 			("Mężczyźni",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28M%C4%99%C5%BCczy%C5%BAni%29&rss=1'),
 			("Kulinaria",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28Kulinaria%29&rss=1'),
 			("Porady",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&tags=%28Porady%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=32&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)

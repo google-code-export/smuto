@@ -1,3 +1,7 @@
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -5,8 +9,12 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 KRY = (names (30049))
 akt = (names (30050))
@@ -20,13 +28,13 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&rss=1'),
-			(KRY,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28Kraje_i_regiony%29&rss=1'),
-			(akt,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28Aktywnie%29&rss=1'),
+			(KRY,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=(Kraje_i_regiony)&rss=1'),
+			(akt,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=(Aktywnie)&rss=1'),
 			("TV",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28TV%29&rss=1'),
 			(eks,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28Ekstremalnie%29&rss=1'),
 			(WFY,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28Wasze_filmy%29&rss=1'),
 			(gos,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&tags=%28Go%C5%9Bcie%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=8&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)

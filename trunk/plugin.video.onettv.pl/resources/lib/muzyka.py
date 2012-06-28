@@ -1,4 +1,7 @@
-#import os
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -6,8 +9,12 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 awa = (names (30039))
 rok = (names (30040))
@@ -22,14 +29,14 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&rss=1'),
 			("Pop",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Pop%29&rss=1'),
 			(awa,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Alternatywa%29&rss=1'),
 			(rok,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Rock%29&rss=1'),
 			(met,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Metal%29&rss=1'),
 			(hop,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Hip-Hop%29&rss=1'),
 			(rnb,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28RnB%29&rss=1'),
-			(klu,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Klubowa%29&rss=1')
+			(klu,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&tags=%28Klubowa%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=6&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)
@@ -37,4 +44,3 @@ class Main:
 			xbmcplugin.addDirectoryItem(int(sys.argv[1]),u,li,True)
 		xbmcplugin.addSortMethod( handle=int( sys.argv[ 1 ] ), sortMethod=xbmcplugin.SORT_METHOD_NONE )
 		xbmcplugin.endOfDirectory( handle=int( sys.argv[ 1 ] ), succeeded=True )
-

@@ -1,4 +1,7 @@
-#import os
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -6,8 +9,12 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 RZM = (names (30054))
 gtu = (names (30055))
@@ -25,11 +32,11 @@ class Main:
 
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&rss=1'),
 			(RZM,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&tags=%28Rozmawiamy%29&rss=1'),
 			(gtu,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&tags=%28Gotujemy%29&rss=1'),
 			(spm,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&tags=%28%C5%9Apiewamy%29&rss=1'),
 			(six,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&tags=%286_miliard%C3%B3w_innych%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=3&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)

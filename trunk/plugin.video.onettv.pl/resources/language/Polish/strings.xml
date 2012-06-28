@@ -22,7 +22,7 @@
 
 <string id="30015">Kolej TV</string>
 <string id="30016">Nauka Języków</string>
-<string id="30017">DISCOVERY Historia</string>
+<string id="30017">Niesławne miejsca</string>
 <string id="30018">Czy wiesz?</string>
 
 <string id="30019">Komedia</string>
@@ -73,7 +73,7 @@
 
 <string id="30058">Kultura</string>
 <string id="30059">Sensacje</string>
-<string id="30060">Tech Nowinki</string>
+<string id="30060">Muzyczne</string>
 <string id="30061">Ludzie ONETU</string>
 
 <string id="30062">Piłka Nożna</string>
@@ -82,7 +82,7 @@
 <string id="30065">Tenis</string>
 <string id="30066">Koszykówka</string>
 <string id="30067">Boks</string>
-<string id="30068">Bez Ciśnień</string>
+<string id="30068">eMeReS</string>
 
 <string id="30069">Moda</string>
 <string id="30070">Gwiazdy</string>
@@ -97,9 +97,10 @@
 
 <string id="30078">Kraj</string>
 <string id="30079">Świat</string>
-<string id="30080">Teraz MY</string>
+<string id="30080">Polska Regionalna</string>
 <string id="30081">Pogoda</string>
-<string id="30082">Nauka</string>
+<string id="30082">Na tropie</string>
 <string id="30083">Ciekawostki</string>
-
+<string id="30084">OnetBiznes</string>
+<string id="30085">Mały Einstein</string>
 </strings>

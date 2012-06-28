@@ -1,3 +1,7 @@
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -5,8 +9,12 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 tra = (names (30034))
 gpy = (names (30035))
@@ -21,13 +29,13 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&rss=1'),
 			(tra,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Trailery%29&rss=1'),
 			(gpy,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Gameplay%29&rss=1'),
 			(KPI,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Kulisy_produkcji%29&rss=1'),
 			(rwo,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Recenzja_wideo%29&rss=1'),
 			(wyw,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Wywiady%29&rss=1'),
 			(imp,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&tags=%28Imprezy%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=9&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)

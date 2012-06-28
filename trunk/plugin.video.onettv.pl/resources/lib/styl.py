@@ -1,4 +1,7 @@
-#import os
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -6,8 +9,12 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 MDA = (names (30069))
 GWA = (names (30070))
@@ -24,15 +31,15 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&rss=1'),
 			(MDA,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Moda%29&rss=1'),
 			(GWA,'hhttp://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Gwiazdy%29&rss=1'),
-			(URO,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Uroda%29&rss=1'),
+			(URO,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=(Uroda)&rss=1'),
 			(FTN,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Fitness%29&rss=1'),
 			(GTO,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Gotowanie%29&rss=1'),
 			(DZI,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Dziecko%29&rss=1'),
 			(MAG,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Magia%29&rss=1'),
-			(oth,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=%28Inne%29&rss=1')
+			(oth,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&tags=(Inne)&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=4&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)

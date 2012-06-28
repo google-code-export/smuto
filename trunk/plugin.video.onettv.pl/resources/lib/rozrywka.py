@@ -1,4 +1,7 @@
-#import os
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
 import sys
 import xbmc
 import xbmcgui
@@ -6,13 +9,17 @@ import xbmcplugin
 import urllib
 import xbmcaddon
 
-Addon = xbmcaddon.Addon(id="plugin.video.onettv.pl")
-names = Addon.getLocalizedString
+__addon__   = "plugin.video.onettv.pl"
+__settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
+names = __settings__.getLocalizedString
+
+#HOME_DIR = os.getcwd()
+#names = xbmc.Language( HOME_DIR ).getLocalizedString
 
 roz = (names (30002))
 kul = (names (30058))
 sen = (names (30059))
-TNI = (names (30060))
+MUz = (names (30060))
 lon = (names (30061))
 alL = (names (33333))
 
@@ -21,12 +28,12 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		gl=[
-			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&rss=1'),
 			(roz,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28Rozrywka%29&rss=1'),
 			(kul,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28Kultura%29&rss=1'),
 			(sen,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28Sensacje%29&rss=1'),
+			(MUz,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28_Muzyczne%29&rss=1'),
 			(lon,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28Ludzie_Onetu%29&rss=1'),
-			("Muzyczne",'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&tags=%28_Muzyczne%29&rss=1'),
+			(alL,'http://www.onet.tv/feed/getMoviesCategoryOrTagsDate,15,1,desc,movies.xml?category=5&rss=1')
 			]
 		for name, url in gl:
 			li=xbmcgui.ListItem(name)
