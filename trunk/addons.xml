@@ -126,6 +126,25 @@
     </extension>
 </addon>
 
+<addon id="plugin.audio.open_FM"
+       name="Open FM"
+       version="1.1"
+       provider-name="pajretX">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.beautifulsoup" version="3.0.8"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Stream'uje radia ze strony open.fm</summary>
+    <description>Stream'uje radia ze strony open.fm</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.image.990px.random" name="990px Random" version="1.0.0" provider-name="smuto">
     <requires>
 	<import addon="xbmc.python" version="2.0"/>
@@ -235,11 +254,11 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.onettv.pl" name="Onet.TV" version="1.0.1" provider-name="pajretX">
+<addon id="plugin.video.onettv.pl" name="Onet.TV" version="1.0.2" provider-name="pajretX">
     <requires>
         <import addon="xbmc.python" version="1.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
