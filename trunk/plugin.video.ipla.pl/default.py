@@ -2,7 +2,7 @@
 
 import xbmcgui, xbmc, xbmcaddon, xbmcplugin
 import elementtree.ElementTree as ET
-import urllib,urllib2,time,os
+import urllib,urllib2,time,os,re
 
 def iplaList(iplaid,contentupdatets,newsid,name):
     iplaidlist = []
@@ -75,10 +75,9 @@ def addLink(name,url,iconimage,descr,timestamp,vcnt,vote,dur,tvshowtitle):
         m, s = divmod(dur, 60)
         h, m = divmod(m, 60)
         odcinek = 0
-        if 'Odcinek' in name:
-            podziel = name.split(' - ')
-            name = podziel[0]
-            odcinek = int(podziel[1].replace("Odcinek ", ""))
+        matched = re.match(u'(.*)\\s[-\u2013]\\s[Oo]dcinek\\s+(\\d+)',name)
+        if matched:
+            name, odcinek = matched.group(1), int(matched.group(2))
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="video",  infoLabels = {
                 'title' : name ,

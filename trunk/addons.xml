@@ -213,7 +213,7 @@
 
 <addon id="plugin.video.ipla.pl"
        name="ipla.tv"
-       version="0.2.3"
+       version="0.2.4"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -286,6 +286,24 @@
     <summary lang="pl">sport.pl</summary>
     <description lang="en">sport.pl</description>
     <description lang="pl">sport.pl</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.trailers.filmweb.pl"
+       name="Trailery"
+       version="0.0.3"
+       provider-name="MDobak">
+  <requires>
+    <import addon="xbmc.python" version="2.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Trailery</summary>
+    <description>Wyświetla losowe trailery filmów z Filmweb.pl</description>
     <platform>all</platform>
   </extension>
 </addon>
