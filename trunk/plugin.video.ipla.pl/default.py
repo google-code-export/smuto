@@ -40,12 +40,25 @@ def iplaVOD(iplaid,contentupdatets,newsid,name):
     vods = elems.find("VoDs").findall("vod")    
     for vod in vods:
         val = vod.attrib
-        link = vod.findall("srcreq")[-1]
-        ell = link.attrib
-        drm = ell['drmtype']
-        if drm == '0':
-            val['url'] = ell['url']
-            darmolist.append(val)
+        links = vod.findall("srcreq")
+        maxquality = 0
+        for link in links:
+            ell = link.attrib
+            drm = ell['drmtype']
+            format = ell['format']
+            quality = ell['quality']
+            if drm == '0' and format != '2':
+                if int(quality) > maxquality:
+                    maxquality = int(quality)
+        for link in links:
+            ell = link.attrib
+            drm = ell['drmtype']
+            format = ell['format']
+            iquality = int(ell['quality'])
+            if drm == '0' and format != '2' and iquality == maxquality:
+                val['url'] = ell['url']
+                darmolist.append(val)
+                break
     if not darmolist:
         dialog = xbmcgui.Dialog()
         ok = dialog.ok('ipla.tv','Niestety, nie ma darmowej zawartości') 

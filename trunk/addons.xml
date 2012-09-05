@@ -213,7 +213,7 @@
 
 <addon id="plugin.video.ipla.pl"
        name="ipla.tv"
-       version="0.2.4"
+       version="0.2.5"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
