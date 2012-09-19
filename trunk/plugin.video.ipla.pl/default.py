@@ -177,7 +177,7 @@ def get_VOD_data(iplaid,contentupdatets,newsid):
     if os.path.exists(local):
         if contentupdatets > os.path.getctime(local):
             download_VODfile(local,iplaid)
-        elif (time.time() - os.path.getctime(local)) > (3600*4) and newsid == 1753:
+        elif (time.time() - os.path.getctime(local)) > (3600*4):
             download_VODfile(local,iplaid)
     else:
         download_VODfile(local,iplaid)  
