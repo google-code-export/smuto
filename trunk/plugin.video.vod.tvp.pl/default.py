@@ -78,7 +78,7 @@ def listingTVP(json):
             if 'samsung_enabled' in item:
                 if item['release_date'].get('sec','') < time() and item['play_mode'] == 1:
                     filename = str(item.get('_id',''))
-                    if item['samsung_enabled']:
+                    if 'video/mp4' in (item.get('videoFormatMimes') or []):
                         filename = filename+'&mime_type=video/mp4'
                     title = item.get('title','')
                     TVShowTitle =  item.get('website_title','')
