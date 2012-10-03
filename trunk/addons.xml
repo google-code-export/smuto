@@ -290,6 +290,21 @@
   </extension>
 </addon>
 
+<addon id="plugin.video.spryciarze.pl" name="spryciarze.pl" version="1.0" provider-name="pajretX">
+    <requires>
+        <import addon="xbmc.python" version="1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>View videos from spryciarze.pl.</summary>
+        <disclaimer>Filmiki</disclaimer>
+        <description>View videos from spryciarze.pl</description>
+    </extension>
+</addon>
+
 <addon id="plugin.video.trailers.filmweb.pl"
        name="Trailery"
        version="0.0.3"
