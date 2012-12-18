@@ -7,7 +7,7 @@ import simplejson, socket
 pluginUrl = sys.argv[0]
 pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
-base_url = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json'
+base_url = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json&v=2.0&authKey=ba786b315508f0920eca1c34d65534cd'
 scale_url = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
 
 socket.setdefaulttimeout(10)
@@ -23,7 +23,7 @@ def TVNPlayerAPI(m,type,id,season):
             name = item.get('name','')
             type = item.get('type','')
             id = item['id']
-            if type != 'titles_of_day':
+            if type != 'titles_of_day' and type != 'favorites' and type != 'pauses':
                 addDir(name,'getItems',type,id,'DefaultVideoPlaylists.png','','')
     else:
         urlQuery = '&m=%s&type=%s&id=%s&limit=500&page=1&sort=newest' % (m, type, id)
@@ -85,17 +85,26 @@ def TVNPlayerItems(json):
 
 def TVNPlayerItem(type, id):
         urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
-        getItem = urllib2.urlopen(base_url + urlQuery)
-        json = simplejson.loads(getItem.read())
-        getItem.close()
-        video_content = json['item']['videos']['main']['video_content']
-        profile_name_list = []
-        for item in video_content:
-            profile_name = item['profile_name']
-            profile_name_list.append(profile_name)
-        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-        stream_url = json['item']['videos']['main']['video_content'][select]['url']
-        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
+        GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
+        GeoIPjson = simplejson.loads(GeoIP.read())
+        GeoIP.close()
+        if GeoIPjson['result']:
+            getItem = urllib2.urlopen(base_url + urlQuery)
+            json = simplejson.loads(getItem.read())
+            getItem.close()
+            video_content = json['item']['videos']['main']['video_content']
+            profile_name_list = []
+            for item in video_content:
+                profile_name = item['profile_name']
+                profile_name_list.append(profile_name)
+            select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+            stream_url = json['item']['videos']['main']['video_content'][select]['url']
+            new_stream_url = urllib2.urlopen(stream_url)
+            stream_url = new_stream_url.read()
+            new_stream_url.close()
+            xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
+        else:
+            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
