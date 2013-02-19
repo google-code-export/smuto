@@ -8,13 +8,9 @@ pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
 
 def get_stream_url(channel_id):
-    xml = urllib2.urlopen('http://tvgry.pl/ajax_getPlaylistXML.asp?movie_ids=' + channel_id).read()
-    try:
-        match=re.compile('flvHD="([^"]+)').findall(xml)[0]
-    except:
-        match=re.compile('flvSD="([^"]+)').findall(xml)[0]
-    leet = string.maketrans('abcdefghijklmnopqrstuvwxyz0123456789:-./^', 'bcdefghijklmnopqrstuvwxyza123456789:-./0_')
-    return match.translate(leet)
+    xml = urllib2.urlopen('http://tvgry.pl/jwplayer/playlist.asp?ID=' + channel_id).read()
+    match=re.compile(':file>([^<]+)').findall(xml)[0]
+    return match
 
 def add_video_item():
     html = urllib2.urlopen('http://www.gry-online.pl/telewizja-dla-graczy.asp?GRU=1').read()
