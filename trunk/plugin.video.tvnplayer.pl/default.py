@@ -53,6 +53,7 @@ def TVNPlayerItems(json):
             name = item.get('title','')
             type = item.get('type','')
             type_episode = item.get('type_episode','')
+            clickable = item['clickable']
             id = item['id']
             thumbnail = item['thumbnail'][0]['url']
             gets = {'type': 1,
@@ -65,7 +66,8 @@ def TVNPlayerItems(json):
                     'dstw': 256,
                     'dsth': 292}
             if type == 'episode':
-                if type_episode == 'normal' or type_episode == 'catchup':
+                if clickable == 1 :                
+                #if type_episode == 'normal' or type_episode == 'catchup':
                     tvshowtitle = item.get('title','')
                     episode = item.get('episode','')
                     sub_title = item.get('sub_title','')
@@ -76,7 +78,7 @@ def TVNPlayerItems(json):
                     name = tvshowtitle + ' - ' + sub_title
                     if not sub_title or tvshowtitle == sub_title:
                         name = tvshowtitle
-                    if type_episode == 'catchup':
+                    if str(episode) != '0' :
                         name = name + ', sezon ' + str(season)+', odcinek '+ str(episode)
                         
                     addLink(name,url,thumbnail,gets,tvshowtitle,lead,episode,season,start_date)
@@ -85,26 +87,28 @@ def TVNPlayerItems(json):
 
 def TVNPlayerItem(type, id):
         urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
+        getItem = urllib2.urlopen(base_url + urlQuery)
+        json = simplejson.loads(getItem.read())
+        getItem.close()
+        video_content = json['item']['videos']['main']['video_content']
+        profile_name_list = []
+        for item in video_content:
+            profile_name = item['profile_name']
+            profile_name_list.append(profile_name)
+        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+        stream_url = json['item']['videos']['main']['video_content'][select]['url']
         GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
         GeoIPjson = simplejson.loads(GeoIP.read())
         GeoIP.close()
-        if GeoIPjson['result']:
-            getItem = urllib2.urlopen(base_url + urlQuery)
-            json = simplejson.loads(getItem.read())
-            getItem.close()
-            video_content = json['item']['videos']['main']['video_content']
-            profile_name_list = []
-            for item in video_content:
-                profile_name = item['profile_name']
-                profile_name_list.append(profile_name)
-            select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-            stream_url = json['item']['videos']['main']['video_content'][select]['url']
-            new_stream_url = urllib2.urlopen(stream_url)
-            stream_url = new_stream_url.read()
-            new_stream_url.close()
-            xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
-        else:
-            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
+        if not GeoIPjson['result']:
+            # http://spys.ru/free-proxy-list/PL/
+            proxy_handler = urllib2.ProxyHandler({'http':'http://195.200.199.98:8080'})
+            opener = urllib2.build_opener(proxy_handler)
+            urllib2.install_opener(opener)
+        new_stream_url = urllib2.urlopen(stream_url)
+        stream_url = new_stream_url.read()
+        new_stream_url.close()
+        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
@@ -164,7 +168,7 @@ def addLink(name,url,thumbnail,gets,serie_title,lead,episode,season,start_date):
                 'aired' : start_date
         })
         liz.setProperty("IsPlayable","true");
-        liz.setProperty('Fanart_Image', 'http://dcs-46-28-242-53.atmcdn.pl/dcs/o2/tvn/web-content/m/orig/' + thumbnail)
+        liz.setProperty('Fanart_Image', 'http://redir.atmcdn.pl/http/o2/tvn/web-content/m/' + thumbnail)
         ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=url,listitem=liz,isFolder=False)
         return ok
 
