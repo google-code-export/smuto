@@ -102,7 +102,7 @@ def TVNPlayerItem(type, id):
         for item in video_content:
             profile_name = item['profile_name']
             profile_name_list.append(profile_name)
-        if __settings__.getSetting('auto_quality'):
+        if __settings__.getSetting('auto_quality') == 'true' :
             if 'HD' in profile_name_list:
                 select = profile_name_list.index('HD')
             elif 'Bardzo Wysoka' in profile_name_list:
@@ -114,25 +114,36 @@ def TVNPlayerItem(type, id):
         else:
             select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
         stream_url = json['item']['videos']['main']['video_content'][select]['url']
+
+        # sprawdzamy, czy nie potrzebujemy proxy
+        # parę darmowych można znaleść na
+        # http://spys.ru/free-proxy-list/PL/
         GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
         GeoIPjson = simplejson.loads(GeoIP.read())
         GeoIP.close()
         if not GeoIPjson['result']:
-            # http://spys.ru/free-proxy-list/PL/
-            pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
-            proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
-            if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
-                password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
-                password_mgr.add_password(None, pl_proxy, __settings__.getSetting('pl_proxy_user'), __settings__.getSetting('pl_proxy_pass'))
-                proxy_auth_handler = urllib2.ProxyBasicAuthHandler(password_mgr)
-                opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+            if __settings__.getSetting('pl_proxy') <> '' and __settings__.getSetting('pl_proxy_port') <> '':
+                pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
+                proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
+                if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
+                    password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+                    password_mgr.add_password(None, pl_proxy, __settings__.getSetting('pl_proxy_user'), __settings__.getSetting('pl_proxy_pass'))
+                    proxy_auth_handler = urllib2.ProxyBasicAuthHandler(password_mgr)
+                    opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+                else:
+                    opener = urllib2.build_opener(proxy_handler)
+                urllib2.install_opener(opener)
+                return TVNPlayer(stream_url)
             else:
-                opener = urllib2.build_opener(proxy_handler)
-            urllib2.install_opener(opener)
-        new_stream_url = urllib2.urlopen(stream_url)
+              ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
+        else :
+            return TVNPlayer(stream_url)
+
+def TVNPlayer(url):
+        new_stream_url = urllib2.urlopen(url)
         stream_url = new_stream_url.read()
         new_stream_url.close()
-        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
+        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))  
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
