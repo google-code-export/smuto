@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+import xbmcaddon
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui
 import simplejson, socket
@@ -9,6 +10,8 @@ pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
 base_url = 'http://tvnplayer.pl/api/?platform=ConnectedTV&terminal=Samsung&format=json&v=2.0&authKey=ba786b315508f0920eca1c34d65534cd'
 scale_url = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/'
+
+__settings__ = xbmcaddon.Addon(id='plugin.video.tvnplayer.pl')
 
 socket.setdefaulttimeout(10)
 
@@ -78,9 +81,13 @@ def TVNPlayerItems(json):
                     name = tvshowtitle + ' - ' + sub_title
                     if not sub_title or tvshowtitle == sub_title:
                         name = tvshowtitle
-                    if str(episode) != '0' :
-                        name = name + ', sezon ' + str(season)+', odcinek '+ str(episode)
-                        
+                    if type_episode == 'catchup' :
+                        if str(episode) == '0' :
+                            name = name
+                        elif str(season) == '0' :
+                            name = name + ', odcinek '+ str(episode)
+                        else:
+                            name = name + ', sezon ' + str(season)+', odcinek '+ str(episode)
                     addLink(name,url,thumbnail,gets,tvshowtitle,lead,episode,season,start_date)
             else:
                 addDir(name,'getItems',type,id,thumbnail,gets,'')
@@ -95,15 +102,32 @@ def TVNPlayerItem(type, id):
         for item in video_content:
             profile_name = item['profile_name']
             profile_name_list.append(profile_name)
-        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+        if __settings__.getSetting('auto_quality'):
+            if 'HD' in profile_name_list:
+                select = profile_name_list.index('HD')
+            elif 'Bardzo Wysoka' in profile_name_list:
+                select = profile_name_list.index('Bardzo Wysoka')
+            elif 'Wysoka' in profile_name_list:
+                select = profile_name_list.index('Wysoka')
+            else:
+                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+        else:
+            select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
         stream_url = json['item']['videos']['main']['video_content'][select]['url']
         GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
         GeoIPjson = simplejson.loads(GeoIP.read())
         GeoIP.close()
         if not GeoIPjson['result']:
             # http://spys.ru/free-proxy-list/PL/
-            proxy_handler = urllib2.ProxyHandler({'http':'http://195.200.199.98:8080'})
-            opener = urllib2.build_opener(proxy_handler)
+            pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
+            proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
+            if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
+                password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
+                password_mgr.add_password(None, pl_proxy, __settings__.getSetting('pl_proxy_user'), __settings__.getSetting('pl_proxy_pass'))
+                proxy_auth_handler = urllib2.ProxyBasicAuthHandler(password_mgr)
+                opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
+            else:
+                opener = urllib2.build_opener(proxy_handler)
             urllib2.install_opener(opener)
         new_stream_url = urllib2.urlopen(stream_url)
         stream_url = new_stream_url.read()
