@@ -93,36 +93,16 @@ def TVNPlayerItems(json):
                 addDir(name,'getItems',type,id,thumbnail,gets,'')
 
 def TVNPlayerItem(type, id):
-        urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
-        getItem = urllib2.urlopen(base_url + urlQuery)
-        json = simplejson.loads(getItem.read())
-        getItem.close()
-        video_content = json['item']['videos']['main']['video_content']
-        profile_name_list = []
-        for item in video_content:
-            profile_name = item['profile_name']
-            profile_name_list.append(profile_name)
-        if __settings__.getSetting('auto_quality') == 'true' :
-            if 'HD' in profile_name_list:
-                select = profile_name_list.index('HD')
-            elif 'Bardzo Wysoka' in profile_name_list:
-                select = profile_name_list.index('Bardzo Wysoka')
-            elif 'Wysoka' in profile_name_list:
-                select = profile_name_list.index('Wysoka')
-            else:
-                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-        else:
-            select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-        stream_url = json['item']['videos']['main']['video_content'][select]['url']
-
         # sprawdzamy, czy nie potrzebujemy proxy
         # parę darmowych można znaleść na
         # http://spys.ru/free-proxy-list/PL/
         GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
         GeoIPjson = simplejson.loads(GeoIP.read())
         GeoIP.close()
-        if not GeoIPjson['result']:
-            if __settings__.getSetting('pl_proxy') <> '' and __settings__.getSetting('pl_proxy_port') <> '':
+        if not GeoIPjson['result'] and __settings__.getSetting('pl_proxy') == '':
+            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
+        else:
+            if not GeoIPjson['result']:
                 pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
                 proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
                 if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
@@ -132,18 +112,37 @@ def TVNPlayerItem(type, id):
                     opener = urllib2.build_opener(proxy_handler, proxy_auth_handler)
                 else:
                     opener = urllib2.build_opener(proxy_handler)
-                urllib2.install_opener(opener)
-                return TVNPlayer(stream_url)
+            urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
+            if not GeoIPjson['result']:
+                getItem = opener.open(base_url + urlQuery)
             else:
-              ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
-        else :
-            return TVNPlayer(stream_url)
-
-def TVNPlayer(url):
-        new_stream_url = urllib2.urlopen(url)
-        stream_url = new_stream_url.read()
-        new_stream_url.close()
-        xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))  
+                getItem = urllib2.urlopen(base_url + urlQuery)
+            json = simplejson.loads(getItem.read())
+            getItem.close()
+            video_content = json['item']['videos']['main']['video_content']
+            profile_name_list = []
+            for item in video_content:
+                profile_name = item['profile_name']
+                profile_name_list.append(profile_name)
+            if __settings__.getSetting('auto_quality') == 'true' :
+                if 'HD' in profile_name_list:
+                    select = profile_name_list.index('HD')
+                elif 'Bardzo Wysoka' in profile_name_list:
+                    select = profile_name_list.index('Bardzo Wysoka')
+                elif 'Wysoka' in profile_name_list:
+                    select = profile_name_list.index('Wysoka')
+                else:
+                    select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+            else:
+                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
+            stream_url = json['item']['videos']['main']['video_content'][select]['url']
+            if not GeoIPjson['result']:
+                new_stream_url = opener.open(stream_url)
+            else:
+                new_stream_url = urllib2.urlopen(stream_url)
+            stream_url = new_stream_url.read()
+            new_stream_url.close()
+            xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
