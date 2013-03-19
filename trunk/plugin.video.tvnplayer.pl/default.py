@@ -17,6 +17,10 @@ socket.setdefaulttimeout(10)
 
 def TVNPlayerAPI(m,type,id,season):
     if m == 'mainInfo':
+        GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
+        GeoIPjson = simplejson.loads(GeoIP.read())
+        GeoIP.close()
+        __settings__.setSetting(id='checkClientip', value=str(GeoIPjson['result']))
         url = base_url + '&m=%s'% (m)
         response = urllib2.urlopen(url)
         json = simplejson.loads(response.read())
@@ -93,16 +97,10 @@ def TVNPlayerItems(json):
                 addDir(name,'getItems',type,id,thumbnail,gets,'')
 
 def TVNPlayerItem(type, id):
-        # sprawdzamy, czy nie potrzebujemy proxy
-        # parę darmowych można znaleść na
-        # http://spys.ru/free-proxy-list/PL/
-        GeoIP = urllib2.urlopen(base_url + '&m=checkClientip')
-        GeoIPjson = simplejson.loads(GeoIP.read())
-        GeoIP.close()
-        if not GeoIPjson['result'] and __settings__.getSetting('pl_proxy') == '':
-            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.')
+        if __settings__.getSetting('checkClientip') == 'false' and __settings__.getSetting('pl_proxy') == '':
+            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.', 'Ustaw proxy albo się przeprowadź.')
         else:
-            if not GeoIPjson['result']:
+            if __settings__.getSetting('checkClientip') == 'false':
                 pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
                 proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
                 if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
@@ -113,7 +111,7 @@ def TVNPlayerItem(type, id):
                 else:
                     opener = urllib2.build_opener(proxy_handler)
             urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
-            if not GeoIPjson['result']:
+            if __settings__.getSetting('checkClientip') == 'false':
                 getItem = opener.open(base_url + urlQuery)
             else:
                 getItem = urllib2.urlopen(base_url + urlQuery)
@@ -136,7 +134,7 @@ def TVNPlayerItem(type, id):
             else:
                 select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
             stream_url = json['item']['videos']['main']['video_content'][select]['url']
-            if not GeoIPjson['result']:
+            if __settings__.getSetting('checkClientip') == 'false':
                 new_stream_url = opener.open(stream_url)
             else:
                 new_stream_url = urllib2.urlopen(stream_url)
@@ -151,9 +149,6 @@ def htmlToText(html):
                 .replace("&amp;", "&")\
                 .replace("&quot;",'"')\
                 .replace("&apos;","'")
-
-def SetTVNPlayer():
-        return TVNPlayerAPI(platform='Mobile',terminal='Sony',format='json')
 
 def get_params():
         param=[]
@@ -201,7 +196,10 @@ def addLink(name,url,thumbnail,gets,serie_title,lead,episode,season,start_date):
                 'season' : int(season) ,
                 'aired' : start_date
         })
-        liz.setProperty("IsPlayable","true");
+        if __settings__.getSetting('checkClientip') == 'false' and __settings__.getSetting('pl_proxy') == '':
+            liz.setProperty("IsPlayable","false");
+        else:
+            liz.setProperty("IsPlayable","true");
         liz.setProperty('Fanart_Image', 'http://redir.atmcdn.pl/http/o2/tvn/web-content/m/' + thumbnail)
         ok=xbmcplugin.addDirectoryItem(handle=pluginHandle,url=url,listitem=liz,isFolder=False)
         return ok
