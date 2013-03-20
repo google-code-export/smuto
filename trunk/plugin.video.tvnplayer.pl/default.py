@@ -97,10 +97,12 @@ def TVNPlayerItems(json):
                 addDir(name,'getItems',type,id,thumbnail,gets,'')
 
 def TVNPlayerItem(type, id):
+        print __settings__.getSetting('checkClientip')
         if __settings__.getSetting('checkClientip') == 'false' and __settings__.getSetting('pl_proxy') == '':
             ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.', 'Ustaw proxy albo się przeprowadź.')
         else:
             if __settings__.getSetting('checkClientip') == 'false':
+                print 'We build proxy'
                 pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
                 proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
                 if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
@@ -113,8 +115,10 @@ def TVNPlayerItem(type, id):
             urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
             if __settings__.getSetting('checkClientip') == 'false':
                 getItem = opener.open(base_url + urlQuery)
+                print 'We open item by proxy'
             else:
                 getItem = urllib2.urlopen(base_url + urlQuery)
+                print 'We open item without proxy'
             json = simplejson.loads(getItem.read())
             getItem.close()
             video_content = json['item']['videos']['main']['video_content']
@@ -136,8 +140,10 @@ def TVNPlayerItem(type, id):
             stream_url = json['item']['videos']['main']['video_content'][select]['url']
             if __settings__.getSetting('checkClientip') == 'false':
                 new_stream_url = opener.open(stream_url)
+                print 'We open stream by proxy'
             else:
                 new_stream_url = urllib2.urlopen(stream_url)
+                print 'We open stream without proxy'
             stream_url = new_stream_url.read()
             new_stream_url.close()
             xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
