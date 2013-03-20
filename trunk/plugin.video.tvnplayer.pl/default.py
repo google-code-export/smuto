@@ -97,12 +97,10 @@ def TVNPlayerItems(json):
                 addDir(name,'getItems',type,id,thumbnail,gets,'')
 
 def TVNPlayerItem(type, id):
-        print __settings__.getSetting('checkClientip')
-        if __settings__.getSetting('checkClientip') == 'false' and __settings__.getSetting('pl_proxy') == '':
+        if __settings__.getSetting('checkClientip') == 'False' and __settings__.getSetting('pl_proxy') == '':
             ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.', 'Ustaw proxy albo się przeprowadź.')
         else:
-            if __settings__.getSetting('checkClientip') == 'false':
-                print 'We build proxy'
+            if __settings__.getSetting('checkClientip') == 'False':
                 pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
                 proxy_handler = urllib2.ProxyHandler({'http':pl_proxy})
                 if __settings__.getSetting('pl_proxy_pass') <> '' and __settings__.getSetting('pl_proxy_user') <> '':
@@ -113,12 +111,10 @@ def TVNPlayerItem(type, id):
                 else:
                     opener = urllib2.build_opener(proxy_handler)
             urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
-            if __settings__.getSetting('checkClientip') == 'false':
+            if __settings__.getSetting('checkClientip') == 'False':
                 getItem = opener.open(base_url + urlQuery)
-                print 'We open item by proxy'
             else:
                 getItem = urllib2.urlopen(base_url + urlQuery)
-                print 'We open item without proxy'
             json = simplejson.loads(getItem.read())
             getItem.close()
             video_content = json['item']['videos']['main']['video_content']
@@ -138,12 +134,10 @@ def TVNPlayerItem(type, id):
             else:
                 select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
             stream_url = json['item']['videos']['main']['video_content'][select]['url']
-            if __settings__.getSetting('checkClientip') == 'false':
+            if __settings__.getSetting('checkClientip') == 'False':
                 new_stream_url = opener.open(stream_url)
-                print 'We open stream by proxy'
             else:
                 new_stream_url = urllib2.urlopen(stream_url)
-                print 'We open stream without proxy'
             stream_url = new_stream_url.read()
             new_stream_url.close()
             xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
@@ -202,7 +196,7 @@ def addLink(name,url,thumbnail,gets,serie_title,lead,episode,season,start_date):
                 'season' : int(season) ,
                 'aired' : start_date
         })
-        if __settings__.getSetting('checkClientip') == 'false' and __settings__.getSetting('pl_proxy') == '':
+        if __settings__.getSetting('checkClientip') == 'False' and __settings__.getSetting('pl_proxy') == '':
             liz.setProperty("IsPlayable","false");
         else:
             liz.setProperty("IsPlayable","true");
