@@ -18,10 +18,10 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("MINIMAL TECHNO",'http://gr-relay-1.gaduradio.pl/50','http://open.fm/files/openfm/minimalTechno150x150.png'),
+			("500 ELECTRONIC HITS",'http://gr-relay-1.gaduradio.pl/94','http://open.fm/files/openfm/Electronic500x500_bia%C5%82eT%C5%82o.png'),
 			("DRUM'N'BASS",'http://gr-relay-1.gaduradio.pl/41','http://open.fm/files/openfm/drumnbass.png'),
 			("DUBSTEP",'http://gr-relay-1.gaduradio.pl/68','http://open.fm/files/openfm/dubstep_www.png'),
-			("TRIP HOP",'http://gr-relay-1.gaduradio.pl/71','http://open.fm/files/openfm/triphop_www.png'),
+			("MINIMAL TECHNO",'http://gr-relay-1.gaduradio.pl/50','http://open.fm/files/openfm/minimalTechno150x150.png'),
 			("CHILLOUT",'http://gr-relay-1.gaduradio.pl/33','http://open.fm/files/openfm/chill_out150x150.png')
 			]
 		for name, url, grafa in stos:

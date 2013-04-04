@@ -18,7 +18,7 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("REGGAENERACJA",'http://gr-relay-1.gaduradio.pl/30','http://open.fm/files/openfm/reggaeneracja.png'),
+			("500 REGGAE HITS",'http://gr-relay-1.gaduradio.pl/30','http://open.fm/files/openfm/150x150_reggae_1.png'),
 			("POLISH REGGAE STYLEE",'http://gr-relay-1.gaduradio.pl/22','http://open.fm/files/openfm/polishreggae.png'),
 			("SKA ROOTS REGGAE",'http://gr-relay-1.gaduradio.pl/44','http://open.fm/files/openfm/skarootsreggae.png')
 			]
