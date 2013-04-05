@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.audio.open_FM"
        name="Open FM"
-<<<<<<< .mine
-       version="1.0.2"
-=======
        version="1.2.0"
->>>>>>> .r153
        provider-name="pajretX">
   <requires>
     <import addon="xbmc.python" version="2.1.0 "/>
