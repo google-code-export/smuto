@@ -128,10 +128,10 @@
 
 <addon id="plugin.audio.open_FM"
        name="Open FM"
-       version="1.1"
+       version="1.2.0"
        provider-name="pajretX">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="2.1.0 "/>
     <import addon="script.module.beautifulsoup" version="3.0.8"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
@@ -139,8 +139,8 @@
         <provides>audio</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Stream'uje radia ze strony open.fm</summary>
-    <description>Stream'uje radia ze strony open.fm</description>
+    <summary>Otwórz się na muzykę z OPEN.FM</summary>
+    <description>Stream radia ze strony open.fm</description>
     <platform>all</platform>
   </extension>
 </addon>
