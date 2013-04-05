@@ -14,7 +14,6 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
 
 #
 # Main class

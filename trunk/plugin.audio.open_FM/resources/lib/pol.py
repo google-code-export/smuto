@@ -11,25 +11,25 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 class Main:
 	def __init__( self ) :
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("IMPREZA",'http://gr-relay-1.gaduradio.pl/2','http://open.fm/files/openfm/impreza_0.png'),
-			("IMPREZA PL",'http://gr-relay-1.gaduradio.pl/12','http://open.fm/files/openfm/impreza_0.png'),
-			("VIVA",'http://gr-relay-1.gaduradio.pl/64','http://openfm.festiwalmtv.pl/viva-2/images/logo_viva_radio.png'),
+			("IMPREZA",'http://gr-relay-1.gaduradio.pl/2',os.path.join(ICO_DIR,'impreza.png')),
+			("IMPREZA PL",'http://gr-relay-1.gaduradio.pl/12',os.path.join(ICO_DIR,'impreza_pl.png')),
+			("VIVA",'http://gr-relay-1.gaduradio.pl/64',os.path.join(ICO_DIR,'viva.png')),
 			("MTV",'http://gr-relay-1.gaduradio.pl/51','http://px.wporzo.pl/stuff/mtv.PNG'),
-			("MTV ROCKS",'http://gr-relay-1.gaduradio.pl/77','http://open.fm/files/openfm/logo_mtv_rocks_radio_500x500_dostosowane_do_czarne_tlo1111.png'),
-			("TOP 2012 Hits",'http://gr-relay-1.gaduradio.pl/93','http://open.fm/files/openfm/top_2012_150x150_na_biale_0.png'),
-			("TOP 20 IMPREZA",'http://gr-relay-1.gaduradio.pl/95','http://open.fm/files/openfm/Top_20_Impreza_bialeTlo_150x150.png'),
-			("TOP 20 DISCO POLO",'http://gr-relay-1.gaduradio.pl/53','http://open.fm/files/openfm/top20_discopolo_150x150_na_biale_0.png'),
-			("TOP 20 POP",'http://gr-relay-1.gaduradio.pl/96','http://open.fm/files/openfm/Top_20_Pop_bialeTlo_150x150.png'),
-			("TOP 20 PL",'http://gr-relay-1.gaduradio.pl/97','http://open.fm/files/openfm/Top_20_PL_bialeTlo_150x150_0.png'),
-			("TOP 20 HIP-HOP",'http://gr-relay-1.gaduradio.pl/98','http://open.fm/files/openfm/Top_20_HH_bialeTlo_150x150.png'),
-			("TOP 20 ROCK",'http://gr-relay-1.gaduradio.pl/99','http://open.fm/files/openfm/Top_20_Rock_bialeTlo_150x150.png')
+			("MTV ROCKS",'http://gr-relay-1.gaduradio.pl/77',os.path.join(ICO_DIR,'mtv_rocks.png')),
+			("TOP 2012 Hits",'http://gr-relay-1.gaduradio.pl/93',os.path.join(ICO_DIR,'top_2012_hits.png')),
+			("TOP 20 IMPREZA",'http://gr-relay-1.gaduradio.pl/95',os.path.join(ICO_DIR,'top_20_impreza.png')),
+			("TOP 20 DISCO POLO",'http://gr-relay-1.gaduradio.pl/53',os.path.join(ICO_DIR,'top_20_disco-polo.png')),
+			("TOP 20 POP",'http://gr-relay-1.gaduradio.pl/96',os.path.join(ICO_DIR,'top_20_pop.png')),
+			("TOP 20 PL",'http://gr-relay-1.gaduradio.pl/97',os.path.join(ICO_DIR,'top_20_pl.png')),
+			("TOP 20 HIP-HOP",'http://gr-relay-1.gaduradio.pl/98',os.path.join(ICO_DIR,'top_20_hip-hop.png')),
+			("TOP 20 ROCK",'http://gr-relay-1.gaduradio.pl/99',os.path.join(ICO_DIR,'top_20_rock.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

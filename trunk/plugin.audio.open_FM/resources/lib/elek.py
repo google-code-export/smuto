@@ -11,18 +11,18 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 class Main:
 	def __init__( self ) :
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 ELECTRONIC HITS",'http://gr-relay-1.gaduradio.pl/94','http://open.fm/files/openfm/Electronic500x500_bia%C5%82eT%C5%82o.png'),
-			("DRUM'N'BASS",'http://gr-relay-1.gaduradio.pl/41','http://open.fm/files/openfm/drumnbass.png'),
-			("DUBSTEP",'http://gr-relay-1.gaduradio.pl/68','http://open.fm/files/openfm/dubstep_www.png'),
-			("MINIMAL TECHNO",'http://gr-relay-1.gaduradio.pl/50','http://open.fm/files/openfm/minimalTechno150x150.png'),
-			("CHILLOUT",'http://gr-relay-1.gaduradio.pl/33','http://open.fm/files/openfm/chill_out150x150.png')
+			("500 ELECTRONIC HITS",'http://gr-relay-1.gaduradio.pl/94',os.path.join(ICO_DIR,'500_electronic.png')),
+			("DRUM'N'BASS",'http://gr-relay-1.gaduradio.pl/41',os.path.join(ICO_DIR,'drumnbass.png')),
+			("DUBSTEP",'http://gr-relay-1.gaduradio.pl/68',os.path.join(ICO_DIR,'dubstep_www.png')),
+			("MINIMAL TECHNO",'http://gr-relay-1.gaduradio.pl/50',os.path.join(ICO_DIR,'minimal.png')),
+			("CHILLOUT",'http://gr-relay-1.gaduradio.pl/33',os.path.join(ICO_DIR,'chill_out.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

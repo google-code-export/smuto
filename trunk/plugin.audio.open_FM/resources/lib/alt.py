@@ -11,18 +11,18 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 class Main:
 	def __init__( self ) :
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 ALTERNATIVE HITS",'http://gr-relay-1.gaduradio.pl/55','http://open.fm/files/openfm/alternative_czarne_150x150.png'),
-			("ALT FRESZZZ",'http://gr-relay-1.gaduradio.pl/6','http://open.fm/files/openfm/alt_fresh_150x150.png'),
-			("ALT CLUB",'http://gr-relay-1.gaduradio.pl/9','http://open.fm/files/openfm/alt_club_150x150.png'),
-			("ALT CAFÉ",'http://gr-relay-1.gaduradio.pl/34','http://open.fm/files/openfm/alt_cafe_150x150.png'),
-			("ALT PL",'http://gr-relay-1.gaduradio.pl/36','http://open.fm/files/openfm/alt_pl_150x150.png')
+			("500 ALTERNATIVE HITS",'http://gr-relay-1.gaduradio.pl/55',os.path.join(ICO_DIR,'500_alternative.png')),
+			("ALT FRESZZZ",'http://gr-relay-1.gaduradio.pl/6',os.path.join(ICO_DIR,'alt_fresh.png')),
+			("ALT CLUB",'http://gr-relay-1.gaduradio.pl/9',os.path.join(ICO_DIR,'alt_club.png')),
+			("ALT CAFÉ",'http://gr-relay-1.gaduradio.pl/34',os.path.join(ICO_DIR,'alt_cafe.png')),
+			("ALT PL",'http://gr-relay-1.gaduradio.pl/36',os.path.join(ICO_DIR,'alt_pl.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

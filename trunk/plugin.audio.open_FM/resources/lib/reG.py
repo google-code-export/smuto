@@ -11,16 +11,16 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 class Main:
 	def __init__( self ) :
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 REGGAE HITS",'http://gr-relay-1.gaduradio.pl/30','http://open.fm/files/openfm/150x150_reggae_1.png'),
-			("POLISH REGGAE STYLEE",'http://gr-relay-1.gaduradio.pl/22','http://open.fm/files/openfm/polishreggae.png'),
-			("SKA ROOTS REGGAE",'http://gr-relay-1.gaduradio.pl/44','http://open.fm/files/openfm/skarootsreggae.png')
+			("500 REGGAE HITS",'http://gr-relay-1.gaduradio.pl/30',os.path.join(ICO_DIR,'500_reggae.png')),
+			("POLISH REGGAE STYLEE",'http://gr-relay-1.gaduradio.pl/22',os.path.join(ICO_DIR,'polishreggae.png')),
+			("SKA ROOTS REGGAE",'http://gr-relay-1.gaduradio.pl/44',os.path.join(ICO_DIR,'skarootsreggae.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

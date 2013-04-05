@@ -11,33 +11,34 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 class Main:
 	def __init__( self ) :
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 NAJWIĘKSZYCH HITÓW",'http://gr-relay-1.gaduradio.pl/11','http://open.fm/files/openfm/500_best_www.png'),
-			("500 POP HITS",'http://gr-relay-1.gaduradio.pl/83','http://open.fm/files/openfm/pop_500x500_0.png'),
-			("FRESZZZ",'http://gr-relay-1.gaduradio.pl/39','http://open.fm/files/openfm/fresz.png'),
-			("PO POLSKU",'http://gr-relay-1.gaduradio.pl/1','http://open.fm/files/openfm/po_polsku_150x1502.png'),
-			("PO POLSKU CLASSIC",'http://gr-relay-1.gaduradio.pl/79','http://open.fm/files/openfm/po_polsku_150x1502_classic_1_2.png'),
-			("PO POLSKU CLASSIC 2",'http://gr-relay-1.gaduradio.pl/17','http://open.fm/files/openfm/po_polsku_150x150_classic_2_2.png'),
-			("LEJDIS CAFÉ",'http://gr-relay-1.gaduradio.pl/48','http://open.fm/files/openfm/lejdis_500x500_biale.png'),
-			("CREMA CAFÉ",'http://gr-relay-1.gaduradio.pl/76','http://open.fm/files/openfm/crema_square.png'),
-			("WE DWOJE",'http://gr-relay-1.gaduradio.pl/4','http://open.fm/files/openfm/wedwoje_0.png'),
-			("BALLADY WSZECH CZASÓW",'http://gr-relay-1.gaduradio.pl/20','http://open.fm/files/openfm/ballady.png'),
-			("100% MICHAEL JACKSON",'http://gr-relay-1.gaduradio.pl/10','http://open.fm/files/openfm/mj_115x83.png'),
-			("100% RIHANNA",'http://gr-relay-1.gaduradio.pl/86','http://open.fm/files/openfm/86_white_1.png'),
-			("LATINO",'http://gr-relay-1.gaduradio.pl/19','http://open.fm/files/openfm/latino_0.png'),
-			("TEENS",'http://gr-relay-1.gaduradio.pl/69','http://open.fm/files/openfm/teens_www_0.png'),
-			("100% JUSTIN BIEBER",'http://gr-relay-1.gaduradio.pl/63','http://open.fm/files/openfm/100justin_www_0.png'),
-			("00s HITS",'http://gr-relay-1.gaduradio.pl/72','http://open.fm/files/openfm/00_150x150_white.png'),
-			("90s HITS",'http://gr-relay-1.gaduradio.pl/14','http://open.fm/files/openfm/90_150x150_white.png'),
-			("80s HITS",'http://gr-relay-1.gaduradio.pl/3','http://open.fm/files/openfm/80_150x150_white.png'),
-			("60s & 70s HITS",'http://gr-relay-1.gaduradio.pl/56','http://open.fm/files/openfm/60i70_150x150_white.png'),
-			("CLASSIC HITS",'http://gr-relay-1.gaduradio.pl/46','http://open.fm/files/openfm/classic_150x150_white.png')
+			("500 NAJWIĘKSZYCH HITÓW",'http://gr-relay-1.gaduradio.pl/11',os.path.join(ICO_DIR,'500_best_www.png')),
+			("500 POP HITS",'http://gr-relay-1.gaduradio.pl/83',os.path.join(ICO_DIR,'500_pop_hits.png')),
+			("FRESZZZ",'http://gr-relay-1.gaduradio.pl/39',os.path.join(ICO_DIR,'freszzz.png')),
+			("PO POLSKU",'http://gr-relay-1.gaduradio.pl/1',os.path.join(ICO_DIR,'po_polsku.png')),
+			("PO POLSKU CLASSIC",'http://gr-relay-1.gaduradio.pl/79',os.path.join(ICO_DIR,'po_polsku_classic.png')),
+			("PO POLSKU CLASSIC 2",'http://gr-relay-1.gaduradio.pl/17',os.path.join(ICO_DIR,'po_polsku_classic_2.png')),
+			("LEJDIS CAFÉ",'http://gr-relay-1.gaduradio.pl/48',os.path.join(ICO_DIR,'lejdis_cafe.png')),
+			("CREMA CAFÉ",'http://gr-relay-1.gaduradio.pl/76',os.path.join(ICO_DIR,'crema_cafe.png')),
+			("WE DWOJE",'http://gr-relay-1.gaduradio.pl/4',os.path.join(ICO_DIR,'we_dwoje.png')),
+			("BALLADY WSZECH CZASÓW",'http://gr-relay-1.gaduradio.pl/20',os.path.join(ICO_DIR,'ballady_WC.png')),
+			("100% MICHAEL JACKSON",'http://gr-relay-1.gaduradio.pl/10',os.path.join(ICO_DIR,'mj.png')),
+			("100% RIHANNA",'http://gr-relay-1.gaduradio.pl/86',os.path.join(ICO_DIR,'rih.png')),
+			("LATINO",'http://gr-relay-1.gaduradio.pl/19',os.path.join(ICO_DIR,'latino.png')),
+			("TEENS",'http://gr-relay-1.gaduradio.pl/69',os.path.join(ICO_DIR,'teens.png')),
+			("TEENS MOVIE",'http://gr-relay-1.gaduradio.pl/65',os.path.join(ICO_DIR,'Teens_Movie.png')),
+			("100% JUSTIN BIEBER",'http://gr-relay-1.gaduradio.pl/63',os.path.join(ICO_DIR,'justin.png')),
+			("00s HITS",'http://gr-relay-1.gaduradio.pl/72',os.path.join(ICO_DIR,'00.png')),
+			("90s HITS",'http://gr-relay-1.gaduradio.pl/14',os.path.join(ICO_DIR,'90.png')),
+			("80s HITS",'http://gr-relay-1.gaduradio.pl/3',os.path.join(ICO_DIR,'80.png')),
+			("60s & 70s HITS",'http://gr-relay-1.gaduradio.pl/56',os.path.join(ICO_DIR,'60i70.png')),
+			("CLASSIC HITS",'http://gr-relay-1.gaduradio.pl/46',os.path.join(ICO_DIR,'classic_hits.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

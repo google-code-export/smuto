@@ -11,7 +11,7 @@ import xbmcaddon
 
 __addon__   = "plugin.audio.open_FM"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
-names = __settings__.getLocalizedString
+ICO_DIR = xbmc.translatePath( os.path.join( __settings__.getAddonInfo('path'), 'resources', 'ico' ) )
 
 
 class Main:
@@ -19,8 +19,8 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("RETRO CAFÉ",'http://gr-relay-1.gaduradio.pl/25','http://open.fm/files/openfm/150x150_RetroCafe_1.png'),
-			("SMOOTH JAZZ",'http://gr-relay-1.gaduradio.pl/60','http://open.fm/files/openfm/smooth_jazz_www.png')
+			("RETRO CAFÉ",'http://gr-relay-1.gaduradio.pl/25',os.path.join(ICO_DIR,'RetroCafe.png')),
+			("SMOOTH JAZZ",'http://gr-relay-1.gaduradio.pl/60',os.path.join(ICO_DIR,'smooth_jazz.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)
