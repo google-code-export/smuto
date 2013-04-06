@@ -7,8 +7,8 @@ import xbmcaddon
 
 __plugin__  = "Onet.TV"
 __author__  = "pajretX"
-__date__    = "28-06-12"
-__version__ = "1.0.2"
+__date__    = "06-04-2013"
+__version__ = "1.0.3"
 __addon__   = "plugin.video.onettv.pl"
 __settings__ = xbmcaddon.Addon(id='plugin.video.onettv.pl')
 

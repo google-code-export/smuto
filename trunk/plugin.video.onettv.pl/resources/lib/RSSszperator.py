@@ -22,7 +22,7 @@ NP = (names (33335))
 class Main: 
 	def __init__( self ) :
  
-		url = urllib.unquote_plus(sys.argv[2].split('=')[2])
+		url = urllib.unquote_plus(sys.argv[2].split('=')[1])
 		getData = urllib2.Request(url)
 		response = urllib2.urlopen(getData)
 		urlContent =response.read()
@@ -36,7 +36,7 @@ class Main:
 		nastFin=adresik[0] +"15," + nast +"," + adresik[1]
 
 		next=xbmcgui.ListItem(NP, iconImage=os.path.join(IMAGES_PATH,'next.png'))
-		u=sys.argv[0]+"?RSS&po_co="+NP+"&url="+urllib.quote_plus(nastFin)
+		u=sys.argv[0]+"?RSS&po_co"+NP+"&url="+urllib.quote_plus(nastFin)
 		xbmcplugin.addDirectoryItem(int(sys.argv[1]),u, next, isFolder=True)
  
 		for link in links:	 
