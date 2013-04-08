@@ -6,8 +6,8 @@ import sys, xbmcaddon
 
 __plugin__  = "Open FM"
 __author__  = "pajretX"
-__date__    = "05-04-13"
-__version__ = "1.2.1"
+__date__    = "08-04-13"
+__version__ = "1.2.2"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
 
 

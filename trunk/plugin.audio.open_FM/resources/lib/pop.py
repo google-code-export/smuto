@@ -43,6 +43,7 @@ class Main:
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)
 			li.setInfo( type="Audio", infoLabels={ "Title": name } )
+			li.setProperty('mimetype', 'application/octet-stream')
 			xbmcplugin.addDirectoryItem(int(sys.argv[1]), url, li, isFolder=False)
 		xbmcplugin.addSortMethod(handle=int(sys.argv[1]), sortMethod=xbmcplugin.SORT_METHOD_NONE)
 		xbmcplugin.endOfDirectory(handle=int(sys.argv[1]), succeeded=True)
