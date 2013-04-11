@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <addon
-        id="plugin.audio.fanclubpolska.pl"
-        version="0.0.5"
-        name="Fanclub Polska Radio"
-        provider-name="XBMC.org.pl">
+        id="plugin.audio.radiokolekcja.pl"
+        version="0.0.1"
+        name="Kolekcja Polskich Stacji Radiowych"
+        provider-name="smuto">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
-        <import addon="script.module.simplejson" version="2.0.10"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>audio</provides>
@@ -19,5 +18,6 @@
         <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws.</disclaimer>
         <license>GPL 2.0</license>
         <platform>all</platform>
+        <language>pl</language>
     </extension>
 </addon>
