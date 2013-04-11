@@ -434,4 +434,18 @@
     <description lang="pl">Twórcy 990px nie ukrywają swojej inspiracji blogiem The Big Picture, jednak na tej bazie starają się stworzyć swój własny, warty uwagi, charakterystyczny fotoblog. Jakość fotografii oraz doboru tematów często również nie odbiega od swojego pierwowzoru. Wszystkie zdjęcie są pokazywane w dużej rozdzielczości (990px). Piotr Macura, fotoedytor 990px, wybiera świetne, bieżące tematy i potrafi bardzo dobrze wyselekcjonować fotografie do umieszczanych na stronie cykli. </description>
   </extension>
 </addon>
+
+<addon id="script.nowplaying" name="Teraz odtwarzane" version="1.0.0" provider-name="smuto">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0 "/>
+        <import addon="plugin.image.artistmultifanart" version="1.0.3"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py"/>
+	<extension point="xbmc.addon.metadata">
+		<summary>smut</summary>
+		<description>smu</description>
+		<disclaimer>smu</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
 </addons>
