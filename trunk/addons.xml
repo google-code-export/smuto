@@ -435,9 +435,9 @@
   </extension>
 </addon>
 
-<addon id="script.nowplaying" name="Teraz odtwarzane" version="1.0.0" provider-name="smuto">
+<addon id="script.nowplaying" name="Teraz odtwarzane" version="1.0.1" provider-name="smuto">
 	<requires>
-		<import addon="xbmc.python" version="2.1.0 "/>
+		<import addon="xbmc.python" version="2.0 "/>
         <import addon="plugin.image.artistmultifanart" version="1.0.3"/>
 	</requires>
 	<extension point="xbmc.python.script" library="default.py"/>

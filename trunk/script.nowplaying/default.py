@@ -7,8 +7,8 @@ __icon__      = __settings__.getAddonInfo('icon')
 
 class showInfo(xbmcgui.WindowXMLDialog):
 
-    def __init__(self, *args, **kwargs):
-        xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
+#    def __init__(self, *args, **kwargs):
+#        xbmcgui.WindowXMLDialog.__init__(self, *args, **kwargs)
 
     def onInit(self):
         self.defineControls()
