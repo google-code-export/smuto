@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.audio.polska_stacja"
+       name="Polska Stacja"
+       version="1.0.1"
+       provider-name="pajretX">
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>audio</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>www.polskastacja.pl</summary>
+    <description>Stream radia ze strony polskastacja.pl</description>
+    <platform>all</platform>
+  </extension>
+</addon>
