@@ -54,7 +54,7 @@
 
 <addon id="metadata.filmweb.pl"
        name="Filmweb"
-       version="1.3.2"
+       version="1.3.3"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.metadata" version="1.0"/>
@@ -205,6 +205,27 @@
         <description>To nie są zwyczajne koty: one potrafią mówić! Budzik i Ruda prowadzą nawet własną telewizję. Pomaga im krasnoludek Piksel, który jak nikt inny zna się na elektronice. Oglądaj w środy o 8.55 w TVP 1.</description>
         <platform>all</platform>
     </extension>
+</addon>
+
+<addon id="plugin.video.ekstraklasa.tv"
+       name="T-Mobile Ekstraklasa"
+       version="0.0.1"
+       provider-name="smuto">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.elementtree" version="1.2.7" />
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">ekstraklasa.tv</summary>
+    <summary lang="pl">ekstraklasa.tv</summary>
+    <description lang="en">ekstraklasa.tv</description>
+    <description lang="pl">ekstraklasa.tv</description>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="plugin.video.euro2012.tvp.pl" version="0.2.3" name="Euro2012.tvp.pl" provider-name="smuto">
@@ -421,7 +442,7 @@
     <requires>
         <import addon="xbmc.addon" version="12.0.0"/>
     </requires>
-    <extension point="xbmc.addon.repository" name="Polskie wtyczki, tralala">
+    <extension point="xbmc.addon.repository" name="Polskie wtyczki">
         <info compressed="true">http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/addons.xml</info>
         <checksum>http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/addons.xml.md5</checksum>
         <datadir zip="true">http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/download</datadir>

@@ -3,7 +3,7 @@
     <requires>
         <import addon="xbmc.addon" version="12.0.0"/>
     </requires>
-    <extension point="xbmc.addon.repository" name="Polskie wtyczki, tralala">
+    <extension point="xbmc.addon.repository" name="Polskie wtyczki">
         <info compressed="true">http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/addons.xml</info>
         <checksum>http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/addons.xml.md5</checksum>
         <datadir zip="true">http://raw.github.com/xbmc-addons-polish/polskie_wtyczki/frodo/download</datadir>
