@@ -9,11 +9,11 @@ from BeautifulSoup import BeautifulSoup as BS
 MAIN_URL = 'http://www.lechpoznan.tv'
 
 def CATEGORIES():
-        addDir('News','/filmy/News',1,1,__icons__ % ('news'),'')
-        addDir('Mecze','/filmy/Mecze',1,1,__icons__ % ('mecze'),'')
-        addDir('Programy','/filmy/Programy',1,1,__icons__ % ('programy'),'')
-        addDir('Szukaj','/Catalog/Search',1,1,__icons__ % ('szukaj'),'')
-        addDir('Historia','/Catalog/Search',3,1,'','')
+        addDir('News','/filmy/News',1,1,__icons__ % ('news'),'lech')
+        addDir('Mecze','/filmy/Mecze',1,1,__icons__ % ('mecze'),'lech')
+        addDir('Programy','/filmy/Programy',1,1,__icons__ % ('programy'),'lech')
+        addDir('Szukaj','/Catalog/Search',1,1,__icons__ % ('szukaj'),'lech')
+        addDir('Historia','/Catalog/Search',3,1,'','lech')
 
 def INDEX(url,page,query):
         if 'Search' in url:

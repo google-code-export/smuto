@@ -266,7 +266,7 @@
 
 <addon id="plugin.video.lechtv.pl"
        name="LechTV"
-       version="1.0.5"
+       version="1.0.6"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
