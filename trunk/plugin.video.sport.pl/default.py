@@ -186,9 +186,9 @@ elif akcja == 'listuj':
                 add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(x[0])+"&xx="+str(x[1]), {'title': '(%s) %s' % (date,title )}, img )
         xbmcplugin.endOfDirectory(plugin_handle) 
     # formula1
-    elif '97844' in url:
-        print 'formula1'
-        base_url = url+'?str=%s_10617454'
+    elif '98302' in url:
+        print 'formula'
+        base_url = url+'?str=%s_10057273'
         results = []
         for start in (1,2,3,4):
             url = base_url % (start)
@@ -209,7 +209,7 @@ elif akcja == 'listuj':
         xbmcplugin.endOfDirectory(plugin_handle)
 
     # siatkarski
-    elif '97845' in url:
+    elif '98845' in url:
         print 'siatkarski'
         base_url = url+'?str=%s_10617629'
         results = []
@@ -252,6 +252,31 @@ elif akcja == 'listuj':
                     results.append(nt)
         for xxd, xx, title,date, img in results:
             add_video_item(sys.argv[0]+"?akcja=seria&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
+        xbmcplugin.endOfDirectory(plugin_handle)
+    #formula
+    elif '96302' in url:
+        print 'wszystkie'
+        base_url = url+'?str=%s_10057273'
+        results = []
+        for start in (1,2,3,4,5):
+            url = base_url % (start)
+            html = urllib2.urlopen(url).read()
+            html = string.split(html,'id="col_left"')
+            if len(html)>=2:
+                html = string.split(html[1],'class="footer"')
+                html = string.split(html[0],'div class="imgw"')
+                for movie in html[1:]:
+                    x = re.compile('title="([^"]+)" href=[^0-9]+[^,]+,([0-9]+),([0-9]+)').findall(movie)[0]
+                    date = re.compile('class="when">([^ ]+)').findall(movie)[0]
+                    try:
+                        img = re.compile('img src="([^"]+)').findall(movie)[0]
+                    except:
+                        img=''
+                        pass
+                    nt = x + (date,img)
+                    results.append(nt)
+        for title, xxd, xx,date, img in results:
+            add_video_item(sys.argv[0]+"?akcja=graj&xxd="+str(xxd)+"&xx="+str(xx), {'title': '(%s) %s' % (date,title )}, img )
         xbmcplugin.endOfDirectory(plugin_handle)
 
     #wszystkie wideo
@@ -319,14 +344,12 @@ elif akcja == 'listuj':
     '''
 else:
     print ' kategorie'
-    html = urllib2.urlopen('http://www.sport.pl').read()
-    html = string.split(html,'li id=\'e11\'')
-    html = string.split(html[1],'li id=\'e12\'')
-    html = string.split(html[0],'</a>')
-    for kategoria in html[:-1]:
-        href = re.compile('a href=\'([^\']+)').findall(kategoria)[0]
-        title = re.compile(' title=\'([^\']+)').findall(kategoria)[0]
-        add_video_item(sys.argv[0]+"?akcja=listuj&url="+urllib.quote_plus(href), {'title': '%s' % (title)} )
+    kategorie = {   'Formula 1': 'http://www.sport.pl/F1/0,96302.html',
+                    'Wideo Sport.pl': 'http://www.sport.pl/sport/0,67450.html',
+                }
+
+    for title , url in kategorie.items():
+        add_video_item(sys.argv[0]+"?akcja=listuj&url="+urllib.quote_plus(url), {'title': '%s' % (title)} )
     xbmcplugin.endOfDirectory(plugin_handle)
     
     
