@@ -98,7 +98,7 @@ def TVNPlayerItems(json):
 
 def TVNPlayerItem(type, id):
         if __settings__.getSetting('checkClientip') == 'False' and __settings__.getSetting('pl_proxy') == '':
-            ok = xbmcgui.Dialog().ok('TVNPlayer', 'Niestety materiał dostępny tylko w Polsce.', 'Ustaw proxy albo się przeprowadź.')
+            __settings__.openSettings()
         else:
             if __settings__.getSetting('checkClientip') == 'False':
                 pl_proxy = 'http://' + __settings__.getSetting('pl_proxy') + ':' + __settings__.getSetting('pl_proxy_port')
@@ -115,15 +115,16 @@ def TVNPlayerItem(type, id):
                 try:
                     getItem = opener.open(base_url + urlQuery)
                 except Exception, ex:
-                    xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
-                    return
+                    ok = xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
+                    return ok
             else:
                 getItem = urllib2.urlopen(base_url + urlQuery)
             json = simplejson.loads(getItem.read())
             getItem.close()
             video_content = json['item']['videos']['main']['video_content']
             if not video_content:
-                xbmcgui.Dialog().ok('TVNPlayer', 'Jak używasz proxy', 'to właśnie przestało działać')
+                ok = xbmcgui.Dialog().ok('TVNPlayer', 'Jak używasz proxy', 'to właśnie przestało działać')
+                return ok
             else:
                 profile_name_list = []
                 for item in video_content:
@@ -140,14 +141,14 @@ def TVNPlayerItem(type, id):
                         select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
                 else:
                     select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-            stream_url = json['item']['videos']['main']['video_content'][select]['url']
-            if __settings__.getSetting('checkClientip') == 'False':
-                new_stream_url = opener.open(stream_url)
-            else:
-                new_stream_url = urllib2.urlopen(stream_url)
-            stream_url = new_stream_url.read()
-            new_stream_url.close()
-            xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
+                stream_url = json['item']['videos']['main']['video_content'][select]['url']
+                if __settings__.getSetting('checkClientip') == 'False':
+                    new_stream_url = opener.open(stream_url)
+                else:
+                    new_stream_url = urllib2.urlopen(stream_url)
+                stream_url = new_stream_url.read()
+                new_stream_url.close()
+                xbmcplugin.setResolvedUrl(pluginHandle, True, xbmcgui.ListItem(path=stream_url))
 
 def htmlToText(html):
     html = re.sub('<.*?>','',html)
