@@ -122,21 +122,24 @@ def TVNPlayerItem(type, id):
             json = simplejson.loads(getItem.read())
             getItem.close()
             video_content = json['item']['videos']['main']['video_content']
-            profile_name_list = []
-            for item in video_content:
-                profile_name = item['profile_name']
-                profile_name_list.append(profile_name)
-            if __settings__.getSetting('auto_quality') == 'true' :
-                if 'HD' in profile_name_list:
-                    select = profile_name_list.index('HD')
-                elif 'Bardzo Wysoka' in profile_name_list:
-                    select = profile_name_list.index('Bardzo Wysoka')
-                elif 'Wysoka' in profile_name_list:
-                    select = profile_name_list.index('Wysoka')
+            if not video_content:
+                xbmcgui.Dialog().ok('TVNPlayer', 'Jak używasz proxy', 'to właśnie przestało działać')
+            else:
+                profile_name_list = []
+                for item in video_content:
+                    profile_name = item['profile_name']
+                    profile_name_list.append(profile_name)
+                if __settings__.getSetting('auto_quality') == 'true' :
+                    if 'HD' in profile_name_list:
+                        select = profile_name_list.index('HD')
+                    elif 'Bardzo Wysoka' in profile_name_list:
+                        select = profile_name_list.index('Bardzo Wysoka')
+                    elif 'Wysoka' in profile_name_list:
+                        select = profile_name_list.index('Wysoka')
+                    else:
+                        select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
                 else:
                     select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
-            else:
-                select = xbmcgui.Dialog().select('Wybierz jakość', profile_name_list)
             stream_url = json['item']['videos']['main']['video_content'][select]['url']
             if __settings__.getSetting('checkClientip') == 'False':
                 new_stream_url = opener.open(stream_url)
