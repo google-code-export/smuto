@@ -112,7 +112,11 @@ def TVNPlayerItem(type, id):
                     opener = urllib2.build_opener(proxy_handler)
             urlQuery = '&type=%s&id=%s&sort=newest&m=getItem&deviceScreenHeight=1080&deviceScreenWidth=1920' % (type, id)
             if __settings__.getSetting('checkClientip') == 'False':
-                getItem = opener.open(base_url + urlQuery)
+                try:
+                    getItem = opener.open(base_url + urlQuery)
+                except Exception, ex:
+                    xbmcgui.Dialog().ok('TVNPlayer', 'Coś nie tak z Twoim proxy', 'error message', str(ex))
+                    return
             else:
                 getItem = urllib2.urlopen(base_url + urlQuery)
             json = simplejson.loads(getItem.read())
