@@ -15,18 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
+import xbmcaddon
 import elementtree.ElementTree as ET
-import re,string
+import os,re,string
 import urllib,urllib2
-import xbmc, xbmcgui, xbmcplugin
+import xbmc, xbmcgui, xbmcplugin, xbmcvfs
+
+ADDON = xbmcaddon.Addon()
+LOGO_PATH = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'logos')
+ICON = os.path.join(ADDON.getAddonInfo('path'), 'icon.png')
+FANART = os.path.join(ADDON.getAddonInfo('path'), 'fanart.jpg')
 
 plugin_handle = int(sys.argv[1])
 
-def add_video_item(url, infolabels, img=''):
-    obrazek = img.replace("C", "D")
+def add_video_item(url, infolabels, img ):
+    obrazek = img.replace("C.", "AA.")
+    print obrazek
     listitem = xbmcgui.ListItem(infolabels['title'], iconImage=obrazek, 
                                 thumbnailImage=obrazek)
     listitem.setInfo('video', infolabels)
+    listitem.setProperty('Fanart_Image', FANART)
     listitem.setProperty('IsPlayable', 'true')
     xbmcplugin.addDirectoryItem(plugin_handle, url, listitem, isFolder=True)
 
@@ -156,7 +164,13 @@ else:
     for kategoria in html[:-1]:
         href = re.compile('a href=\'[^,]+,([0-9]+)').findall(kategoria)[0]
         title = re.compile(' title=\'([^\']+)').findall(kategoria)[0]
-        add_video_item(sys.argv[0]+"?akcja=listuj&url="+urllib.quote_plus(href), {'title': '%s' % (title.decode('iso-8859-2'))} )
+        logoImage = os.path.join(LOGO_PATH, href + '.png')
+        print logoImage
+        if xbmcvfs.exists(logoImage):
+            img=logoImage
+        else:
+            img=ICON
+        add_video_item(sys.argv[0]+"?akcja=listuj&url="+urllib.quote_plus(href), {'title': '%s' % (title.decode('iso-8859-2'))} , img)
     xbmcplugin.endOfDirectory(plugin_handle)
     
     
