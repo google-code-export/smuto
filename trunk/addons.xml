@@ -156,12 +156,12 @@
     </extension>
 </addon>
 
-<addon id="plugin.image.990px.random" name="990px Random" version="1.0.0" provider-name="smuto">
+<addon id="plugin.image.990px.random" name="990px Random" version="1.0.1" provider-name="smuto">
     <requires>
 	<import addon="xbmc.python" version="2.0"/>
 	<import addon="script.module.simplejson" version="2.0.10"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="default.py">
 	<provides>image</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
@@ -174,12 +174,12 @@
     </extension>
 </addon>
 
-<addon id="plugin.image.artistmultifanart" name="Artist Multi Fanart" version="1.0.3" provider-name="smuto">
+<addon id="plugin.image.artistmultifanart" name="Artist Multi Fanart" version="1.0.4" provider-name="smuto">
     <requires>
 	<import addon="xbmc.python" version="2.0"/>
 	<import addon="script.module.simplejson" version="2.0.10"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="default.py">
 	<provides>image</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
