@@ -456,11 +456,12 @@
     </extension>
 </addon>
 
-<addon id="screensaver.smuto" name="Smuto's Screensaver" version="0.0.1" provider-name="smuto">
+<addon id="screensaver.smuto" name="Smuto's Screensaver" version="0.0.2" provider-name="smuto">
     <requires>
         <import addon="xbmc.python" version="2.0"/>
         <import addon="plugin.image.artistmultifanart" version="1.0.4"/>
         <import addon="plugin.image.990px.random" version="1.0.1"/>
+        <import addon="script.cu.lrclyrics" version="1.0.7"/>
     </requires>
     <extension point="xbmc.ui.screensaver" library="screensaver.py" />
     <extension point="xbmc.addon.metadata">

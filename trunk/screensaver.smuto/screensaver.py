@@ -44,11 +44,14 @@ class Screensaver(xbmcgui.WindowXMLDialog):
         self.abort_requested = False
         self.started = False
         self.exit_monitor = self.ExitMonitor(self.exit)
-
+        if xbmc.Player().isPlayingAudio():
+            xbmc.executebuiltin('RunScript(script.cu.lrclyrics)')
 
     def exit(self):
         self.abort_requested = True
         self.exit_monitor = None
+        if xbmc.Player().isPlayingAudio():
+            xbmc.executebuiltin('Action(Back)')
         self.log('exit')
         self.close()
 
