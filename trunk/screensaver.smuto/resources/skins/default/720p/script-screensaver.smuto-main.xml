@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window type="window">
     <controls>
+		<include>CommonBackground</include>
         <control type="multiimage">
             <posx>0</posx>
             <posy>0</posy>
