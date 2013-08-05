@@ -185,7 +185,7 @@ def get_VOD_data(iplaid,contentupdatets,newsid):
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.ipla.pl')
 URL_IPLA = 'http://getmedia.redefine.pl'
-IDENTITY = 'login=qc4iweax&ver=344&cuid=-31842300'
+IDENTITY = 'login=qc4iweax&ver=344'
 URL_CATEGORIES = URL_IPLA + '/r/l_x_35_ipla/categories/list/?' + IDENTITY
 URL_MOVIE = URL_IPLA + '/action/2.0/vod/list/?' + IDENTITY + '&category='
 params=get_params()
