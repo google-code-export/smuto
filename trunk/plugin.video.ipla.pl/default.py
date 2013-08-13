@@ -142,6 +142,7 @@ def get_params():
 
 def request(url):
 	req = urllib2.Request(url)
+	req.add_header('User-Agent', 'ipla/344 (Windows NT 6.1)')
 	response = urllib2.urlopen(req)
 	data = response.read()
 	response.close()
@@ -185,7 +186,7 @@ def get_VOD_data(iplaid,contentupdatets,newsid):
 
 __settings__ = xbmcaddon.Addon(id='plugin.video.ipla.pl')
 URL_IPLA = 'http://getmedia.redefine.pl'
-IDENTITY = 'login=qc4iweax&ver=344'
+IDENTITY = 'login=9j3fi376&passwdmd5=79fb619cc2d042eb686c556f8fc147f8&cuid=9887518'
 URL_CATEGORIES = URL_IPLA + '/r/l_x_35_ipla/categories/list/?' + IDENTITY
 URL_MOVIE = URL_IPLA + '/action/2.0/vod/list/?' + IDENTITY + '&category='
 params=get_params()

@@ -245,7 +245,7 @@
 
 <addon id="plugin.video.ipla.pl"
        name="ipla.tv"
-       version="0.2.8"
+       version="0.2.9"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
