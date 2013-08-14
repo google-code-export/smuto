@@ -245,7 +245,7 @@
 
 <addon id="plugin.video.ipla.pl"
        name="ipla.tv"
-       version="0.2.9"
+       version="0.3.0"
        provider-name="smuto">
   <requires>
     <import addon="xbmc.python" version="2.0"/>
@@ -261,6 +261,7 @@
     <description lang="en">Watch videos from www.ipla.pl</description>
     <description lang="pl">Ipla to największa telewizja internetowa w Polsce. Swoim widzom oferuje transmisje w wysokiej jakości, największą w Polsce legalną bazę treści, w tym tysiące odcinków seriali, programów rozrywkowych i informacyjnych, koncerty i najważniejsze wydarzenia sportowe, a także ponad tysiąc filmów pełnometrażowych. Dostęp do zasobów telewizji ipla mają użytkownicy różnych urządzeń dzięki aplikacjom ipla specjalnie do nich przystosowanym.</description>
     <platform>all</platform>
+    <broken>deprecated</broken>
   </extension>
 </addon>
 
