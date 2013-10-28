@@ -8,12 +8,12 @@ pluginHandle = int(sys.argv[1])
 pluginQuery = sys.argv[2]
 
 def get_stream_url(channel_id):
-    xml = urllib2.urlopen('http://tvgry.pl/jwplayer/playlist.asp?ID=' + channel_id).read()
+    xml = urllib2.urlopen('http://tvgry.pl/player/playlist_union.asp?ID=' + channel_id + '&QUALITY=2&SECTION=TV').read()
     match=re.compile(':file>([^<]+)').findall(xml)[0]
     return match
 
 def add_video_item():
-    html = urllib2.urlopen('http://www.gry-online.pl/telewizja-dla-graczy.asp?GRU=1').read()
+    html = urllib2.urlopen('http://www.gry-online.pl/telewizja-dla-graczy.asp?GRU=7').read()
     for v in re.finditer('src="([^"]+)"><a href="[^0-9]+([0-9]+)"></a></div><h4>([^<]+)', html):
         img, filename, title = v.groups()
         listitem = xbmcgui.ListItem(title.decode('cp1250'), iconImage=img, thumbnailImage=img)
