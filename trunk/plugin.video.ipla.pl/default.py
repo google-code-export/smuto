@@ -45,17 +45,15 @@ def iplaVOD(iplaid,contentupdatets,newsid,name):
         for link in links:
             ell = link.attrib
             drm = ell['drmtype']
-            format = ell['format']
             quality = ell['quality']
-            if drm == '0' and format != '2':
+            if drm == '0' :
                 if int(quality) > maxquality:
                     maxquality = int(quality)
         for link in links:
             ell = link.attrib
             drm = ell['drmtype']
-            format = ell['format']
             iquality = int(ell['quality'])
-            if drm == '0' and format != '2' and iquality == maxquality:
+            if drm == '0' and iquality == maxquality:
                 val['url'] = ell['url']
                 darmolist.append(val)
                 break
@@ -88,7 +86,7 @@ def addLink(name,url,iconimage,descr,timestamp,vcnt,vote,dur,tvshowtitle):
         m, s = divmod(dur, 60)
         h, m = divmod(m, 60)
         odcinek = 0
-        matched = re.match(u'(.*)\\s[-\u2013]\\s[Oo]dcinek\\s+(\\d+)',name)
+        matched = re.match(u'(.*)\\s?[-\u2013]\\s[Oo]dcinek\\s+(\\d+)',name)
         if matched:
             name, odcinek = matched.group(1), int(matched.group(2))
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
