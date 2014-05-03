@@ -105,7 +105,7 @@
 
 <addon id="plugin.audio.open_FM"
        name="Open FM"
-       version="1.2.2"
+       version="1.2.4"
        provider-name="pajretX">
   <extension point="xbmc.python.pluginsource"
             library="default.py">

@@ -18,11 +18,11 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 ELECTRONIC HITS",'http://gr-relay-1.gaduradio.pl/94',os.path.join(ICO_DIR,'500_electronic.png')),
-			("DRUM'N'BASS",'http://gr-relay-1.gaduradio.pl/41',os.path.join(ICO_DIR,'drumnbass.png')),
-			("DUBSTEP",'http://gr-relay-1.gaduradio.pl/68',os.path.join(ICO_DIR,'dubstep_www.png')),
-			("MINIMAL TECHNO",'http://gr-relay-1.gaduradio.pl/50',os.path.join(ICO_DIR,'minimal.png')),
-			("CHILLOUT",'http://gr-relay-1.gaduradio.pl/33',os.path.join(ICO_DIR,'chill_out.png'))
+			("500 Electronic Hits",'http://gr-relay-12.gaduradio.pl/94',os.path.join(ICO_DIR,'500_electronic.png')),
+			("Miejska Stacja",'http://gr-relay-12.gaduradio.pl/106',os.path.join(ICO_DIR,'miejska_stac')),
+			("Dubstep",'http://gr-relay-12.gaduradio.pl/68',os.path.join(ICO_DIR,'dubstep.png')),
+			("Drum'N'Bass",'http://gr-relay-12.gaduradio.pl/41',os.path.join(ICO_DIR,'drumnbass.png')),
+			("Chillout",'http://gr-relay-12.gaduradio.pl/33',os.path.join(ICO_DIR,'chill_out.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

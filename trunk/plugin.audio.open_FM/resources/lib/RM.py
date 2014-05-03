@@ -18,20 +18,24 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 ROCK HITS",'http://gr-relay-1.gaduradio.pl/82',os.path.join(ICO_DIR,'500_rock_hits.png')),
-			("POLSKI ROCK",'http://gr-relay-1.gaduradio.pl/29',os.path.join(ICO_DIR,'polskirock.png')),
-			("POLSKI ROCK CLASSIC",'http://gr-relay-1.gaduradio.pl/45',os.path.join(ICO_DIR,'polski_rock_classic.png')),
-			("ROCK BALLADY",'http://gr-relay-1.gaduradio.pl/61',os.path.join(ICO_DIR,'rock_ballady.png')),
-			("CLASSIC ROCK",'http://gr-relay-1.gaduradio.pl/32',os.path.join(ICO_DIR,'classic_rock.png')),
-			("AMERICAN ROCK",'http://gr-relay-1.gaduradio.pl/40',os.path.join(ICO_DIR,'americanrock.png')),
-			("PUNK ROCK",'http://gr-relay-1.gaduradio.pl/78',os.path.join(ICO_DIR,'punkrock_www.png')),
-			("500 HEAVY HITS",'http://gr-relay-1.gaduradio.pl/54',os.path.join(ICO_DIR,'500_heavyhits.png')),
-			("100% GRABAŻ",'http://gr-relay-1.gaduradio.pl/73',os.path.join(ICO_DIR,'Grabaz.png')),
-			("100% DŻEM",'http://gr-relay-1.gaduradio.pl/15',os.path.join(ICO_DIR,'dzem.png')),
-			("100% KAZIK",'http://gr-relay-1.gaduradio.pl/35',os.path.join(ICO_DIR,'Kazik.png')),
-			("100% METALLICA",'http://gr-relay-1.gaduradio.pl/62',os.path.join(ICO_DIR,'Metallica.png')),
-			("100% LINKIN PARK",'http://gr-relay-1.gaduradio.pl/42',os.path.join(ICO_DIR,'linkinpark.png')),			
-			("100% DEPECHE MODE",'http://gr-relay-1.gaduradio.pl/74',os.path.join(ICO_DIR,'dm.png'))
+			("MTV Rocks",'http://gr-relay-12.gaduradio.pl/77',os.path.join(ICO_DIR,'mtv_rocks.png')),
+			("Top 20 Rock",'http://gr-relay-12.gaduradio.pl/99',os.path.join(ICO_DIR,'top_20_rock.png')),
+			("500 Rock Hits",'http://gr-relay-12.gaduradio.pl/82',os.path.join(ICO_DIR,'500_rock_hits.png')),
+			("Polski Rock",'http://gr-relay-12.gaduradio.pl/29',os.path.join(ICO_DIR,'polski_rock.png')),
+			("Polski Rock Classic",'http://gr-relay-12.gaduradio.pl/45',os.path.join(ICO_DIR,'polski_rock_classic.png')),			
+			("Rock Ballady",'http://gr-relay-12.gaduradio.pl/61',os.path.join(ICO_DIR,'rock_ballady.png')),
+			("Classic Rock",'http://gr-relay-12.gaduradio.pl/32',os.path.join(ICO_DIR,'classic_rock.png')),
+			("American Rock",'http://gr-relay-12.gaduradio.pl/40',os.path.join(ICO_DIR,'americanrock.png')),
+			("Punk Rock",'http://gr-relay-12.gaduradio.pl/78',os.path.join(ICO_DIR,'punk_rock.png')),
+			("500 Heavy Hits",'http://gr-relay-12.gaduradio.pl/54',os.path.join(ICO_DIR,'500_heavyhits.png')),
+			("Classic Metal",'http://gr-relay-12.gaduradio.pl/108',os.path.join(ICO_DIR,'class_metal.png')),
+			("Ciężkie Brzmienia",'http://gr-relay-12.gaduradio.pl/13',os.path.join(ICO_DIR,'ciezkie_b.png')),			
+			("100% Dżem",'http://gr-relay-12.gaduradio.pl/15',os.path.join(ICO_DIR,'dzem.png')),
+			("100% Grabaż",'http://gr-relay-12.gaduradio.pl/73',os.path.join(ICO_DIR,'Grabaz.png')),
+			("100% Kazik",'http://gr-relay-12.gaduradio.pl/35',os.path.join(ICO_DIR,'Kazik.png')),
+			("100% Metallica",'http://gr-relay-12.gaduradio.pl/62',os.path.join(ICO_DIR,'Metallica.png')),
+			("100% Linkin Park",'http://gr-relay-12.gaduradio.pl/42',os.path.join(ICO_DIR,'linkinpark.png')),			
+			("100% Depeche Mode",'http://gr-relay-12.gaduradio.pl/74',os.path.join(ICO_DIR,'DM.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

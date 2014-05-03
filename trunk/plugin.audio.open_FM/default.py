@@ -6,8 +6,8 @@ import sys, xbmcaddon
 
 __plugin__  = "Open FM"
 __author__  = "pajretX"
-__date__    = "08-04-13"
-__version__ = "1.2.2"
+__date__    = "03-05-14"
+__version__ = "1.2.4"
 __settings__ = xbmcaddon.Addon(id='plugin.audio.open_FM')
 
 
@@ -45,20 +45,20 @@ elif ( "RM" in sys.argv[ 2 ] ):
 elif ( "alt" in sys.argv[ 2 ] ):
     import  alt as plugin
 #
-# Reggae
+# Sport
 #
-elif ( "reG" in sys.argv[ 2 ] ):
-    import reG as plugin
+elif ( "sport" in sys.argv[ 2 ] ):
+    import sport as plugin
 #
 # Elektronika
 #
 elif ( "elek" in sys.argv[ 2 ] ):
     import elek as plugin
 #
-# Jazz
+# Do auta
 #
-elif ( "jazz" in sys.argv[ 2 ] ):
-    import jazz as plugin
+elif ( "auto" in sys.argv[ 2 ] ):
+    import auto as plugin
 #
 # Inne
 #

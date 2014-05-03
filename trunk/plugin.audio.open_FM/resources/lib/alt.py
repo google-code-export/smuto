@@ -18,11 +18,12 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 ALTERNATIVE HITS",'http://gr-relay-1.gaduradio.pl/55',os.path.join(ICO_DIR,'500_alternative.png')),
-			("ALT FRESZZZ",'http://gr-relay-1.gaduradio.pl/6',os.path.join(ICO_DIR,'alt_fresh.png')),
-			("ALT CLUB",'http://gr-relay-1.gaduradio.pl/9',os.path.join(ICO_DIR,'alt_club.png')),
-			("ALT CAFÉ",'http://gr-relay-1.gaduradio.pl/34',os.path.join(ICO_DIR,'alt_cafe.png')),
-			("ALT PL",'http://gr-relay-1.gaduradio.pl/36',os.path.join(ICO_DIR,'alt_pl.png'))
+			("500 Alternative Hits",'http://gr-relay-12.gaduradio.pl/55',os.path.join(ICO_DIR,'500_alternative.png')),
+			("Alt Freszzz",'http://gr-relay-12.gaduradio.pl/6',os.path.join(ICO_DIR,'alt_fresh.png')),
+			("Alt Club",'http://gr-relay-12.gaduradio.pl/9',os.path.join(ICO_DIR,'alt_club.png')),
+			("Alt Café",'http://gr-relay-12.gaduradio.pl/34',os.path.join(ICO_DIR,'alt_cafe.png')),
+			("Alt PL",'http://gr-relay-12.gaduradio.pl/36',os.path.join(ICO_DIR,'alt_pl.png')),
+			("Alt Classic",'http://gr-relay-12.gaduradio.pl/43',os.path.join(ICO_DIR,'alt_class.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

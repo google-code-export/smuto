@@ -24,8 +24,8 @@ class Main:
         #
         # Polecane
         #
-		listitem = xbmcgui.ListItem( "Szczególnie Polecamy", iconImage="DefaultFolder.png" )
-		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1] ), url = '%s?pol&po_co=%s' % ( sys.argv[ 0 ], "Szczególnie Polecamy" ), listitem=listitem, isFolder=True)		
+		listitem = xbmcgui.ListItem( "Polecane", iconImage="DefaultFolder.png" )
+		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1] ), url = '%s?pol&po_co=%s' % ( sys.argv[ 0 ], "Polecane" ), listitem=listitem, isFolder=True)		
         #
         # Impreza
         #
@@ -52,20 +52,20 @@ class Main:
 		listitem = xbmcgui.ListItem( "Alternatywa", iconImage="DefaultFolder.png" )
 		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?alt&po_co=%s' % ( sys.argv[ 0 ], "Alternatywa" ), listitem=listitem, isFolder=True)
         #
-        # Reggae
+        # Sport
         #
-		listitem = xbmcgui.ListItem( "Reggae", iconImage="DefaultFolder.png" )
-		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?reG&po_co=%s' % ( sys.argv[ 0 ], "Reggae" ), listitem=listitem, isFolder=True)
+		listitem = xbmcgui.ListItem( "Sport", iconImage="DefaultFolder.png" )
+		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?sport&po_co=%s' % ( sys.argv[ 0 ], "Sport" ), listitem=listitem, isFolder=True)
         #
         # Elektronika
         #
 		listitem = xbmcgui.ListItem( "Elektronika", iconImage = "DefaultFolder.png" )
 		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?elek&po_co=%s' % ( sys.argv[ 0 ], "Elektronika" ), listitem=listitem, isFolder=True)
         #
-        #  Jazz
+        # Do auta
         #
-		listitem = xbmcgui.ListItem( "Jazz", iconImage = "DefaultFolder.png" )
-		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?jazz&po_co=%s' % ( sys.argv[ 0 ], "Jazz" ), listitem=listitem, isFolder=True)
+		listitem = xbmcgui.ListItem( "Do auta", iconImage = "DefaultFolder.png" )
+		xbmcplugin.addDirectoryItem( handle = int(sys.argv[ 1 ]), url = '%s?auto&po_co=%s' % ( sys.argv[ 0 ], "Do auta" ), listitem=listitem, isFolder=True)
         #
         #  Inne
         #

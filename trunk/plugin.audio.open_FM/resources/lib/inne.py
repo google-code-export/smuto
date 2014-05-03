@@ -18,14 +18,18 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("MUZYKA KLASYCZNA",'http://gr-relay-1.gaduradio.pl/67',os.path.join(ICO_DIR,'klasyczna.png')),
-			("MUZYKA FILMOWA",'http://gr-relay-1.gaduradio.pl/38',os.path.join(ICO_DIR,'filmowa.png')),
-			("KRAINA ŁAGODNOŚCI",'http://gr-relay-1.gaduradio.pl/37',os.path.join(ICO_DIR,'krainalagodnosci.png')),
-			("SZANTY",'http://gr-relay-1.gaduradio.pl/28',os.path.join(ICO_DIR,'szanty.png')),
-			("BIESIADA",'http://gr-relay-1.gaduradio.pl/59',os.path.join(ICO_DIR,'biesiada.png')),
-			("BIESIADA ŚLĄSKA",'http://gr-relay-1.gaduradio.pl/66',os.path.join(ICO_DIR,'slaska.png')),
-			("KIDS",'http://gr-relay-1.gaduradio.pl/16',os.path.join(ICO_DIR,'kids.png')),
-			("ODGŁOSY NATURY",'http://gr-relay-1.gaduradio.pl/52',os.path.join(ICO_DIR,'natura.png'))
+			("500 Reggae Hits",'http://gr-relay-12.gaduradio.pl/30',os.path.join(ICO_DIR,'500_reg.png')),
+			("Polish Reggae Stylee",'http://gr-relay-12.gaduradio.pl/22',os.path.join(ICO_DIR,'pol_reg.png')),
+			("Retro Café",'http://gr-relay-12.gaduradio.pl/25',os.path.join(ICO_DIR,'retro_caf.png')),
+			("Smooth Jazz",'http://gr-relay-12.gaduradio.pl/60',os.path.join(ICO_DIR,'smooth_jazz.png')),
+			("Muzyka Klasyczna",'http://gr-relay-12.gaduradio.pl/67',os.path.join(ICO_DIR,'klasyczna.png')),
+			("Muzyka Filmowa",'http://gr-relay-12.gaduradio.pl/38',os.path.join(ICO_DIR,'filmowa.png')),
+			("Kraina Łagodności",'http://gr-relay-12.gaduradio.pl/37',os.path.join(ICO_DIR,'krainalagodnosci.png')),
+			("Szanty",'http://gr-relay-12.gaduradio.pl/28',os.path.join(ICO_DIR,'szanty.png')),
+			("Biesiada",'http://gr-relay-12.gaduradio.pl/59',os.path.join(ICO_DIR,'biesiada.png')),
+			("Biesiada Śląska",'http://gr-relay-12.gaduradio.pl/66',os.path.join(ICO_DIR,'slaska.png')),
+			("Kids",'http://gr-relay-12.gaduradio.pl/16',os.path.join(ICO_DIR,'kids.png')),
+			("Odgłosy Natury",'http://gr-relay-12.gaduradio.pl/52',os.path.join(ICO_DIR,'natura.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)
