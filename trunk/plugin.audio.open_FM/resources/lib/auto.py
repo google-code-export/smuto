@@ -19,8 +19,9 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("RETRO CAFÉ",'http://gr-relay-1.gaduradio.pl/25',os.path.join(ICO_DIR,'RetroCafe.png')),
-			("SMOOTH JAZZ",'http://gr-relay-1.gaduradio.pl/60',os.path.join(ICO_DIR,'smooth_jazz.png'))
+			("Rock",'http://gr-relay-12.gaduradio.pl/113',os.path.join(ICO_DIR,'auto_rock.png')),
+			("Club",'http://gr-relay-12.gaduradio.pl/114',os.path.join(ICO_DIR,'auto_club.png')),
+			("Hip-Hop",'http://gr-relay-12.gaduradio.pl/115',os.path.join(ICO_DIR,'auto_hh.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)

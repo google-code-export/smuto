@@ -18,9 +18,9 @@ class Main:
 		self.getNames()
 	def getNames(self):
 		stos=[
-			("500 REGGAE HITS",'http://gr-relay-1.gaduradio.pl/30',os.path.join(ICO_DIR,'500_reggae.png')),
-			("POLISH REGGAE STYLEE",'http://gr-relay-1.gaduradio.pl/22',os.path.join(ICO_DIR,'polishreggae.png')),
-			("SKA ROOTS REGGAE",'http://gr-relay-1.gaduradio.pl/44',os.path.join(ICO_DIR,'skarootsreggae.png'))
+			("Bieganie",'http://gr-relay-12.gaduradio.pl/116',os.path.join(ICO_DIR,'bieganie.png')),
+			("Fitness",'http://gr-relay-12.gaduradio.pl/65',os.path.join(ICO_DIR,'fitness.png')),
+			("Trening",'http://gr-relay-12.gaduradio.pl/101',os.path.join(ICO_DIR,'trening.png'))
 			]
 		for name, url, grafa in stos:
 			li=xbmcgui.ListItem(name, thumbnailImage=grafa)
